@@ -1,8 +1,8 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import {Button} from '$lib/components/ui/button';
+import Layout from '$lib/layouts/Layout.astro';
+import MatriculateForm from '$lib/components/MatriculateForm.svelte';
 ---
 
 <Layout title="Welcome to Astro.">
-	<Button class=" bg-primaryMain" >Hello world</Button>
+	<MatriculateForm client:load />
 </Layout>

@@ -13,9 +13,6 @@ const config = {
 				"2xl": "1400px"
 			}
 		},
-		colors:{
-			primaryMain: "var(--color-primary)",
-		},
 		extend: {
 			colors: {
 				border: "hsl(var(--border) / <alpha-value>)",
