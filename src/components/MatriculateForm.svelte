@@ -13,88 +13,28 @@
     let page = 1;
     let title = 'Datos del estudiante'
 
-    const typeOfDocument = [
-        {value: 'CC', label: 'Cédula de Ciudadanía'},
-        {value: 'TI', label: 'Tarjeta de Identidad'},
-        {value: 'CE', label: 'Cédula de Extranjería'},
-        {value: 'PA', label: 'Pasaporte'},
-        {value: 'RC', label: 'Registro Civil'}
-    ]
+    export let data = {
+      nombres: '',
+      apellidos: '',
+      documento: '',
+      tipoid_id: 0,
+      mupioexp_id: 0,
+      fechanace: '',
+      direccion: '',
+      municipio_id: 0,
+      barrio_id: 0,
+      telefono: '',
+      enfermedad: '',
+      emernombre: '',
+      emertelefono: '',
+      tipoemer: '',
+    }
 
-    const Municipality = [
-        {value: '1', label: 'Medellín'},
-        {value: '2', label: 'Envigado'},
-        {value: '3', label: 'Itagüí'},
-        {value: '4', label: 'Bello'},
-        {value: '5', label: 'Caldas'},
-        {value: '6', label: 'La Estrella'},
-        {value: '7', label: 'Sabaneta'},
-        {value: '8', label: 'Barbosa'},
-        {value: '9', label: 'Girardota'},
-        {value: '10', label: 'Copacabana'},
-        {value: '11', label: 'Turbo'},
-        {value: '12', label: 'San Jerónimo'},
-        {value: '13', label: 'El Carmen de Viboral'},
-        {value: '14', label: 'Rionegro'},
-        {value: '15', label: 'Marinilla'},
-        {value: '16', label: 'Guarne'},
-        {value: '17', label: 'La Ceja'},
-        {value: '18', label: 'El Retiro'},
-        {value: '19', label: 'Carmen de Viboral'},
-        {value: '20', label: 'El Santuario'},
-        {value: '21', label: 'Abejorral'},
-        {value: '22', label: 'San Vicente'},
-        {value: '23', label: 'Sonsón'},
-        {value: '24', label: 'Argelia'},
-        {value: '25', label: 'Concepción'},
-        {value: '26', label: 'El Peñol'},
-        {value: '27', label: 'Granada'},
-        {value: '28', label: 'Guatapé'},
-        {value: '29', label: 'San Rafael'},
-        {value: '30', label: 'Alejandría'},
-        {value: '31', label: 'San Francisco'},
-        {value: '32', label: 'San Carlos'},
-        {value: '33', label: 'San Luis'},
-        {value: '34', label: 'San Roque'},
-        {value: '35', label: 'San Pedro'},
-    ]
+    export let typeOfDocument = []
 
-    const neighborhood = [
-        {value: '1', label: 'Aguas Frías'},
-        {value: '2', label: 'Aranjuez'},
-        {value: '3', label: 'Belen'},
-        {value: '4', label: 'Buenos Aires'},
-        {value: '5', label: 'Castilla'},
-        {value: '6', label: 'Doce de Octubre'},
-        {value: '7', label: 'El Poblado'},
-        {value: '8', label: 'Guayabal'},
-        {value: '9', label: 'La Candelaria'},
-        {value: '10', label: 'Laureles'},
-        {value: '11', label: 'Manrique'},
-        {value: '12', label: 'Robledo'},
-        {value: '13', label: 'San Javier'},
-        {value: '14', label: 'Villa Hermosa'},
-        {value: '15', label: 'Altavista'},
-        {value: '16', label: 'Santa Cruz'},
-        {value: '17', label: 'San Cristobal'},
-        {value: '18', label: 'Palmitas'},
-        {value: '19', label: 'San Sebastián de Palmitas'},
-        {value: '20', label: 'San Antonio de Prado'},
-        {value: '21', label: 'Santa Elena'},
-        {value: '22', label: 'San Cristóbal'},
-        {value: '23', label: 'San Cristóbal'},
-        {value: '24', label: 'San Cristóbal'},
-        {value: '25', label: 'San Cristóbal'},
-        {value: '26', label: 'San Cristóbal'},
-        {value: '27', label: 'San Cristóbal'},
-        {value: '28', label: 'San Cristóbal'},
-        {value: '29', label: 'San Cristóbal'},
-        {value: '30', label: 'San Cristóbal'},
-        {value: '31', label: 'San Cristóbal'},
-        {value: '32', label: 'San Cristóbal'},
-        {value: '33', label: 'San Cristóbal'},
-        {value: '34', label: 'San Cristóbal'},
-    ]
+    export let Municipality = [];
+
+    export let neighborhood = []
 
     const nationality = [
         {value: '1', label: 'Colombiano'},
@@ -166,7 +106,7 @@
 
 </script>
 
-<div class=" m-16 text-center bg-" >
+<div class=" m-16 text-center " >
     <h1 class=" text-3xl font-bold" >{title}</h1>
 </div>
 
@@ -175,15 +115,15 @@
         <div class=" flex items-center justify-center gap-10 flex-wrap" >
             <div class="flex flex-col gap-1.5">
                 <label for="name">Nombres</label>
-                <Input class="w-[300px]" type="text" id="name" placeholder="Nombres" />
+                <Input class="w-[300px]" type="text" id="name" placeholder="Nombres" bind:value={data.nombres} disabled />
             </div>
             <div class="flex flex-col gap-1.5">
                 <label for="name">Apellidos</label>
-                <Input class="w-[300px]" type="text" id="last" placeholder="Apellidos" />
+                <Input class="w-[300px]" type="text" id="last" placeholder="Apellidos" bind:value={data.apellidos} disabled />
             </div>
             <div class=" flex flex-col gap-1.5" >
                 <label for="">Tipo de identificación</label>
-                <Select.Root portal={null}>
+                <Select.Root onSelectedChange={(v)=> data.tipoid_id = v.value}>
                   <Select.Trigger class="w-[300px]">
                     <Select.Value placeholder="Tipo de Documento" />
                   </Select.Trigger>
@@ -191,8 +131,8 @@
                     <Select.Group>
                       <Select.Label>Documentos</Select.Label>
                       {#each typeOfDocument as document}
-                        <Select.Item value={document.value} label={document.label}
-                          >{document.label}</Select.Item
+                        <Select.Item value={document.id} label={document.nombre}
+                          >{document.nombre}</Select.Item
                         >
                       {/each}
                     </Select.Group>
@@ -202,13 +142,13 @@
             </div>
             <div class="flex flex-col gap-1.5">
                 <label for="numberofid">Número de identificación</label>
-                <Input class="w-[300px]" type="number" id="numberofid" placeholder="Número de identificación" />
+                <Input class="w-[300px]" type="number" id="numberofid" placeholder="Número de identificación" bind:value={data.documento} disabled />
             </div>
         </div>
         <div class=" flex items-center justify-center gap-10 flex-wrap mt-5" >
             <div class=" flex flex-col gap-1.5" >
-                <label for="">Expedición del documento</label>
-                <Select.Root portal={null}>
+                <label for="">Expedición del documento <strong class=" text-red-600" >*</strong> </label>
+                <Select.Root onSelectedChange={(v)=> data.mupioexp_id = v.value} >
                   <Select.Trigger class="w-[300px]">
                     <Select.Value placeholder="Expedición del documento" />
                   </Select.Trigger>
@@ -216,8 +156,8 @@
                     <Select.Group>
                       <Select.Label>Municipios</Select.Label>
                       {#each Municipality as municipality}
-                        <Select.Item value={municipality.value} label={municipality.label}
-                          >{municipality.label}</Select.Item
+                        <Select.Item value={municipality.id} label={municipality.nombre}
+                          >{municipality.nombre}</Select.Item
                         >
                       {/each}
                     </Select.Group>
@@ -234,23 +174,24 @@
                       class=
                         "w-[300px] justify-start text-left font-normal"
                       builders={[builder]}
+                      disabled
                     >
                       <CalendarIcon class="mr-2 h-4 w-4" />
-                      Elige una fecha
+                      {data.fechanace ? data.fechanace : 'Elige una fecha'}
                     </Button>
                   </Popover.Trigger>
                   <Popover.Content class="w-auto p-0">
-                    <Calendar />
+                    <Calendar bind:value={data.fechanace} />
                   </Popover.Content>
                 </Popover.Root>
             </div>
             <div class="flex flex-col gap-1.5">
-                <label for="address">Dirección de residencia</label>
-                <Input class="w-[300px]" type="text" id="address" placeholder="Dirección de residencia" />
+                <label for="address">Dirección de residencia <strong class=" text-red-600" >*</strong> </label>
+                <Input class="w-[300px]" type="text" id="address" placeholder="Dirección de residencia" bind:value={data.direccion} />
             </div>
             <div class=" flex flex-col gap-1.5" >
-                <label for="">Municipio</label>
-                <Select.Root portal={null}>
+                <label for="">Municipio <strong class=" text-red-600" >*</strong> </label>
+                <Select.Root onSelectedChange={(v)=> data.municipio_id = v.value}>
                   <Select.Trigger class="w-[300px]">
                     <Select.Value placeholder="Municipio" />
                   </Select.Trigger>
@@ -258,8 +199,8 @@
                     <Select.Group>
                       <Select.Label>Municipios</Select.Label>
                       {#each Municipality as municipality}
-                        <Select.Item value={municipality.value} label={municipality.label}
-                          >{municipality.label}</Select.Item
+                        <Select.Item value={municipality.id} label={municipality.nombre}
+                          >{municipality.nombre}</Select.Item
                         >
                       {/each}
                     </Select.Group>
@@ -270,8 +211,8 @@
         </div>
         <div class=" flex items-center justify-center gap-10 flex-wrap mt-5" >
             <div class=" flex flex-col gap-1.5" >
-                <label for="">Barrio</label>
-                <Select.Root portal={null}>
+                <label for="">Barrio <strong class=" text-red-600" >*</strong> </label>
+                <Select.Root onSelectedChange={(v)=> data.barrio_id = v.value}>
                   <Select.Trigger class="w-[300px]">
                     <Select.Value placeholder="Barrio" />
                   </Select.Trigger>
@@ -279,8 +220,8 @@
                     <Select.Group>
                       <Select.Label>Barrios</Select.Label>
                       {#each neighborhood as item}
-                        <Select.Item value={item.value} label={item.label}
-                          >{item.label}</Select.Item
+                        <Select.Item value={item.id} label={item.nombre}
+                          >{item.nombre}</Select.Item
                         >
                       {/each}
                     </Select.Group>
@@ -289,29 +230,29 @@
                 </Select.Root>
             </div>
             <div class="flex flex-col gap-1.5">
-                <label for="landlinephone">Teléfono fijo</label>
-                <Input class="w-[300px]" type="number" id="landlinephone" placeholder="Teléfono fijo" />
+                <label for="landlinephone">Teléfono fijo <strong class=" text-red-600" >*</strong> </label>
+                <Input class="w-[300px]" type="number" id="landlinephone" placeholder="Teléfono fijo" bind:value={data.telefono} />
             </div>
             <div class="flex flex-col gap-1.5 items-center">
                 <label for="diseases">Enfermedades o alergias sufridas por el estudiante</label>
-                <Textarea class="w-[300px] sm:w-[642px]" placeholder="Explícanos tu situación." />
+                <Textarea class="w-[300px] sm:w-[642px]" placeholder="Explícanos tu situación." bind:value={data.enfermedad} />
             </div>
         </div>
         <div class=" flex items-center justify-center gap-10 flex-wrap mt-5" >
-            <p>En caso de urgencia ¿a quién podemos llamar? (diferente apapá y mamá)</p>
+            <p>En caso de urgencia ¿a quién podemos llamar? (diferente a papá y mamá)</p>
         </div>
         <div class=" flex items-center justify-center gap-10 flex-wrap mt-5" >
             <div class="flex flex-col gap-1.5">
-                <label for="person'sname">Nombre de la persona</label>
-                <Input class="w-[300px]" type="text" id="person'sname" placeholder="Nombre" />
+                <label for="person'sname">Nombre de la persona <strong class=" text-red-600" >*</strong> </label>
+                <Input class="w-[300px]" type="text" id="person'sname" placeholder="Nombre" bind:value={data.emernombre} />
             </div>
             <div class="flex flex-col gap-1.5">
-                <label for="person'snumber">Teléfono o celular</label>
-                <Input class="w-[300px]" type="number" id="person'snumber" placeholder="Teléfono o celular." />
+                <label for="person'snumber">Teléfono o celular <strong class=" text-red-600" >*</strong> </label>
+                <Input class="w-[300px]" type="number" id="person'snumber" placeholder="Teléfono o celular." bind:value={data.emertelefono} />
             </div>
             <div class="flex flex-col gap-1.5">
-                <label for="person'srelationship">Parentesco</label>
-                <Input class="w-[300px]" type="text" id="person'srelationship" placeholder="Parentesco" />
+                <label for="person'srelationship">Parentesco <strong class=" text-red-600" >*</strong> </label>
+                <Input class="w-[300px]" type="text" id="person'srelationship" placeholder="Parentesco" bind:value={data.tipoemer} />
             </div>
         </div>
     {:else if page === 2}
@@ -353,8 +294,8 @@
                     <Select.Group>
                       <Select.Label>Documentos</Select.Label>
                       {#each typeOfDocument as document}
-                        <Select.Item value={document.value} label={document.label}
-                          >{document.label}</Select.Item
+                        <Select.Item value={document.id} label={document.nombre}
+                          >{document.nombre}</Select.Item
                         >
                       {/each}
                     </Select.Group>
@@ -378,8 +319,8 @@
                     <Select.Group>
                       <Select.Label>Municipios</Select.Label>
                       {#each Municipality as municipality}
-                        <Select.Item value={municipality.value} label={municipality.label}
-                          >{municipality.label}</Select.Item
+                        <Select.Item value={municipality.id} label={municipality.nombre}
+                          >{municipality.nombre}</Select.Item
                         >
                       {/each}
                     </Select.Group>
@@ -442,8 +383,8 @@
                     <Select.Group>
                       <Select.Label>Documentos</Select.Label>
                       {#each typeOfDocument as document}
-                        <Select.Item value={document.value} label={document.label}
-                          >{document.label}</Select.Item
+                        <Select.Item value={document.id} label={document.nombre}
+                          >{document.nombre}</Select.Item
                         >
                       {/each}
                     </Select.Group>
@@ -467,8 +408,8 @@
                     <Select.Group>
                       <Select.Label>Municipios</Select.Label>
                       {#each Municipality as municipality}
-                        <Select.Item value={municipality.value} label={municipality.label}
-                          >{municipality.label}</Select.Item
+                        <Select.Item value={municipality.id} label={municipality.nombre}
+                          >{municipality.nombre}</Select.Item
                         >
                       {/each}
                     </Select.Group>
@@ -560,8 +501,8 @@
                     <Select.Group>
                       <Select.Label>Documentos</Select.Label>
                       {#each typeOfDocument as document}
-                        <Select.Item value={document.value} label={document.label}
-                          >{document.label}</Select.Item
+                        <Select.Item value={document.id} label={document.nombre}
+                          >{document.nombre}</Select.Item
                         >
                       {/each}
                     </Select.Group>
@@ -585,8 +526,8 @@
                     <Select.Group>
                       <Select.Label>Municipios</Select.Label>
                       {#each Municipality as municipality}
-                        <Select.Item value={municipality.value} label={municipality.label}
-                          >{municipality.label}</Select.Item
+                        <Select.Item value={municipality.id} label={municipality.nombre}
+                          >{municipality.nombre}</Select.Item
                         >
                       {/each}
                     </Select.Group>
@@ -678,8 +619,8 @@
                     <Select.Group>
                       <Select.Label>Documentos</Select.Label>
                       {#each typeOfDocument as document}
-                        <Select.Item value={document.value} label={document.label}
-                          >{document.label}</Select.Item
+                        <Select.Item value={document.id} label={document.nombre}
+                          >{document.nombre}</Select.Item
                         >
                       {/each}
                     </Select.Group>
@@ -703,8 +644,8 @@
                     <Select.Group>
                       <Select.Label>Municipios</Select.Label>
                       {#each Municipality as municipality}
-                        <Select.Item value={municipality.value} label={municipality.label}
-                          >{municipality.label}</Select.Item
+                        <Select.Item value={municipality.id} label={municipality.nombre}
+                          >{municipality.nombre}</Select.Item
                         >
                       {/each}
                     </Select.Group>
@@ -793,8 +734,8 @@
                     <Select.Group>
                       <Select.Label>Municipios</Select.Label>
                       {#each Municipality as municipality}
-                        <Select.Item value={municipality.value} label={municipality.label}
-                          >{municipality.label}</Select.Item
+                        <Select.Item value={municipality.id} label={municipality.nombre}
+                          >{municipality.nombre}</Select.Item
                         >
                       {/each}
                     </Select.Group>
@@ -999,7 +940,8 @@
     {/if}
 </div>
 
-<Pagination.Root count={100} perPage={13} let:pages let:currentPage onPageChange={(e)=> page = e} class="mt-10 mx-2 sm:mx-0" >
+<div class="w-screen p-2 overflow-hidden" >
+  <Pagination.Root count={100} perPage={13} let:pages let:currentPage onPageChange={(e)=> page = e} class="mt-10 " >
     <Pagination.Content>
     <Pagination.Item>
       <Pagination.PrevButton />
@@ -1021,5 +963,6 @@
       <Pagination.NextButton />
     </Pagination.Item>
   </Pagination.Content>
-</Pagination.Root>
+  </Pagination.Root>
+</div>
 

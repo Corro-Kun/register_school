@@ -1,0 +1,13 @@
+---
+import Layout from '$lib/layouts/Layout.astro';
+import MatriculateForm from '$lib/components/MatriculateForm.svelte';
+
+const { id } = Astro.params;
+
+const result = await fetch(`${Astro.url.origin}/api/reservation/${id}`);
+const data = await result.json();
+---
+
+<Layout title="Welcome to Astro.">
+	<MatriculateForm client:load Municipality={data.municipality} typeOfDocument={data.dni} neighborhood={data.neighborhood} data={data.student[0]} />
+</Layout>
