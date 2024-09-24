@@ -28,6 +28,16 @@
       emernombre: '',
       emertelefono: '',
       tipoemer: '',
+      nompadre: '',
+      apellpadre: '',
+      docpadre: '',
+      emailpadre: '',
+      padrecelular: '',
+      nommadre: '',
+      apellmadre: '',
+      docmadre: '',
+      madreemail: '',
+      madrecelular: '',
     }
 
     export let typeOfDocument = []
@@ -122,7 +132,7 @@
                 <Input class="w-[300px]" type="text" id="last" placeholder="Apellidos" bind:value={data.apellidos} disabled />
             </div>
             <div class=" flex flex-col gap-1.5" >
-                <label for="">Tipo de identificación</label>
+                <label for="">Tipo de identificación <strong class=" text-red-600" >*</strong> </label>
                 <Select.Root onSelectedChange={(v)=> data.tipoid_id = v.value}>
                   <Select.Trigger class="w-[300px]">
                     <Select.Value placeholder="Tipo de Documento" />
@@ -278,14 +288,14 @@
         <div class=" flex items-center justify-center gap-10 flex-wrap mt-5" >
             <div class="flex flex-col gap-1.5">
                 <label for="name">Nombres</label>
-                <Input class="w-[300px]" type="text" id="name" placeholder="Nombres" />
+                <Input class="w-[300px]" type="text" id="name" placeholder="Nombres" bind:value={data.nompadre} disabled />
             </div>
             <div class="flex flex-col gap-1.5">
                 <label for="name">Apellidos</label>
-                <Input class="w-[300px]" type="text" id="last" placeholder="Apellidos" />
+                <Input class="w-[300px]" type="text" id="last" placeholder="Apellidos" bind:value={data.apellpadre} disabled />
             </div>
             <div class=" flex flex-col gap-1.5" >
-                <label for="">Tipo de identificación</label>
+                <label for="">Tipo de identificación <strong class=" text-red-600" >*</strong> </label>
                 <Select.Root portal={null}>
                   <Select.Trigger class="w-[300px]">
                     <Select.Value placeholder="Tipo de Documento" />
@@ -305,12 +315,12 @@
             </div>
             <div class="flex flex-col gap-1.5">
                 <label for="numberofid">Número de identificación</label>
-                <Input class="w-[300px]" type="number" id="numberofid" placeholder="Número de identificación" />
+                <Input class="w-[300px]" type="number" id="numberofid" placeholder="Número de identificación" bind:value={data.docpadre} disabled />
             </div>
         </div>
         <div class=" flex items-center justify-center gap-10 flex-wrap mt-5" >
             <div class=" flex flex-col gap-1.5" >
-                <label for="">Expedición del documento</label>
+                <label for="">Expedición del documento <strong class=" text-red-600" >*</strong> </label>
                 <Select.Root portal={null}>
                   <Select.Trigger class="w-[300px]">
                     <Select.Value placeholder="Expedición del documento" />
@@ -329,12 +339,12 @@
                 </Select.Root>
             </div>
             <div class="flex flex-col gap-1.5">
-                <label for="Email">Email</label>
-                <Input class="w-[300px]" type="text" id="Email" placeholder="Email" />
+                <label for="Email">Email <strong class=" text-red-600" >*</strong> </label>
+                <Input class="w-[300px]" type="text" id="Email" placeholder="Email" bind:value={data.emailpadre} />
             </div>
             <div class="flex flex-col gap-1.5">
-                <label for="cellular">Celular</label>
-                <Input class="w-[300px]" type="number" id="cellular" placeholder="Celular" />
+                <label for="cellular">Celular <strong class=" text-red-600" >*</strong> </label>
+                <Input class="w-[300px]" type="number" id="cellular" placeholder="Celular" bind:value={data.padrecelular} />
             </div>
             <div class="flex flex-col gap-1.5">
                 <label for="work-phone">Teléfono del trabajo</label>
@@ -367,14 +377,14 @@
         <div class=" flex items-center justify-center gap-10 flex-wrap mt-5" >
             <div class="flex flex-col gap-1.5">
                 <label for="name">Nombres</label>
-                <Input class="w-[300px]" type="text" id="name" placeholder="Nombres" />
+                <Input class="w-[300px]" type="text" id="name" placeholder="Nombres" bind:value={data.nommadre} disabled />
             </div>
             <div class="flex flex-col gap-1.5">
                 <label for="name">Apellidos</label>
-                <Input class="w-[300px]" type="text" id="last" placeholder="Apellidos" />
+                <Input class="w-[300px]" type="text" id="last" placeholder="Apellidos" bind:value={data.apellmadre} disabled />
             </div>
             <div class=" flex flex-col gap-1.5" >
-                <label for="">Tipo de identificación</label>
+                <label for="">Tipo de identificación <strong class=" text-red-600" >*</strong> </label>
                 <Select.Root portal={null}>
                   <Select.Trigger class="w-[300px]">
                     <Select.Value placeholder="Tipo de Documento" />
@@ -394,12 +404,12 @@
             </div>
             <div class="flex flex-col gap-1.5">
                 <label for="numberofid">Número de identificación</label>
-                <Input class="w-[300px]" type="number" id="numberofid" placeholder="Número de identificación" />
+                <Input class="w-[300px]" type="number" id="numberofid" placeholder="Número de identificación" bind:value={data.docmadre} disabled />
             </div>
         </div>
         <div class=" flex items-center justify-center gap-10 flex-wrap mt-5" >
             <div class=" flex flex-col gap-1.5" >
-                <label for="">Expedición del documento</label>
+                <label for="">Expedición del documento <strong class=" text-red-600" >*</strong> </label>
                 <Select.Root portal={null}>
                   <Select.Trigger class="w-[300px]">
                     <Select.Value placeholder="Expedición del documento" />
@@ -418,12 +428,12 @@
                 </Select.Root>
             </div>
             <div class="flex flex-col gap-1.5">
-                <label for="Email">Email</label>
-                <Input class="w-[300px]" type="text" id="Email" placeholder="Email" />
+                <label for="Email">Email <strong class=" text-red-600" >*</strong> </label>
+                <Input class="w-[300px]" type="text" id="Email" placeholder="Email" bind:value={data.madreemail} />
             </div>
             <div class="flex flex-col gap-1.5">
-                <label for="cellular">Celular</label>
-                <Input class="w-[300px]" type="number" id="cellular" placeholder="Celular" />
+                <label for="cellular">Celular <strong class=" text-red-600" >*</strong> </label>
+                <Input class="w-[300px]" type="number" id="cellular" placeholder="Celular" bind:value={data.madrecelular} />
             </div>
             <div class="flex flex-col gap-1.5">
                 <label for="work-phone">Teléfono del trabajo</label>

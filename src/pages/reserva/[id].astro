@@ -6,6 +6,20 @@ const { id } = Astro.params;
 
 const result = await fetch(`${Astro.url.origin}/api/reservation/${id}`);
 const data = await result.json();
+if (data.father !== null){
+	data.student[0].nompadre = data.father.nombres;
+	data.student[0].apellpadre = data.father.apellidos;
+	data.student[0].docpadre = data.father.documento;
+	data.student[0].emailpadre = data.father.email;
+	data.student[0].padrecelular = data.father.celular;
+}
+if (data.mother !== null){
+	data.student[0].nommadre = data.mother.nombres;
+	data.student[0].apellmadre = data.mother.apellidos;
+	data.student[0].docmadre = data.mother.documento;
+	data.student[0].madreemail = data.mother.email;
+	data.student[0].madrecelular = data.mother.celular;
+}
 ---
 
 <Layout title="Welcome to Astro.">
