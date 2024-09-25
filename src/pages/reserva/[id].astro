@@ -12,6 +12,9 @@ if (data.father !== null){
 	data.student[0].docpadre = data.father.documento;
 	data.student[0].emailpadre = data.father.email;
 	data.student[0].padrecelular = data.father.celular;
+	data.student[0].padrevivo = '1';
+}else{
+	data.student[0].padrevivo = '2';
 }
 if (data.mother !== null){
 	data.student[0].nommadre = data.mother.nombres;
@@ -19,6 +22,9 @@ if (data.mother !== null){
 	data.student[0].docmadre = data.mother.documento;
 	data.student[0].madreemail = data.mother.email;
 	data.student[0].madrecelular = data.mother.celular;
+	data.student[0].madrevive= '1';
+}else{
+	data.student[0].madrevive = '2';
 }
 ---
 

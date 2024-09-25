@@ -33,12 +33,16 @@
       docpadre: '',
       emailpadre: '',
       padrecelular: '',
+      padrevivo: null,
       nommadre: '',
       apellmadre: '',
       docmadre: '',
       madreemail: '',
       madrecelular: '',
+      madrevive: null,
     }
+
+    let acu = null;
 
     export let typeOfDocument = []
 
@@ -268,23 +272,24 @@
     {:else if page === 2}
         <div class=" flex items-center justify-center gap-10 flex-wrap" >
             <div class="flex flex-col gap-1.5">
-                <label for="">Estado</label>
-                <RadioGroup.Root value="comfortable">
+                <label for="">Estado <strong class=" text-red-600" >*</strong> </label>
+                <RadioGroup.Root bind:value={data.padrevivo} >
                     <div class="flex items-center space-x-2">
-                      <RadioGroup.Item value="Presente" id="r1" />
+                      <RadioGroup.Item value='1' id="r1" />
                       <label for="r1">Presente</label>
                     </div>
                     <div class="flex items-center space-x-2">
-                      <RadioGroup.Item value="Sin información" id="r2" />
+                      <RadioGroup.Item value='2' id="r2" />
                       <label for="r2">Sin información</label>
                     </div>
                     <div class="flex items-center space-x-2">
-                      <RadioGroup.Item value="Fallecido" id="r3" />
+                      <RadioGroup.Item value='0' id="r3" />
                       <label for="r3">Fallecido</label>
                     </div>
                 </RadioGroup.Root>
             </div>
         </div>
+        {#if data.padrevivo === '1'}
         <div class=" flex items-center justify-center gap-10 flex-wrap mt-5" >
             <div class="flex flex-col gap-1.5">
                 <label for="name">Nombres</label>
@@ -354,26 +359,28 @@
                 </div>
             </div>
         </div>
+        {/if}
     {:else if page === 3}
         <div class=" flex items-center justify-center gap-10 flex-wrap" >
             <div class="flex flex-col gap-1.5">
-                <label for="">Estado</label>
-                <RadioGroup.Root value="comfortable">
+                <label for="">Estado <strong class=" text-red-600" >*</strong> </label>
+                <RadioGroup.Root bind:value={data.madrevive} >
                     <div class="flex items-center space-x-2">
-                      <RadioGroup.Item value="Presente" id="r1" />
+                      <RadioGroup.Item value='1' id="r1" />
                       <label for="r1">Presente</label>
                     </div>
                     <div class="flex items-center space-x-2">
-                      <RadioGroup.Item value="Sin información" id="r2" />
+                      <RadioGroup.Item value='2' id="r2" />
                       <label for="r2">Sin información</label>
                     </div>
                     <div class="flex items-center space-x-2">
-                      <RadioGroup.Item value="Fallecido" id="r3" />
+                      <RadioGroup.Item value='0' id="r3" />
                       <label for="r3">Fallecido</label>
                     </div>
                 </RadioGroup.Root>
             </div>
         </div>
+        {#if data.madrevive === '1'}
         <div class=" flex items-center justify-center gap-10 flex-wrap mt-5" >
             <div class="flex flex-col gap-1.5">
                 <label for="name">Nombres</label>
@@ -443,27 +450,30 @@
                 </div>
             </div>
         </div>
+        {/if}
     {:else if page === 4}
         <div class=" flex items-center justify-center gap-10 flex-wrap" >
             <div class="flex flex-col gap-1.5 items-center">
-                <label for="">Seleccione el acudiente</label>
-                <RadioGroup.Root value="Padre">
+                <label for="">Seleccione el acudiente <strong class=" text-red-600" >*</strong> </label>
+                <RadioGroup.Root bind:value={acu} >
                     <div class="flex items-center space-x-2">
-                      <RadioGroup.Item value="Presente" id="r1" />
+                      <RadioGroup.Item value='0' id="r1" />
                       <label for="r1">Padre</label>
                     </div>
                     <div class="flex items-center space-x-2">
-                      <RadioGroup.Item value="Madre" id="r2" />
+                      <RadioGroup.Item value='1' id="r2" />
                       <label for="r2">Madre</label>
                     </div>
                     <div class="flex items-center space-x-2">
-                      <RadioGroup.Item value="Tercera persona" id="r3" />
+                      <RadioGroup.Item value='2' id="r3" />
                       <label for="r3">Tercera persona</label>
                     </div>
                 </RadioGroup.Root>
             </div>
+        
+            {#if acu === '2'}
             <div class="flex flex-col gap-1.5 items-center">
-                <label for="">Tipo de relación con el estudiante</label>
+                <label for="">Tipo de relación con el estudiante <strong class=" text-red-600" >*</strong> </label>
                 <RadioGroup.Root value="comfortable">
                     <div class="flex items-center space-x-2">
                       <RadioGroup.Item value="Abuelo (a)" id="r1" />
@@ -491,18 +501,32 @@
                     </div>
                 </RadioGroup.Root>
             </div>
+            {/if}
         </div>
+        {#if acu !== null}
         <div class=" flex items-center justify-center gap-10 flex-wrap mt-5" >
             <div class="flex flex-col gap-1.5">
-                <label for="name">Nombres</label>
-                <Input class="w-[300px]" type="text" id="name" placeholder="Nombres" />
+                <label for="name">Nombres <strong class=" text-red-600" >*</strong> </label>
+                {#if acu === '0'}
+                    <Input class="w-[300px]" type="text" id="name" placeholder="Nombres" bind:value={data.nompadre} disabled />
+                {:else if acu === '1'}
+                    <Input class="w-[300px]" type="text" id="name" placeholder="Nombres" bind:value={data.nommadre} disabled />
+                {:else if acu === '2'}
+                    <Input class="w-[300px]" type="text" id="name" placeholder="Nombres" />
+                {/if}
             </div>
             <div class="flex flex-col gap-1.5">
-                <label for="name">Apellidos</label>
-                <Input class="w-[300px]" type="text" id="last" placeholder="Apellidos" />
+                <label for="name">Apellidos <strong class=" text-red-600" >*</strong> </label>
+                {#if acu === '0'}
+                    <Input class="w-[300px]" type="text" id="last" placeholder="Apellidos" bind:value={data.apellpadre} disabled />
+                {:else if acu === '1'}
+                    <Input class="w-[300px]" type="text" id="last" placeholder="Apellidos" bind:value={data.apellmadre} disabled />
+                {:else if acu === '2'}
+                    <Input class="w-[300px]" type="text" id="last" placeholder="Apellidos" />
+                {/if}
             </div>
             <div class=" flex flex-col gap-1.5" >
-                <label for="">Tipo de identificación</label>
+                <label for="">Tipo de identificación <strong class=" text-red-600" >*</strong> </label>
                 <Select.Root portal={null}>
                   <Select.Trigger class="w-[300px]">
                     <Select.Value placeholder="Tipo de Documento" />
@@ -521,13 +545,19 @@
                 </Select.Root>
             </div>
             <div class="flex flex-col gap-1.5">
-                <label for="numberofid">Número de identificación</label>
-                <Input class="w-[300px]" type="number" id="numberofid" placeholder="Número de identificación" />
+                <label for="numberofid">Número de identificación <strong class=" text-red-600" >*</strong> </label>
+                {#if acu === '0'}
+                    <Input class="w-[300px]" type="number" id="numberofid" placeholder="Número de identificación" bind:value={data.docpadre} disabled />
+                {:else if acu === '1'}
+                    <Input class="w-[300px]" type="number" id="numberofid" placeholder="Número de identificación" bind:value={data.docmadre} disabled />
+                {:else if acu === '2'}
+                    <Input class="w-[300px]" type="number" id="numberofid" placeholder="Número de identificación" />
+                {/if}
             </div>
         </div>
         <div class=" flex items-center justify-center gap-10 flex-wrap mt-5" >
             <div class=" flex flex-col gap-1.5" >
-                <label for="">Expedición del documento</label>
+                <label for="">Expedición del documento <strong class=" text-red-600" >*</strong> </label>
                 <Select.Root portal={null}>
                   <Select.Trigger class="w-[300px]">
                     <Select.Value placeholder="Expedición del documento" />
@@ -546,21 +576,34 @@
                 </Select.Root>
             </div>
             <div class="flex flex-col gap-1.5">
-                <label for="Email">Email</label>
-                <Input class="w-[300px]" type="text" id="Email" placeholder="Email" />
+                <label for="Email">Email <strong class=" text-red-600" >*</strong> </label>
+                {#if acu === '0'}
+                    <Input class="w-[300px]" type="text" id="Email" placeholder="Email" bind:value={data.emailpadre} disabled />
+                {:else if acu === '1'}
+                    <Input class="w-[300px]" type="text" id="Email" placeholder="Email" bind:value={data.madreemail} disabled />
+                {:else if acu === '2'}
+                    <Input class="w-[300px]" type="text" id="Email" placeholder="Email" />
+                {/if}
             </div>
             <div class="flex flex-col gap-1.5">
-                <label for="cellular">Celular</label>
-                <Input class="w-[300px]" type="number" id="cellular" placeholder="Celular" />
+                <label for="cellular">Celular <strong class=" text-red-600" >*</strong> </label>
+                {#if acu === '0'}
+                    <Input class="w-[300px]" type="number" id="cellular" placeholder="Celular" bind:value={data.padrecelular} disabled />
+                {:else if acu === '1'}
+                    <Input class="w-[300px]" type="number" id="cellular" placeholder="Celular" bind:value={data.madrecelular} disabled />
+                {:else if acu === '2'}
+                    <Input class="w-[300px]" type="number" id="cellular" placeholder="Celular" />
+                {/if}
             </div>
             <div class="flex flex-col gap-1.5">
-                <label for="work-phone">Teléfono del trabajo</label>
+                <label for="work-phone">Teléfono del trabajo <strong class=" text-red-600" >*</strong> </label>
                 <div class="flex gap-3" >
                     <Input class="w-[50px]" type="number" placeholder="601" />
                     <Input class="w-[240px]" type="number" id="work-phone" placeholder="Teléfono del trabajo" />
                 </div>
             </div>
         </div>
+        {/if}
     {:else if page === 5}
         <div class=" flex items-center justify-center gap-10 flex-wrap" >
             <div class="flex flex-col gap-1.5 items-center">
