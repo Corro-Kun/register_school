@@ -9,6 +9,7 @@
     import {Textarea} from '$lib/components/ui/textarea';
     import * as RadioGroup from '$lib/components/ui/radio-group';
     import * as Pagination from '$lib/components/ui/pagination';
+    import toast from "svelte-french-toast";
 
     let page = 1;
     let title = 'Datos del estudiante'
@@ -33,16 +34,45 @@
       docpadre: '',
       emailpadre: '',
       padrecelular: '',
+      tipoidpadre_id: 0,
+      munexppadre_id: 0,
       padrevivo: null,
       nommadre: '',
       apellmadre: '',
       docmadre: '',
       madreemail: '',
       madrecelular: '',
+      tipoidmadre_id: 0,
+      munexpmadre_id: 0,
       madrevive: null,
+      acuparentesco_id: null,
+      nomacu: '',
+      apellacu: '',
+      docacu: '',
+      tipoidacu_id: 0,
+      munexpacu_id: 0,
+      acuemail: '',
+      acucelular: '',
+      declaratipo: 0,
+      declaranombres: '',
+      declaraapellidos: '',
+      declaradocumento: '',
+      declaratipoid: 0,
+      declaraemail: '',
+      declaracelular: '',
+      declarafechanace: '',
+      declaralugarnace: 0,
+      declaradireccion: '',
+      declaraocupacion: '',
+      declaralugarexpide: 0,
+      decactivos: '',
+      decpasivos: '',
+      decpatrimonio: '',
     }
 
     let acu = null;
+
+    let dec = null;
 
     export let typeOfDocument = []
 
@@ -88,15 +118,9 @@
         {value: '35', label: 'Marroquí'},
     ]
 
-    const occupation = [
-        {value: '1', label: 'Ama de casa'},
-        {value: '2', label: 'Estudiante'},
-        {value: '3', label: 'Empleado'},
-        {value: '4', label: 'Independiente'},
-        {value: '5', label: 'Desempleado'},
-        {value: '6', label: 'Pensionado'},
-        {value: '7', label: 'Otro'},
-    ];
+    export let occupation = [];
+
+    export let relationship = []
 
     $:{
         if (page === 1) {
@@ -301,7 +325,7 @@
             </div>
             <div class=" flex flex-col gap-1.5" >
                 <label for="">Tipo de identificación <strong class=" text-red-600" >*</strong> </label>
-                <Select.Root portal={null}>
+                <Select.Root onSelectedChange={(v)=> data.tipoidpadre_id = v.value} >
                   <Select.Trigger class="w-[300px]">
                     <Select.Value placeholder="Tipo de Documento" />
                   </Select.Trigger>
@@ -326,7 +350,7 @@
         <div class=" flex items-center justify-center gap-10 flex-wrap mt-5" >
             <div class=" flex flex-col gap-1.5" >
                 <label for="">Expedición del documento <strong class=" text-red-600" >*</strong> </label>
-                <Select.Root portal={null}>
+                <Select.Root onSelectedChange={(v)=> data.munexppadre_id = v.value} >
                   <Select.Trigger class="w-[300px]">
                     <Select.Value placeholder="Expedición del documento" />
                   </Select.Trigger>
@@ -392,7 +416,7 @@
             </div>
             <div class=" flex flex-col gap-1.5" >
                 <label for="">Tipo de identificación <strong class=" text-red-600" >*</strong> </label>
-                <Select.Root portal={null}>
+                <Select.Root onSelectedChange={(v)=> data.tipoidmadre_id = v.value} >
                   <Select.Trigger class="w-[300px]">
                     <Select.Value placeholder="Tipo de Documento" />
                   </Select.Trigger>
@@ -417,7 +441,7 @@
         <div class=" flex items-center justify-center gap-10 flex-wrap mt-5" >
             <div class=" flex flex-col gap-1.5" >
                 <label for="">Expedición del documento <strong class=" text-red-600" >*</strong> </label>
-                <Select.Root portal={null}>
+                <Select.Root onSelectedChange={(v)=> data.munexpmadre_id = v.value} >
                   <Select.Trigger class="w-[300px]">
                     <Select.Value placeholder="Expedición del documento" />
                   </Select.Trigger>
@@ -465,7 +489,7 @@
                       <label for="r2">Madre</label>
                     </div>
                     <div class="flex items-center space-x-2">
-                      <RadioGroup.Item value='2' id="r3" />
+                      <RadioGroup.Item value='2' id="r3" on:click={()=> toast("para registrar una tercera persona como acudiente, debe adjuntar autorización autenticada en notaria de parte de los padres o copia de la resolución de custodia del menor y copia ampliada de la cédula del acudiente.", {duration: 10000})} />
                       <label for="r3">Tercera persona</label>
                     </div>
                 </RadioGroup.Root>
@@ -474,32 +498,22 @@
             {#if acu === '2'}
             <div class="flex flex-col gap-1.5 items-center">
                 <label for="">Tipo de relación con el estudiante <strong class=" text-red-600" >*</strong> </label>
-                <RadioGroup.Root value="comfortable">
-                    <div class="flex items-center space-x-2">
-                      <RadioGroup.Item value="Abuelo (a)" id="r1" />
-                      <label for="r1">Abuelo (a)</label>
-                    </div>
-                    <div class="flex items-center space-x-2">
-                      <RadioGroup.Item value="Hermano (a)" id="r2" />
-                      <label for="r2">Hermano (a)</label>
-                    </div>
-                    <div class="flex items-center space-x-2">
-                      <RadioGroup.Item value="Padrastro – Madrastra" id="r3" />
-                      <label for="r3">Padrastro – Madrastra</label>
-                    </div>
-                    <div class="flex items-center space-x-2">
-                      <RadioGroup.Item value="Tío (a)" id="r5" />
-                      <label for="r5">Tío (a)</label>
-                    </div>
-                    <div class="flex items-center space-x-2">
-                      <RadioGroup.Item value="Primo (a)" id="r6" />
-                      <label for="r6">Primo (a)</label>
-                    </div>
-                    <div class="flex items-center space-x-2">
-                      <RadioGroup.Item value="Sustituto ICBF" id="r7" />
-                      <label for="r7">Sustituto ICBF</label>
-                    </div>
-                </RadioGroup.Root>
+                <Select.Root onSelectedChange={(v)=> data.acuparentesco_id = v.value} >
+                  <Select.Trigger class="w-[300px]">
+                    <Select.Value placeholder="Parentesco" />
+                  </Select.Trigger>
+                  <Select.Content class="h-40 overflow-auto" >
+                    <Select.Group>
+                      <Select.Label>Relación</Select.Label>
+                      {#each relationship as re}
+                        <Select.Item value={re.id} label={re.descripcion}
+                          >{re.descripcion}</Select.Item
+                        >
+                      {/each}
+                    </Select.Group>
+                  </Select.Content>
+                  <Select.Input name="document issuance" />
+                </Select.Root>
             </div>
             {/if}
         </div>
@@ -512,7 +526,7 @@
                 {:else if acu === '1'}
                     <Input class="w-[300px]" type="text" id="name" placeholder="Nombres" bind:value={data.nommadre} disabled />
                 {:else if acu === '2'}
-                    <Input class="w-[300px]" type="text" id="name" placeholder="Nombres" />
+                    <Input class="w-[300px]" type="text" id="name" placeholder="Nombres" bind:value={data.nomacu} />
                 {/if}
             </div>
             <div class="flex flex-col gap-1.5">
@@ -522,12 +536,12 @@
                 {:else if acu === '1'}
                     <Input class="w-[300px]" type="text" id="last" placeholder="Apellidos" bind:value={data.apellmadre} disabled />
                 {:else if acu === '2'}
-                    <Input class="w-[300px]" type="text" id="last" placeholder="Apellidos" />
+                    <Input class="w-[300px]" type="text" id="last" placeholder="Apellidos" bind:value={data.apellacu} />
                 {/if}
             </div>
             <div class=" flex flex-col gap-1.5" >
                 <label for="">Tipo de identificación <strong class=" text-red-600" >*</strong> </label>
-                <Select.Root portal={null}>
+                <Select.Root onSelectedChange={(v)=> data.tipoidacu_id = v.value} >
                   <Select.Trigger class="w-[300px]">
                     <Select.Value placeholder="Tipo de Documento" />
                   </Select.Trigger>
@@ -551,14 +565,14 @@
                 {:else if acu === '1'}
                     <Input class="w-[300px]" type="number" id="numberofid" placeholder="Número de identificación" bind:value={data.docmadre} disabled />
                 {:else if acu === '2'}
-                    <Input class="w-[300px]" type="number" id="numberofid" placeholder="Número de identificación" />
+                    <Input class="w-[300px]" type="number" id="numberofid" placeholder="Número de identificación" bind:value={data.docacu} />
                 {/if}
             </div>
         </div>
         <div class=" flex items-center justify-center gap-10 flex-wrap mt-5" >
             <div class=" flex flex-col gap-1.5" >
                 <label for="">Expedición del documento <strong class=" text-red-600" >*</strong> </label>
-                <Select.Root portal={null}>
+                <Select.Root bind:value={data.munexpacu_id} >
                   <Select.Trigger class="w-[300px]">
                     <Select.Value placeholder="Expedición del documento" />
                   </Select.Trigger>
@@ -582,7 +596,7 @@
                 {:else if acu === '1'}
                     <Input class="w-[300px]" type="text" id="Email" placeholder="Email" bind:value={data.madreemail} disabled />
                 {:else if acu === '2'}
-                    <Input class="w-[300px]" type="text" id="Email" placeholder="Email" />
+                    <Input class="w-[300px]" type="text" id="Email" placeholder="Email" bind:value={data.acuemail} />
                 {/if}
             </div>
             <div class="flex flex-col gap-1.5">
@@ -592,7 +606,7 @@
                 {:else if acu === '1'}
                     <Input class="w-[300px]" type="number" id="cellular" placeholder="Celular" bind:value={data.madrecelular} disabled />
                 {:else if acu === '2'}
-                    <Input class="w-[300px]" type="number" id="cellular" placeholder="Celular" />
+                    <Input class="w-[300px]" type="number" id="cellular" placeholder="Celular" bind:value={data.acucelular} />
                 {/if}
             </div>
             <div class="flex flex-col gap-1.5">
@@ -607,64 +621,69 @@
     {:else if page === 5}
         <div class=" flex items-center justify-center gap-10 flex-wrap" >
             <div class="flex flex-col gap-1.5 items-center">
-                <label for="">Seleccione el acudiente</label>
-                <RadioGroup.Root value="Padre">
+                <label for="">Seleccione el acudiente <strong class=" text-red-600" >*</strong> </label>
+                <RadioGroup.Root bind:value={dec} >
                     <div class="flex items-center space-x-2">
-                      <RadioGroup.Item value="Presente" id="r1" />
+                      <RadioGroup.Item value='0' id="r1" />
                       <label for="r1">Padre</label>
                     </div>
                     <div class="flex items-center space-x-2">
-                      <RadioGroup.Item value="Madre" id="r2" />
+                      <RadioGroup.Item value='1' id="r2" />
                       <label for="r2">Madre</label>
                     </div>
                     <div class="flex items-center space-x-2">
-                      <RadioGroup.Item value="Tercera persona" id="r3" />
+                      <RadioGroup.Item value='2' id="r3" on:click={()=> toast("para registrar una tercera persona como declarante, debe adjuntar autorización autenticada en notaria de parte de los padres o copia de la resolución de custodia del menor y copia ampliada de la cédula del declarante.", {duration: 10000})} />
                       <label for="r3">Tercera persona</label>
                     </div>
                 </RadioGroup.Root>
             </div>
+            {#if dec === '2'}
             <div class="flex flex-col gap-1.5 items-center">
-                <label for="">Tipo de relación con el estudiante</label>
-                <RadioGroup.Root value="comfortable">
-                    <div class="flex items-center space-x-2">
-                      <RadioGroup.Item value="Abuelo (a)" id="r1" />
-                      <label for="r1">Abuelo (a)</label>
-                    </div>
-                    <div class="flex items-center space-x-2">
-                      <RadioGroup.Item value="Hermano (a)" id="r2" />
-                      <label for="r2">Hermano (a)</label>
-                    </div>
-                    <div class="flex items-center space-x-2">
-                      <RadioGroup.Item value="Padrastro – Madrastra" id="r3" />
-                      <label for="r3">Padrastro – Madrastra</label>
-                    </div>
-                    <div class="flex items-center space-x-2">
-                      <RadioGroup.Item value="Tío (a)" id="r5" />
-                      <label for="r5">Tío (a)</label>
-                    </div>
-                    <div class="flex items-center space-x-2">
-                      <RadioGroup.Item value="Primo (a)" id="r6" />
-                      <label for="r6">Primo (a)</label>
-                    </div>
-                    <div class="flex items-center space-x-2">
-                      <RadioGroup.Item value="Sustituto ICBF" id="r7" />
-                      <label for="r7">Sustituto ICBF</label>
-                    </div>
-                </RadioGroup.Root>
+                <label for="">Tipo de relación con el estudiante <strong class=" text-red-600" >*</strong> </label>
+                <Select.Root>
+                  <Select.Trigger class="w-[300px]">
+                    <Select.Value placeholder="Parentesco" />
+                  </Select.Trigger>
+                  <Select.Content class="h-40 overflow-auto" >
+                    <Select.Group>
+                      <Select.Label>Relación</Select.Label>
+                      {#each relationship as re}
+                        <Select.Item value={re.id} label={re.descripcion}
+                          >{re.descripcion}</Select.Item
+                        >
+                      {/each}
+                    </Select.Group>
+                  </Select.Content>
+                  <Select.Input name="document issuance" />
+                </Select.Root>
             </div>
+            {/if}
         </div>
+        {#if dec !== null}
         <div class=" flex items-center justify-center gap-10 flex-wrap mt-5" >
             <div class="flex flex-col gap-1.5">
-                <label for="name">Nombres</label>
-                <Input class="w-[300px]" type="text" id="name" placeholder="Nombres" />
+                <label for="name">Nombres <strong class=" text-red-600" >*</strong> </label>
+                {#if dec === '0'}
+                    <Input class="w-[300px]" type="text" id="name" placeholder="Nombres" bind:value={data.nompadre} disabled />
+                {:else if dec === '1'}
+                    <Input class="w-[300px]" type="text" id="name" placeholder="Nombres" bind:value={data.nommadre} disabled />
+                {:else if dec === '2'}
+                    <Input class="w-[300px]" type="text" id="name" placeholder="Nombres" bind:value={data.declaranombres} />
+                {/if}
             </div>
             <div class="flex flex-col gap-1.5">
-                <label for="name">Apellidos</label>
-                <Input class="w-[300px]" type="text" id="last" placeholder="Apellidos" />
+                <label for="name">Apellidos <strong class=" text-red-600" >*</strong> </label>
+                {#if dec === '0'}
+                    <Input class="w-[300px]" type="text" id="last" placeholder="Apellidos" bind:value={data.apellpadre} disabled />
+                {:else if dec === '1'}
+                    <Input class="w-[300px]" type="text" id="last" placeholder="Apellidos" bind:value={data.apellmadre} disabled />
+                {:else if dec === '2'}
+                    <Input class="w-[300px]" type="text" id="last" placeholder="Apellidos" bind:value={data.declarapellidos} />
+                {/if}
             </div>
             <div class=" flex flex-col gap-1.5" >
-                <label for="">Tipo de identificación</label>
-                <Select.Root portal={null}>
+                <label for="">Tipo de identificación <strong class=" text-red-600" >*</strong> </label>
+                <Select.Root onSelectedChange={(v)=> data.tipoiddeclarante_id = v.value} >
                   <Select.Trigger class="w-[300px]">
                     <Select.Value placeholder="Tipo de Documento" />
                   </Select.Trigger>
@@ -682,14 +701,20 @@
                 </Select.Root>
             </div>
             <div class="flex flex-col gap-1.5">
-                <label for="numberofid">Número de identificación</label>
-                <Input class="w-[300px]" type="number" id="numberofid" placeholder="Número de identificación" />
+                <label for="numberofid">Número de identificación <strong class=" text-red-600" >*</strong> </label>
+                {#if dec === '0'}
+                    <Input class="w-[300px]" type="number" id="numberofid" placeholder="Número de identificación" bind:value={data.docpadre} disabled />
+                {:else if dec === '1'}
+                    <Input class="w-[300px]" type="number" id="numberofid" placeholder="Número de identificación" bind:value={data.docmadre} disabled />
+                {:else if dec === '2'}
+                    <Input class="w-[300px]" type="number" id="numberofid" placeholder="Número de identificación" bind:value={data.declaradoc} />
+                {/if}
             </div>
         </div>
         <div class=" flex items-center justify-center gap-10 flex-wrap mt-5" >
             <div class=" flex flex-col gap-1.5" >
-                <label for="">Expedición del documento</label>
-                <Select.Root portal={null}>
+                <label for="">Expedición del documento <strong class=" text-red-600" >*</strong> </label>
+                <Select.Root onSelectedChange={(v)=> data.declaralugarexpide = v.value} >
                   <Select.Trigger class="w-[300px]">
                     <Select.Value placeholder="Expedición del documento" />
                   </Select.Trigger>
@@ -707,15 +732,27 @@
                 </Select.Root>
             </div>
             <div class="flex flex-col gap-1.5">
-                <label for="Email">Email</label>
-                <Input class="w-[300px]" type="text" id="Email" placeholder="Email" />
+                <label for="Email">Email <strong class=" text-red-600" >*</strong> </label>
+                {#if dec === '0'}
+                    <Input class="w-[300px]" type="text" id="Email" placeholder="Email" bind:value={data.emailpadre} disabled />
+                {:else if dec === '1'}
+                    <Input class="w-[300px]" type="text" id="Email" placeholder="Email" bind:value={data.madreemail} disabled />
+                {:else if dec === '2'}
+                    <Input class="w-[300px]" type="text" id="Email" placeholder="Email" bind:value={data.declaraemail} />
+                {/if}
             </div>
             <div class="flex flex-col gap-1.5">
-                <label for="cellular">Celular</label>
-                <Input class="w-[300px]" type="number" id="cellular" placeholder="Celular" />
+                <label for="cellular">Celular <strong class=" text-red-600" >*</strong> </label>
+                {#if dec === '0'}
+                    <Input class="w-[300px]" type="number" id="cellular" placeholder="Celular" bind:value={data.padrecelular} disabled />
+                {:else if dec === '1'}
+                    <Input class="w-[300px]" type="number" id="cellular" placeholder="Celular" bind:value={data.madrecelular} disabled />
+                {:else if dec === '2'}
+                    <Input class="w-[300px]" type="number" id="cellular" placeholder="Celular" bind:value={data.declaracelular} />
+                {/if}
             </div>
             <div class=" flex flex-col gap-1.5" >
-                <label for="">Fecha de nacimiento</label>
+                <label for="">Fecha de nacimiento <strong class=" text-red-600" >*</strong> </label>
                 <Popover.Root>
                   <Popover.Trigger asChild let:builder>
                     <Button
@@ -725,19 +762,19 @@
                       builders={[builder]}
                     >
                       <CalendarIcon class="mr-2 h-4 w-4" />
-                      Elige una fecha
+                      {data.declarafechanace ? data.declarafechanace : 'Fecha de nacimiento'}
                     </Button>
                   </Popover.Trigger>
                   <Popover.Content class="w-auto p-0">
-                    <Calendar />
+                    <Calendar bind:value={data.declarafechanace} />
                   </Popover.Content>
                 </Popover.Root>
             </div>
         </div>
         <div class=" flex items-center justify-center gap-10 flex-wrap mt-5" >
             <div class=" flex flex-col gap-1.5" >
-                <label for="">Nacionalidad</label>
-                <Select.Root portal={null}>
+                <label for="">Nacionalidad <strong class=" text-red-600" >*</strong> </label>
+                <Select.Root onSelectedChange={(v)=> data.declaralugarnace = v.value} >
                   <Select.Trigger class="w-[300px]">
                     <Select.Value placeholder="Nacionalidad" />
                   </Select.Trigger>
@@ -755,8 +792,8 @@
                 </Select.Root>
             </div>
             <div class=" flex flex-col gap-1.5" >
-                <label for="">Ocupación y oficio</label>
-                <Select.Root portal={null}>
+                <label for="">Ocupación y oficio <strong class=" text-red-600" >*</strong> </label>
+                <Select.Root onSelectedChange={(v)=> data.declaraocupacion = v.label} >
                   <Select.Trigger class="w-[300px]">
                     <Select.Value placeholder="Ocupación y oficio" />
                   </Select.Trigger>
@@ -764,8 +801,8 @@
                     <Select.Group>
                       <Select.Label>Ocupaciones</Select.Label>
                       {#each occupation as item}
-                        <Select.Item value={item.value} label={item.label}
-                          >{item.label}</Select.Item
+                        <Select.Item value={item.id} label={item.descripcion}
+                          >{item.descripcion}</Select.Item
                         >
                       {/each}
                     </Select.Group>
@@ -774,12 +811,12 @@
                 </Select.Root>
             </div>
             <div class="flex flex-col gap-1.5">
-                <label for="Residence-address">Dirección de residencia</label>
+                <label for="Residence-address">Dirección de residencia <strong class=" text-red-600" >*</strong> </label>
                 <Input class="w-[300px]" type="text" id="Residence-address" placeholder="Dirección de residencia" />
             </div>
             <div class=" flex flex-col gap-1.5" >
-                <label for="">Municipio</label>
-                <Select.Root portal={null}>
+                <label for="">Municipio <strong class=" text-red-600" >*</strong> </label>
+                <Select.Root >
                   <Select.Trigger class="w-[300px]">
                     <Select.Value placeholder="Municipio" />
                   </Select.Trigger>
@@ -797,19 +834,20 @@
                 </Select.Root>
             </div>
         </div>
+        {/if}
     {:else if page === 6}
         <div class=" flex items-center justify-center gap-10 flex-wrap" >
             <div class="flex flex-col gap-1.5">
-                <label for="Assets">Activos</label>
-                <Input class="w-[300px]" type="number" id="Assets" placeholder="Activos" />
+                <label for="Assets">Activos <strong class=" text-red-600" >*</strong> </label>
+                <Input class="w-[300px]" type="number" id="Assets" placeholder="Activos" bind:value={data.decactivos} />
             </div>
             <div class="flex flex-col gap-1.5">
-                <label for="passive">Pasivos</label>
-                <Input class="w-[300px]" type="number" id="passive" placeholder="Pasivos" />
+                <label for="passive">Pasivos <strong class=" text-red-600" >*</strong> </label>
+                <Input class="w-[300px]" type="number" id="passive" placeholder="Pasivos" bind:value={data.decpasivos} />
             </div>
             <div class="flex flex-col gap-1.5">
-                <label for="patrimony">Patrimonio</label>
-                <Input class="w-[300px]" type="number" id="patrimony" placeholder="Patrimonio" />
+                <label for="patrimony">Patrimonio <strong class=" text-red-600" >*</strong> </label>
+                <Input class="w-[300px]" type="number" id="patrimony" placeholder="Patrimonio" bind:value={data.decpatrimonio} />
             </div>
             <div class="flex flex-col gap-1.5">
                 <label for="patrimony">Otros ingresos</label>
@@ -822,7 +860,7 @@
                 <Input class="w-[300px]" type="number" id="Other income concept" placeholder="Concepto otros ingresos" />
             </div>
             <div class=" flex flex-col gap-1.5" >
-                <label for="">¿Por su cargo maneja recursos públicos?</label>
+                <label for="">¿Por su cargo maneja recursos públicos? <strong class=" text-red-600" >*</strong> </label>
                 <Select.Root portal={null}>
                   <Select.Trigger class="w-[300px]">
                     <Select.Value placeholder="Seleccione su respuesta" />
@@ -866,7 +904,7 @@
         </div>
         <div class=" flex items-center justify-center gap-10 flex-wrap mt-5" >
             <div class=" flex flex-col gap-1.5 items-center" >
-                <label for="">¿Existe algún vínculo entre usted y una persona considerada públicamente expuesta?</label>
+                <label for="">¿Existe algún vínculo entre usted y una persona considerada públicamente expuesta? <strong class=" text-red-600" >*</strong> </label>
                 <Select.Root portal={null}>
                   <Select.Trigger class="w-[300px]">
                     <Select.Value placeholder="Seleccione su respuesta" />
@@ -888,7 +926,7 @@
         </div>
         <div class=" flex items-center justify-center gap-10 flex-wrap mt-5" >
             <div class=" flex flex-col gap-1.5 items-center" >
-                <label for="">¿Es usted sujeto de obligaciones tributarias en otro país o grupo de países?</label>
+                <label for="">¿Es usted sujeto de obligaciones tributarias en otro país o grupo de países? <strong class=" text-red-600" >*</strong> </label>
                 <Select.Root portal={null}>
                   <Select.Trigger class="w-[300px]">
                     <Select.Value placeholder="Seleccione su respuesta" />
@@ -910,14 +948,14 @@
         </div>
         <div class=" flex items-center justify-center gap-10 flex-wrap mt-5" >
            <div class="flex flex-col gap-1.5 items-center">
-                <label for="diseases">¿Cuál es el origen de sus ingresos?</label>
+                <label for="diseases">¿Cuál es el origen de sus ingresos? <strong class=" text-red-600" >*</strong> </label>
                 <Textarea class="w-[300px] sm:w-[642px]" placeholder="Explícanos tu situación." />
             </div> 
         </div>
     {:else if page === 7}
         <div class=" flex items-center justify-center gap-10 flex-wrap mt-5" >
             <div class=" flex flex-col gap-1.5 items-center" >
-                <label for="">¿Realiza operaciones en moneda extranjera?</label>
+                <label for="">¿Realiza operaciones en moneda extranjera? <strong class=" text-red-600" >*</strong> </label>
                 <Select.Root portal={null}>
                   <Select.Trigger class="w-[300px]">
                     <Select.Value placeholder="Seleccione su respuesta" />
@@ -939,7 +977,7 @@
         </div>
         <div class=" flex items-center justify-center gap-10 flex-wrap mt-5" >
             <div class="flex flex-col gap-1.5 items-center">
-                <label for="">¿Realiza alguna de estas operaciones?</label>
+                <label for="">¿Realiza alguna de estas operaciones? <strong class=" text-red-600" >*</strong> </label>
                 <RadioGroup.Root value="comfortable">
                     <div class="flex items-center space-x-2">
                       <RadioGroup.Item value="Ninguna" id="r1" />
@@ -970,7 +1008,7 @@
         </div>
         <div class=" flex items-center justify-center gap-10 flex-wrap mt-5" >
             <div class=" flex flex-col gap-1.5 items-center" >
-                <label for="">¿Posee cuentas bancarias en moneda extranjera?</label>
+                <label for="">¿Posee cuentas bancarias en moneda extranjera? <strong class=" text-red-600" >*</strong> </label>
                 <Select.Root portal={null}>
                   <Select.Trigger class="w-[300px]">
                     <Select.Value placeholder="Seleccione su respuesta" />

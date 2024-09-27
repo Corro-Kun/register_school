@@ -5,6 +5,8 @@ export const GET: APIRoute = async ({ params, request }) => {
     try{
         const [municipality] = await sql.query('select * from municipio where departamento_id = 13;');
         const [dni] = await sql.query('select * from tipoid;');
+        const [ocupation] = await sql.query('select * from ocupacion;');
+        const [parents] = await sql.query('select * from parentesco where descripcion != "Padre" and descripcion != "Madre" and descripcion != "Acudiente";');
         let [student] = await sql.query('select id, nombres, apellidos, documento, idtipoid as tipoid_id, mupioexp, nacefecha, direccion, municipio_id, barrio_id, telefono, enfermedad, matricula_id from estudiante where documento = ?;', [params.id]);
         let [neighborhood] = await sql.query('select * from barrio where municipio_id = ?;', [student[0].municipio_id]);
         student[0].fechanace = new Date(student[0].nacefecha).toISOString().split('T')[0];
@@ -13,6 +15,8 @@ export const GET: APIRoute = async ({ params, request }) => {
         const data = {
             municipality: municipality,
             dni: dni,
+            parents: parents,
+            ocupation: ocupation,
             student: student,
             neighborhood: neighborhood,
             father: father.length > 0 ? father[0] : null,

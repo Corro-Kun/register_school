@@ -29,5 +29,11 @@ if (data.mother !== null){
 ---
 
 <Layout title="Welcome to Astro.">
-	<MatriculateForm client:load Municipality={data.municipality} typeOfDocument={data.dni} neighborhood={data.neighborhood} data={data.student[0]} />
+	<MatriculateForm client:load 
+	Municipality={data.municipality} 
+	typeOfDocument={data.dni} 
+	neighborhood={data.neighborhood} 
+	data={data.student[0]} 
+	relationship={data.parents}
+	occupation={data.ocupation} />
 </Layout>
