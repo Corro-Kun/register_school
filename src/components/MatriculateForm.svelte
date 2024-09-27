@@ -10,6 +10,7 @@
     import * as RadioGroup from '$lib/components/ui/radio-group';
     import * as Pagination from '$lib/components/ui/pagination';
     import toast from "svelte-french-toast";
+    import { PDFDocument, rgb } from 'pdf-lib';
 
     let page = 1;
     let title = 'Datos del estudiante'
@@ -68,6 +69,15 @@
       decactivos: '',
       decpasivos: '',
       decpatrimonio: '',
+      decotrosing: '',
+      decconcepto: '',
+      decrpublicos: null,
+      decppublic: null,
+      decvincpublico: null,
+      decextranjero: null,
+      decorigen: '',
+      decmonextern: null,
+      deccuentasme: null,
     }
 
     let acu = null;
@@ -140,6 +150,53 @@
         }else if (page === 8) {
             title = 'Finalizar'
         }
+    }
+
+    async function fillOutForm(){
+      const pdfUrl = '/Reserva.pdf';
+      const existingPdfBytes = await fetch(pdfUrl).then(res => res.arrayBuffer());  
+
+      const pdfDoc = await PDFDocument.load(existingPdfBytes);
+
+      pdfDoc.getPage(0).drawText(data.nombres,{
+        x: 120,
+        y: pdfDoc.getPage(0).getHeight() - 139,
+        size: 11,
+        color: rgb(0,0,0)
+      })
+
+      pdfDoc.getPage(0).drawText(data.apellidos,{
+        x: 357,
+        y: pdfDoc.getPage(0).getHeight() - 139,
+        size: 11,
+        color: rgb(0,0,0)
+      })
+
+      pdfDoc.getPage(0).drawText(data.documento,{
+        x: 435,
+        y: pdfDoc.getPage(0).getHeight() - 151,
+        size: 11,
+        color: rgb(0,0,0)
+      })
+
+      pdfDoc.getPage(0).drawText(data.documento,{
+        x: 168,
+        y: pdfDoc.getPage(0).getHeight() - 151,
+        size: 11,
+        color: rgb(0,0,0)
+      })
+
+      const pdfBytes = await pdfDoc.save();
+
+      const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+
+      const link = document.createElement('a');
+      link.href = window.URL.createObjectURL(blob);
+      link.download = 'Reserva.pdf';
+
+      link.click();
+
+      link.remove();
     }
 
 </script>
@@ -851,27 +908,27 @@
             </div>
             <div class="flex flex-col gap-1.5">
                 <label for="patrimony">Otros ingresos</label>
-                <Input class="w-[300px]" type="number" id="patrimony" placeholder="Otros ingresos" />
+                <Input class="w-[300px]" type="number" id="patrimony" placeholder="Otros ingresos" bind:value={data.decotrosing} />
             </div>
         </div>
         <div class=" flex items-center justify-center gap-10 flex-wrap mt-5" >
             <div class="flex flex-col gap-1.5">
                 <label for="Other income concept" >Concepto otros ingresos</label>
-                <Input class="w-[300px]" type="number" id="Other income concept" placeholder="Concepto otros ingresos" />
+                <Input class="w-[300px]" type="number" id="Other income concept" placeholder="Concepto otros ingresos" bind:value={data.decconcepto} />
             </div>
             <div class=" flex flex-col gap-1.5" >
                 <label for="">¿Por su cargo maneja recursos públicos? <strong class=" text-red-600" >*</strong> </label>
-                <Select.Root portal={null}>
+                <Select.Root onSelectedChange={(e) => data.decrpublicos = e.value} >
                   <Select.Trigger class="w-[300px]">
                     <Select.Value placeholder="Seleccione su respuesta" />
                   </Select.Trigger>
                   <Select.Content class="h-40 overflow-auto" >
                     <Select.Group>
                       <Select.Label>Seleccione su respuesta</Select.Label>
-                        <Select.Item value="si" label="Si"
+                        <Select.Item value='1' label="Si"
                           >Si</Select.Item
                         >
-                        <Select.Item value="no" label="No"
+                        <Select.Item value='0' label="No"
                           >No</Select.Item
                         >
                     </Select.Group>
@@ -883,17 +940,17 @@
         <div class=" flex items-center justify-center gap-10 flex-wrap mt-5" >
             <div class=" flex flex-col gap-1.5 items-center" >
                 <label for="">¿Por su cargo o actividad ejerce algún grado de poder público?</label>
-                <Select.Root portal={null}>
+                <Select.Root onSelectedChange={(e) => data.decppublic = e.value} >
                   <Select.Trigger class="w-[300px]">
                     <Select.Value placeholder="Seleccione su respuesta" />
                   </Select.Trigger>
                   <Select.Content class="h-40 overflow-auto" >
                     <Select.Group>
                       <Select.Label>Seleccione su respuesta</Select.Label>
-                        <Select.Item value="si" label="Si"
+                        <Select.Item value='1' label="Si"
                           >Si</Select.Item
                         >
-                        <Select.Item value="no" label="No"
+                        <Select.Item value='0' label="No"
                           >No</Select.Item
                         >
                     </Select.Group>
@@ -905,17 +962,17 @@
         <div class=" flex items-center justify-center gap-10 flex-wrap mt-5" >
             <div class=" flex flex-col gap-1.5 items-center" >
                 <label for="">¿Existe algún vínculo entre usted y una persona considerada públicamente expuesta? <strong class=" text-red-600" >*</strong> </label>
-                <Select.Root portal={null}>
+                <Select.Root onSelectedChange={(e) => data.decvincpublico = e.value} >
                   <Select.Trigger class="w-[300px]">
                     <Select.Value placeholder="Seleccione su respuesta" />
                   </Select.Trigger>
                   <Select.Content class="h-40 overflow-auto" >
                     <Select.Group>
                       <Select.Label>Seleccione su respuesta</Select.Label>
-                        <Select.Item value="si" label="Si"
+                        <Select.Item value='1' label="Si"
                           >Si</Select.Item
                         >
-                        <Select.Item value="no" label="No"
+                        <Select.Item value='0' label="No"
                           >No</Select.Item
                         >
                     </Select.Group>
@@ -927,17 +984,17 @@
         <div class=" flex items-center justify-center gap-10 flex-wrap mt-5" >
             <div class=" flex flex-col gap-1.5 items-center" >
                 <label for="">¿Es usted sujeto de obligaciones tributarias en otro país o grupo de países? <strong class=" text-red-600" >*</strong> </label>
-                <Select.Root portal={null}>
+                <Select.Root onSelectedChange={(e) => data.decextranjero = e.value} >
                   <Select.Trigger class="w-[300px]">
                     <Select.Value placeholder="Seleccione su respuesta" />
                   </Select.Trigger>
                   <Select.Content class="h-40 overflow-auto" >
                     <Select.Group>
                       <Select.Label>Seleccione su respuesta</Select.Label>
-                        <Select.Item value="si" label="Si"
+                        <Select.Item value='1' label="Si"
                           >Si</Select.Item
                         >
-                        <Select.Item value="no" label="No"
+                        <Select.Item value='0' label="No"
                           >No</Select.Item
                         >
                     </Select.Group>
@@ -949,24 +1006,24 @@
         <div class=" flex items-center justify-center gap-10 flex-wrap mt-5" >
            <div class="flex flex-col gap-1.5 items-center">
                 <label for="diseases">¿Cuál es el origen de sus ingresos? <strong class=" text-red-600" >*</strong> </label>
-                <Textarea class="w-[300px] sm:w-[642px]" placeholder="Explícanos tu situación." />
+                <Textarea class="w-[300px] sm:w-[642px]" placeholder="Explícanos tu situación." bind:value={data.decorigen} />
             </div> 
         </div>
     {:else if page === 7}
         <div class=" flex items-center justify-center gap-10 flex-wrap mt-5" >
             <div class=" flex flex-col gap-1.5 items-center" >
                 <label for="">¿Realiza operaciones en moneda extranjera? <strong class=" text-red-600" >*</strong> </label>
-                <Select.Root portal={null}>
+                <Select.Root onSelectedChange={(v) => data.decmonextern = v.value} >
                   <Select.Trigger class="w-[300px]">
                     <Select.Value placeholder="Seleccione su respuesta" />
                   </Select.Trigger>
                   <Select.Content class="h-40 overflow-auto" >
                     <Select.Group>
                       <Select.Label>Seleccione su respuesta</Select.Label>
-                        <Select.Item value="si" label="Si"
+                        <Select.Item value='1' label="Si"
                           >Si</Select.Item
                         >
-                        <Select.Item value="no" label="No"
+                        <Select.Item value='0' label="No"
                           >No</Select.Item
                         >
                     </Select.Group>
@@ -1009,17 +1066,17 @@
         <div class=" flex items-center justify-center gap-10 flex-wrap mt-5" >
             <div class=" flex flex-col gap-1.5 items-center" >
                 <label for="">¿Posee cuentas bancarias en moneda extranjera? <strong class=" text-red-600" >*</strong> </label>
-                <Select.Root portal={null}>
+                <Select.Root onSelectedChange={(v) => data.deccuentasme = v.value} >
                   <Select.Trigger class="w-[300px]">
                     <Select.Value placeholder="Seleccione su respuesta" />
                   </Select.Trigger>
                   <Select.Content class="h-40 overflow-auto" >
                     <Select.Group>
                       <Select.Label>Seleccione su respuesta</Select.Label>
-                        <Select.Item value="si" label="Si"
+                        <Select.Item value='1' label="Si"
                           >Si</Select.Item
                         >
-                        <Select.Item value="no" label="No"
+                        <Select.Item value='0' label="No"
                           >No</Select.Item
                         >
                     </Select.Group>
@@ -1027,6 +1084,10 @@
                   <Select.Input name="municipality" />
                 </Select.Root>
             </div>
+        </div>
+    {:else if page === 8}
+        <div class="flex items-center justify-center" >
+          <button class="px-5 py-2 bg-red-500 text-white rounded-sm" on:click={fillOutForm} >pdf</button>
         </div>
     {/if}
 </div>
