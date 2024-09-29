@@ -20,11 +20,15 @@
       apellidos: '',
       documento: '',
       tipoid_id: 0,
+      tipoid_label_frontend: '',
       mupioexp_id: 0,
+      mupioexp_label_frontend: '',
       fechanace: '',
       direccion: '',
       municipio_id: 0,
+      municipio_label_frontend: '',
       barrio_id: 0,
+      barrio_label_frontend: '',
       telefono: '',
       enfermedad: '',
       emernombre: '',
@@ -36,7 +40,9 @@
       emailpadre: '',
       padrecelular: '',
       tipoidpadre_id: 0,
+      tipoidpadre_label_frontend: '',
       munexppadre_id: 0,
+      munexppadre_label_frontend: '',
       padrevivo: null,
       nommadre: '',
       apellmadre: '',
@@ -44,14 +50,18 @@
       madreemail: '',
       madrecelular: '',
       tipoidmadre_id: 0,
+      tipoidmadre_label_frontend: '',
       munexpmadre_id: 0,
+      munexpmadre_label_frontend: '',
       madrevive: null,
       acuparentesco_id: null,
       nomacu: '',
       apellacu: '',
       docacu: '',
       tipoidacu_id: 0,
+      tipoidacu_label_frontend: '',
       munexpacu_id: 0,
+      munexpacu_label_frontend: '',
       acuemail: '',
       acucelular: '',
       declaratipo: 0,
@@ -59,13 +69,16 @@
       declaraapellidos: '',
       declaradocumento: '',
       declaratipoid: 0,
+      declaratipoid_label_frontend: '',
       declaraemail: '',
       declaracelular: '',
       declarafechanace: '',
       declaralugarnace: 0,
+      declaralugarnace_label_frontend: '',
       declaradireccion: '',
       declaraocupacion: '',
       declaralugarexpide: 0,
+      declaralugarexpide_label_frontend: '',
       decactivos: '',
       decpasivos: '',
       decpatrimonio: '',
@@ -132,6 +145,9 @@
 
     export let relationship = []
 
+    let loading = 0;
+    let messageLoading = '¿Enviar formulario?';
+
     $:{
         if (page === 1) {
             title = 'Datos del Estudiante'
@@ -152,51 +168,330 @@
         }
     }
 
+    async function formartData(){
+      loading = 1;
+      messageLoading = 'Ordenando datos...';
+
+      if (acu === '0'){
+        data.nomacu = data.nompadre;
+        data.apellacu = data.apellpadre;
+        data.docacu = data.docpadre;
+        data.tipoidacu_id = data.tipoidpadre_id;
+        data.munexpacu_id = data.munexppadre_id;
+        data.acuemail = data.emailpadre;
+        data.acucelular = data.padrecelular;
+        data.tipoidacu_label_frontend = data.tipoidpadre_label_frontend;
+        data.munexpacu_label_frontend = data.munexppadre_label_frontend;
+      }else if(acu === '1'){
+        data.nomacu = data.nommadre;
+        data.apellacu = data.apellmadre;
+        data.docacu = data.docmadre;
+        data.tipoidacu_id = data.tipoidmadre_id;
+        data.munexpacu_id = data.munexpmadre_id;
+        data.acuemail = data.madreemail;
+        data.acucelular = data.madrecelular;
+        data.tipoidacu_label_frontend = data.tipoidmadre_label_frontend;
+        data.munexpacu_label_frontend = data.munexpmadre_label_frontend;
+      }
+
+      if (dec === '0'){
+        data.declaranombres = data.nompadre;
+        data.declaraapellidos = data.apellpadre;
+        data.declaradocumento = data.docpadre;
+        data.declaratipoid = data.tipoidpadre_id;
+        data.declaraemail = data.emailpadre;
+        data.declaracelular = data.padrecelular;
+        data.declaratipoid_label_frontend = data.tipoidpadre_label_frontend;
+        data.declaralugarexpide_label_frontend = data.munexppadre_label_frontend;
+      }else if (dec === '1'){
+        data.declaranombres = data.nommadre;
+        data.declaraapellidos = data.apellmadre;
+        data.declaradocumento = data.docmadre;
+        data.declaratipoid = data.tipoidmadre_id;
+        data.declaraemail = data.madreemail;
+        data.declaracelular = data.madrecelular;
+        data.declaratipoid_label_frontend = data.tipoidmadre_label_frontend;
+        data.declaralugarexpide_label_frontend = data.munexpmadre_label_frontend;
+      }
+
+      fillOutForm();
+    }
+
     async function fillOutForm(){
-      const pdfUrl = '/Reserva.pdf';
-      const existingPdfBytes = await fetch(pdfUrl).then(res => res.arrayBuffer());  
+      messageLoading = 'Creando pdf...';
 
-      const pdfDoc = await PDFDocument.load(existingPdfBytes);
+      try {
+        const pdfUrl = '/Reserva.pdf';
+        const existingPdfBytes = await fetch(pdfUrl).then(res => res.arrayBuffer());  
 
-      pdfDoc.getPage(0).drawText(data.nombres,{
-        x: 120,
-        y: pdfDoc.getPage(0).getHeight() - 139,
-        size: 11,
-        color: rgb(0,0,0)
-      })
+        const pdfDoc = await PDFDocument.load(existingPdfBytes);
 
-      pdfDoc.getPage(0).drawText(data.apellidos,{
-        x: 357,
-        y: pdfDoc.getPage(0).getHeight() - 139,
-        size: 11,
-        color: rgb(0,0,0)
-      })
+        // student data
 
-      pdfDoc.getPage(0).drawText(data.documento,{
-        x: 435,
-        y: pdfDoc.getPage(0).getHeight() - 151,
-        size: 11,
-        color: rgb(0,0,0)
-      })
+        pdfDoc.getPage(0).drawText(data.nombres,{
+          x: 120,
+          y: pdfDoc.getPage(0).getHeight() - 138,
+          size: 10,
+          color: rgb(0,0,0)
+        })
 
-      pdfDoc.getPage(0).drawText(data.documento,{
-        x: 168,
-        y: pdfDoc.getPage(0).getHeight() - 151,
-        size: 11,
-        color: rgb(0,0,0)
-      })
+        pdfDoc.getPage(0).drawText(data.apellidos,{
+          x: 357,
+          y: pdfDoc.getPage(0).getHeight() - 138,
+          size: 10,
+          color: rgb(0,0,0)
+        })
 
-      const pdfBytes = await pdfDoc.save();
+        pdfDoc.getPage(0).drawText(data.tipoid_label_frontend,{
+          x: 168,
+          y: pdfDoc.getPage(0).getHeight() - 150.5,
+          size: 10,
+          color: rgb(0,0,0)
+        })
 
-      const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+        pdfDoc.getPage(0).drawText(data.documento,{
+          x: 435,
+          y: pdfDoc.getPage(0).getHeight() - 151,
+          size: 10,
+          color: rgb(0,0,0)
+        })
 
-      const link = document.createElement('a');
-      link.href = window.URL.createObjectURL(blob);
-      link.download = 'Reserva.pdf';
+        pdfDoc.getPage(0).drawText(data.mupioexp_label_frontend,{
+          x: 325,
+          y: pdfDoc.getPage(0).getHeight() - 162.5,
+          size: 10,
+          color: rgb(0,0,0)
+        })
 
-      link.click();
+        pdfDoc.getPage(0).drawText(data.fechanace,{
+          x: 168,
+          y: pdfDoc.getPage(0).getHeight() - 175,
+          size: 10,
+          color: rgb(0,0,0)
+        });
 
-      link.remove();
+        pdfDoc.getPage(0).drawText(data.municipio_label_frontend,{
+          x: 420,
+          y: pdfDoc.getPage(0).getHeight() - 175,
+          size: 10,
+          color: rgb(0,0,0)
+        });
+
+        pdfDoc.getPage(0).drawText(data.direccion,{
+          x: 184,
+          y: pdfDoc.getPage(0).getHeight() - 187.5,
+          size: 10,
+          color: rgb(0,0,0)
+        });
+
+        pdfDoc.getPage(0).drawText(data.barrio_label_frontend,{
+          x: 452,
+          y: pdfDoc.getPage(0).getHeight() - 187.5,
+          size: 10,
+          color: rgb(0,0,0)
+        });
+
+        pdfDoc.getPage(0).drawText(data.telefono,{
+          x: 184,
+          y: pdfDoc.getPage(0).getHeight() - 199.5,
+          size: 10,
+          color: rgb(0,0,0)
+        });
+
+        pdfDoc.getPage(0).drawText(data.emernombre,{
+          x: 370,
+          y: 178,
+          size: 10,
+          color: rgb(0,0,0)
+        });
+
+        pdfDoc.getPage(0).drawText(data.emertelefono,{
+          x: 420,
+          y: 165,
+          size: 10,
+          color: rgb(0,0,0)
+        });
+
+        pdfDoc.getPage(0).drawText(data.tipoemer,{
+          x: 387,
+          y: 153.5,
+          size: 10,
+          color: rgb(0,0,0)
+        });
+
+        // father data
+
+        pdfDoc.getPage(0).drawText(data.nompadre,{
+          x: 120,
+          y: pdfDoc.getPage(0).getHeight() - 236,
+          size: 10,
+          color: rgb(0,0,0)
+        })
+
+        pdfDoc.getPage(0).drawText(data.apellpadre,{
+          x: 357,
+          y: pdfDoc.getPage(0).getHeight() - 236,
+          size: 10,
+          color: rgb(0,0,0)
+        })
+
+        pdfDoc.getPage(0).drawText(data.tipoidpadre_label_frontend,{
+          x: 168,
+          y: pdfDoc.getPage(0).getHeight() - 248.5,
+          size: 10,
+          color: rgb(0,0,0)
+        })
+
+        pdfDoc.getPage(0).drawText(data.docpadre,{
+          x: 435,
+          y: pdfDoc.getPage(0).getHeight() - 248.5,
+          size: 10,
+          color: rgb(0,0,0)
+        })
+
+        pdfDoc.getPage(0).drawText(data.munexppadre_label_frontend,{
+          x: 325,
+          y: pdfDoc.getPage(0).getHeight() - 260.5,
+          size: 10,
+          color: rgb(0,0,0)
+        })
+
+        pdfDoc.getPage(0).drawText(data.emailpadre,{
+          x: 90,
+          y: pdfDoc.getPage(0).getHeight() - 272.5,
+          size: 10,
+          color: rgb(0,0,0)
+        });
+
+        pdfDoc.getPage(0).drawText(data.padrecelular,{
+          x: 405,
+          y: pdfDoc.getPage(0).getHeight() - 285,
+          size: 10,
+          color: rgb(0,0,0)
+        });
+
+        // mother data
+
+        pdfDoc.getPage(0).drawText(data.nommadre,{
+          x: 120,
+          y: pdfDoc.getPage(0).getHeight() - 321.5,
+          size: 10,
+          color: rgb(0,0,0)
+        })
+
+        pdfDoc.getPage(0).drawText(data.apellmadre,{
+          x: 357,
+          y: pdfDoc.getPage(0).getHeight() - 321.5,
+          size: 10,
+          color: rgb(0,0,0)
+        })
+
+        pdfDoc.getPage(0).drawText(data.tipoidmadre_label_frontend,{
+          x: 168,
+          y: pdfDoc.getPage(0).getHeight() - 334,
+          size: 10,
+          color: rgb(0,0,0)
+        })
+
+        pdfDoc.getPage(0).drawText(data.docmadre,{
+          x: 435,
+          y: pdfDoc.getPage(0).getHeight() - 334,
+          size: 10,
+          color: rgb(0,0,0)
+        })
+
+        pdfDoc.getPage(0).drawText(data.munexpmadre_label_frontend,{
+          x: 325,
+          y: pdfDoc.getPage(0).getHeight() - 346,
+          size: 10,
+          color: rgb(0,0,0)
+        })
+
+        pdfDoc.getPage(0).drawText(data.madreemail,{
+          x: 90,
+          y: pdfDoc.getPage(0).getHeight() - 358,
+          size: 10,
+          color: rgb(0,0,0)
+        });
+
+        pdfDoc.getPage(0).drawText(data.madrecelular,{
+          x: 405,
+          y: pdfDoc.getPage(0).getHeight() - 370,
+          size: 10,
+          color: rgb(0,0,0)
+        });
+
+        // acudiente data
+
+        pdfDoc.getPage(0).drawText(data.nomacu,{
+          x: 120,
+          y: 275,
+          size: 10,
+          color: rgb(0,0,0)
+        });
+
+        pdfDoc.getPage(0).drawText(data.apellacu,{
+          x: 357,
+          y: 275,
+          size: 10,
+          color: rgb(0,0,0)
+        })
+
+        pdfDoc.getPage(0).drawText(data.tipoidacu_label_frontend,{
+          x: 168,
+          y: 262.5,
+          size: 10,
+          color: rgb(0,0,0)
+        })
+
+        pdfDoc.getPage(0).drawText(data.docacu,{
+          x: 435,
+          y: 262.5,
+          size: 10,
+          color: rgb(0,0,0)
+        })
+
+        pdfDoc.getPage(0).drawText(data.munexpacu_label_frontend,{
+          x: 325,
+          y: 251,
+          size: 10,
+          color: rgb(0,0,0)
+        })
+
+        pdfDoc.getPage(0).drawText(data.acuemail,{
+          x: 90,
+          y: 238.5,
+          size: 10,
+          color: rgb(0,0,0)
+        });
+
+        pdfDoc.getPage(0).drawText(data.acucelular,{
+          x: 405,
+          y: 226,
+          size: 10,
+          color: rgb(0,0,0)
+        });
+
+        const pdfBytes = await pdfDoc.save();
+
+        const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+
+        const link = document.createElement('a');
+        link.href = window.URL.createObjectURL(blob);
+        link.download = 'Reserva.pdf';
+
+        link.click();
+
+        link.remove();
+
+        messageLoading = 'Terminado'
+        loading = 2;
+
+      } catch (error) {
+        messageLoading = '¿Enviar formulario?';
+        loading = 0;
+        toast.error('Llene todos los campos requeridos');
+      }
     }
 
 </script>
@@ -218,7 +513,10 @@
             </div>
             <div class=" flex flex-col gap-1.5" >
                 <label for="">Tipo de identificación <strong class=" text-red-600" >*</strong> </label>
-                <Select.Root onSelectedChange={(v)=> data.tipoid_id = v.value}>
+                <Select.Root onSelectedChange={(v)=> {
+                  data.tipoid_id = v.value
+                  data.tipoid_label_frontend = v.label
+                  }}>
                   <Select.Trigger class="w-[300px]">
                     <Select.Value placeholder="Tipo de Documento" />
                   </Select.Trigger>
@@ -243,7 +541,10 @@
         <div class=" flex items-center justify-center gap-10 flex-wrap mt-5" >
             <div class=" flex flex-col gap-1.5" >
                 <label for="">Expedición del documento <strong class=" text-red-600" >*</strong> </label>
-                <Select.Root onSelectedChange={(v)=> data.mupioexp_id = v.value} >
+                <Select.Root onSelectedChange={(v)=> {
+                  data.mupioexp_id = v.value
+                  data.mupioexp_label_frontend = v.label
+                  }} >
                   <Select.Trigger class="w-[300px]">
                     <Select.Value placeholder="Expedición del documento" />
                   </Select.Trigger>
@@ -286,7 +587,10 @@
             </div>
             <div class=" flex flex-col gap-1.5" >
                 <label for="">Municipio <strong class=" text-red-600" >*</strong> </label>
-                <Select.Root onSelectedChange={(v)=> data.municipio_id = v.value}>
+                <Select.Root onSelectedChange={(v)=> {
+                  data.municipio_id = v.value
+                  data.municipio_label_frontend = v.label
+                  }}>
                   <Select.Trigger class="w-[300px]">
                     <Select.Value placeholder="Municipio" />
                   </Select.Trigger>
@@ -307,7 +611,10 @@
         <div class=" flex items-center justify-center gap-10 flex-wrap mt-5" >
             <div class=" flex flex-col gap-1.5" >
                 <label for="">Barrio <strong class=" text-red-600" >*</strong> </label>
-                <Select.Root onSelectedChange={(v)=> data.barrio_id = v.value}>
+                <Select.Root onSelectedChange={(v)=> {
+                  data.barrio_id = v.value
+                  data.barrio_label_frontend = v.label
+                  }}>
                   <Select.Trigger class="w-[300px]">
                     <Select.Value placeholder="Barrio" />
                   </Select.Trigger>
@@ -382,7 +689,10 @@
             </div>
             <div class=" flex flex-col gap-1.5" >
                 <label for="">Tipo de identificación <strong class=" text-red-600" >*</strong> </label>
-                <Select.Root onSelectedChange={(v)=> data.tipoidpadre_id = v.value} >
+                <Select.Root onSelectedChange={(v)=> {
+                  data.tipoidpadre_id = v.value
+                  data.tipoidpadre_label_frontend = v.label
+                  }} >
                   <Select.Trigger class="w-[300px]">
                     <Select.Value placeholder="Tipo de Documento" />
                   </Select.Trigger>
@@ -407,7 +717,10 @@
         <div class=" flex items-center justify-center gap-10 flex-wrap mt-5" >
             <div class=" flex flex-col gap-1.5" >
                 <label for="">Expedición del documento <strong class=" text-red-600" >*</strong> </label>
-                <Select.Root onSelectedChange={(v)=> data.munexppadre_id = v.value} >
+                <Select.Root onSelectedChange={(v)=> {
+                  data.munexppadre_id = v.value
+                  data.munexppadre_label_frontend = v.label
+                  }} >
                   <Select.Trigger class="w-[300px]">
                     <Select.Value placeholder="Expedición del documento" />
                   </Select.Trigger>
@@ -473,7 +786,10 @@
             </div>
             <div class=" flex flex-col gap-1.5" >
                 <label for="">Tipo de identificación <strong class=" text-red-600" >*</strong> </label>
-                <Select.Root onSelectedChange={(v)=> data.tipoidmadre_id = v.value} >
+                <Select.Root onSelectedChange={(v)=> {
+                  data.tipoidmadre_id = v.value
+                  data.tipoidmadre_label_frontend = v.label
+                  }} >
                   <Select.Trigger class="w-[300px]">
                     <Select.Value placeholder="Tipo de Documento" />
                   </Select.Trigger>
@@ -498,7 +814,10 @@
         <div class=" flex items-center justify-center gap-10 flex-wrap mt-5" >
             <div class=" flex flex-col gap-1.5" >
                 <label for="">Expedición del documento <strong class=" text-red-600" >*</strong> </label>
-                <Select.Root onSelectedChange={(v)=> data.munexpmadre_id = v.value} >
+                <Select.Root onSelectedChange={(v)=> {
+                  data.munexpmadre_id = v.value
+                  data.munexpmadre_label_frontend = v.label
+                  }} >
                   <Select.Trigger class="w-[300px]">
                     <Select.Value placeholder="Expedición del documento" />
                   </Select.Trigger>
@@ -598,7 +917,10 @@
             </div>
             <div class=" flex flex-col gap-1.5" >
                 <label for="">Tipo de identificación <strong class=" text-red-600" >*</strong> </label>
-                <Select.Root onSelectedChange={(v)=> data.tipoidacu_id = v.value} >
+                <Select.Root onSelectedChange={(v)=> {
+                  data.tipoidacu_id = v.value
+                  data.tipoidacu_label_frontend = v.label
+                  }} disabled={acu === '2'? false: true} >
                   <Select.Trigger class="w-[300px]">
                     <Select.Value placeholder="Tipo de Documento" />
                   </Select.Trigger>
@@ -629,7 +951,10 @@
         <div class=" flex items-center justify-center gap-10 flex-wrap mt-5" >
             <div class=" flex flex-col gap-1.5" >
                 <label for="">Expedición del documento <strong class=" text-red-600" >*</strong> </label>
-                <Select.Root bind:value={data.munexpacu_id} >
+                <Select.Root onSelectedChange={(v)=>{
+                  data.munexpacu_id = v.value
+                  data.munexpacu_label_frontend = v.label
+                }} disabled={acu === '2'? false: true} >
                   <Select.Trigger class="w-[300px]">
                     <Select.Value placeholder="Expedición del documento" />
                   </Select.Trigger>
@@ -678,7 +1003,7 @@
     {:else if page === 5}
         <div class=" flex items-center justify-center gap-10 flex-wrap" >
             <div class="flex flex-col gap-1.5 items-center">
-                <label for="">Seleccione el acudiente <strong class=" text-red-600" >*</strong> </label>
+                <label for="">Seleccione el declarante <strong class=" text-red-600" >*</strong> </label>
                 <RadioGroup.Root bind:value={dec} >
                     <div class="flex items-center space-x-2">
                       <RadioGroup.Item value='0' id="r1" />
@@ -1086,8 +1411,15 @@
             </div>
         </div>
     {:else if page === 8}
-        <div class="flex items-center justify-center" >
-          <button class="px-5 py-2 bg-red-500 text-white rounded-sm" on:click={fillOutForm} >pdf</button>
+        <div class="flex items-center justify-center flex-col gap-2" >
+          <p>{messageLoading}</p>
+          {#if loading === 0}
+          <button class="px-5 py-2 bg-slate-900 text-white rounded-sm" on:click={formartData} >Enviar</button>
+          {:else if loading === 1}
+          <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="animate-spin icon icon-tabler icons-tabler-outline icon-tabler-loader-2"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 3a9 9 0 1 0 9 9" /></svg>
+          {:else if loading === 2}
+          <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-check"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10" /></svg>
+          {/if}
         </div>
     {/if}
 </div>
