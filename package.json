@@ -18,7 +18,7 @@
     "astro": "^4.15.6",
     "bits-ui": "^0.21.15",
     "clsx": "^2.1.1",
-    "lucide-svelte": "^0.441.0",
+    "lucide-svelte": "^0.446.0",
     "mysql2": "^3.11.3",
     "pdf-lib": "^1.17.1",
     "shadcn-svelte": "^0.13.0",

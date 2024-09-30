@@ -33,3 +33,62 @@ export const GET: APIRoute = async ({ params, request }) => {
          });
     }
 }
+
+export const POST: APIRoute = async ({ params, request }) => {
+    try {
+        const body = await request.json();
+
+        let [student] = await sql.query('select id, idinstitucion from estudiante where documento = ?;', [params.id]);
+
+        await sql.query('update estudiante set mupioexp = ?, direccion = ?, municipio_id = ?, barrio_id = ?, telefono = ?, enfermedad = ? where id = ?;', [body.mupioexp, body.direccion, body.municipio_id, body.barrio_id, body.telefono, body.enfermedad, student[0].id]);
+
+        const dateNow = new Date();
+
+        const year = dateNow.getFullYear();
+        const month = String(dateNow.getMonth() + 1).padStart(2, '0'); 
+        const day = String(dateNow.getDate()).padStart(2, '0'); 
+
+        const currentDate = `${year}/${month}/${day}`;
+ 
+        const [id] = await sql.query('insert into reservacupo (estudiante_id, estado, apellidos, nombres, documento, tipoid_id, mupioexp, fechanace, direccion, municipio_id, barrio_id, telefono, observacion, anyo, institucion_id, fecha, padrevivo, madrevive ) values (?, 1, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);', [student[0].id, body.apellidos, body.nombres, params.id, body.tipoid_id, body.mupioexp, body.fechanace, body.direccion, body.municipio_id, body.barrio_id, body.telefono, body.enfermedad, '2025', student[0].idinstitucion, currentDate, body.padrevivo, body.madreviva]);
+
+        if (body.padrevivo === '1'){
+            await sql.query('update estudiante_familia set email = ?, celular = ? where idestudiante = ? and idparentesco = 1;', [body.emailpadre, body.padrecelular, student[0].id]);
+            await sql.query('update reservacupo set nompadre = ?, apellpadre = ?, docpadre = ?, emailpadre = ?, padrecelular = ?, tipoidpadre_id = ?, munexppadre_id = ? where id = ?;', [student[0].id, body.nompadre, body.apellpadre, body.docpadre, body.emailpadre, body.padrecelular, body.tipoidpadre_id, body.munexppadre_id, id]);
+        }
+        if (body.madreviva === '1'){
+            await sql.query('update estudiante_familia set email = ?, celular = ? where idestudiante = ? and idparentesco = 2;', [body.madreemail, body.madrecelular, student[0].id]);
+            await sql.query('update reservacupo set nommadre = ?, apellmadre = ?, docmadre = ?, madreemail = ?, madrecelular = ?, tipoidmadre_id = ?, munexpmadre_id = ? where id = ?', [student[0].id, body.nommadre, body.apellmadre, body.docmadre, body.madreemail, body.madrecelular, body.tipoidmadre_id, body.munexpmadre_id, id]);
+        }
+
+        /* 
+        nombres: '',
+      apellidos: '',
+      documento: '',
+      tipoid_id: 0,
+      tipoid_label_frontend: '',
+      mupioexp_id: 0,
+      mupioexp_label_frontend: '',
+      fechanace: '',
+      direccion: '',
+      municipio_id: 0,
+      municipio_label_frontend: '',
+      barrio_id: 0,
+      barrio_label_frontend: '',
+      telefono: '',
+      enfermedad: '',
+      emernombre: '',
+      emertelefono: '',
+      tipoemer: '', 
+        */
+
+        return new Response(JSON.stringify({message: 'ok'}), {
+            status: 200,
+            headers: {"Content-Type": "application/json"}
+        });
+    } catch (error) {
+        return new Response(JSON.stringify({message: error}), { status: 500,
+            headers: {"Content-Type": "application/json"}
+        });
+    }
+};

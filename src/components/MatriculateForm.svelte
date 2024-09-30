@@ -7,6 +7,7 @@
     import {Button} from '$lib/components/ui/button';
     import {Switch} from '$lib/components/ui/switch';
     import {Textarea} from '$lib/components/ui/textarea';
+    import { Checkbox } from "$lib/components/ui/checkbox/";
     import * as RadioGroup from '$lib/components/ui/radio-group';
     import * as Pagination from '$lib/components/ui/pagination';
     import toast from "svelte-french-toast";
@@ -76,6 +77,8 @@
       declaralugarnace: 0,
       declaralugarnace_label_frontend: '',
       declaradireccion: '',
+      declarareside: 0,
+      declarareside_label_frontend: '',
       declaraocupacion: '',
       declaralugarexpide: 0,
       declaralugarexpide_label_frontend: '',
@@ -472,6 +475,71 @@
           color: rgb(0,0,0)
         });
 
+        // declarante data
+
+        pdfDoc.getPage(0).drawText(data.declaranombres,{
+          x: 120,
+          y: pdfDoc.getPage(0).getHeight() -406.5,
+          size: 10,
+          color: rgb(0,0,0)
+        }); 
+
+        pdfDoc.getPage(0).drawText(data.declaraapellidos,{
+          x: 357,
+          y: pdfDoc.getPage(0).getHeight() -406.5,
+          size: 10,
+          color: rgb(0,0,0)
+        });
+
+        pdfDoc.getPage(0).drawText(data.declaratipoid_label_frontend,{
+          x: 168,
+          y: pdfDoc.getPage(0).getHeight() -419,
+          size: 10,
+          color: rgb(0,0,0)
+        });
+
+        pdfDoc.getPage(0).drawText(data.declaradocumento,{
+          x: 435,
+          y: pdfDoc.getPage(0).getHeight() -419,
+          size: 10,
+          color: rgb(0,0,0)
+        });
+
+        pdfDoc.getPage(0).drawText(data.declaralugarexpide_label_frontend,{
+          x: 325,
+          y: pdfDoc.getPage(0).getHeight() -431,
+          size: 10,
+          color: rgb(0,0,0)
+        });
+
+        pdfDoc.getPage(0).drawText(data.declaradireccion,{
+          x: 168,
+          y: pdfDoc.getPage(0).getHeight() -443.5,
+          size: 10,
+          color: rgb(0,0,0)
+        });
+
+        pdfDoc.getPage(0).drawText(data.declarareside_label_frontend,{
+          x: 467,
+          y: pdfDoc.getPage(0).getHeight() -443.5,
+          size: 10,
+          color: rgb(0,0,0)
+        });
+
+        pdfDoc.getPage(0).drawText(data.declaraemail,{
+          x: 90,
+          y: pdfDoc.getPage(0).getHeight() -456,
+          size: 10,
+          color: rgb(0,0,0)
+        });
+
+        pdfDoc.getPage(0).drawText(data.declaracelular,{
+          x: 390,
+          y: pdfDoc.getPage(0).getHeight() -456,
+          size: 10,
+          color: rgb(0,0,0)
+        });
+
         const pdfBytes = await pdfDoc.save();
 
         const blob = new Blob([pdfBytes], { type: 'application/pdf' });
@@ -487,11 +555,25 @@
         messageLoading = 'Terminado'
         loading = 2;
 
+        save();
+
       } catch (error) {
         messageLoading = '¿Enviar formulario?';
         loading = 0;
         toast.error('Llene todos los campos requeridos');
       }
+    }
+
+    async function save(){
+      const res = await fetch('/api/reservation/'+data.documento,{
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      });
+
+      console.log(res);
     }
 
 </script>
@@ -856,14 +938,18 @@
             <div class="flex flex-col gap-1.5 items-center">
                 <label for="">Seleccione el acudiente <strong class=" text-red-600" >*</strong> </label>
                 <RadioGroup.Root bind:value={acu} >
+                    {#if data.padrevivo === '1'}
                     <div class="flex items-center space-x-2">
                       <RadioGroup.Item value='0' id="r1" />
                       <label for="r1">Padre</label>
                     </div>
+                    {/if}
+                    {#if data.madrevive === '1'}
                     <div class="flex items-center space-x-2">
                       <RadioGroup.Item value='1' id="r2" />
                       <label for="r2">Madre</label>
                     </div>
+                    {/if}
                     <div class="flex items-center space-x-2">
                       <RadioGroup.Item value='2' id="r3" on:click={()=> toast("para registrar una tercera persona como acudiente, debe adjuntar autorización autenticada en notaria de parte de los padres o copia de la resolución de custodia del menor y copia ampliada de la cédula del acudiente.", {duration: 10000})} />
                       <label for="r3">Tercera persona</label>
@@ -1005,14 +1091,18 @@
             <div class="flex flex-col gap-1.5 items-center">
                 <label for="">Seleccione el declarante <strong class=" text-red-600" >*</strong> </label>
                 <RadioGroup.Root bind:value={dec} >
+                    {#if data.padrevivo === '1'}
                     <div class="flex items-center space-x-2">
                       <RadioGroup.Item value='0' id="r1" />
                       <label for="r1">Padre</label>
                     </div>
+                    {/if}
+                    {#if data.madrevive === '1'}
                     <div class="flex items-center space-x-2">
                       <RadioGroup.Item value='1' id="r2" />
                       <label for="r2">Madre</label>
                     </div>
+                    {/if}
                     <div class="flex items-center space-x-2">
                       <RadioGroup.Item value='2' id="r3" on:click={()=> toast("para registrar una tercera persona como declarante, debe adjuntar autorización autenticada en notaria de parte de los padres o copia de la resolución de custodia del menor y copia ampliada de la cédula del declarante.", {duration: 10000})} />
                       <label for="r3">Tercera persona</label>
@@ -1060,12 +1150,15 @@
                 {:else if dec === '1'}
                     <Input class="w-[300px]" type="text" id="last" placeholder="Apellidos" bind:value={data.apellmadre} disabled />
                 {:else if dec === '2'}
-                    <Input class="w-[300px]" type="text" id="last" placeholder="Apellidos" bind:value={data.declarapellidos} />
+                    <Input class="w-[300px]" type="text" id="last" placeholder="Apellidos" bind:value={data.declaraapellidos} />
                 {/if}
             </div>
             <div class=" flex flex-col gap-1.5" >
                 <label for="">Tipo de identificación <strong class=" text-red-600" >*</strong> </label>
-                <Select.Root onSelectedChange={(v)=> data.tipoiddeclarante_id = v.value} >
+                <Select.Root onSelectedChange={(v)=> {
+                  data.declaratipoid = v.value
+                  data.declaratipoid_label_frontend = v.label
+                  }} >
                   <Select.Trigger class="w-[300px]">
                     <Select.Value placeholder="Tipo de Documento" />
                   </Select.Trigger>
@@ -1089,14 +1182,17 @@
                 {:else if dec === '1'}
                     <Input class="w-[300px]" type="number" id="numberofid" placeholder="Número de identificación" bind:value={data.docmadre} disabled />
                 {:else if dec === '2'}
-                    <Input class="w-[300px]" type="number" id="numberofid" placeholder="Número de identificación" bind:value={data.declaradoc} />
+                    <Input class="w-[300px]" type="number" id="numberofid" placeholder="Número de identificación" bind:value={data.declaradocumento} />
                 {/if}
             </div>
         </div>
         <div class=" flex items-center justify-center gap-10 flex-wrap mt-5" >
             <div class=" flex flex-col gap-1.5" >
                 <label for="">Expedición del documento <strong class=" text-red-600" >*</strong> </label>
-                <Select.Root onSelectedChange={(v)=> data.declaralugarexpide = v.value} >
+                <Select.Root onSelectedChange={(v)=> {
+                  data.declaralugarexpide = v.value
+                  data.declaralugarexpide_label_frontend = v.label
+                }} >
                   <Select.Trigger class="w-[300px]">
                     <Select.Value placeholder="Expedición del documento" />
                   </Select.Trigger>
@@ -1194,11 +1290,14 @@
             </div>
             <div class="flex flex-col gap-1.5">
                 <label for="Residence-address">Dirección de residencia <strong class=" text-red-600" >*</strong> </label>
-                <Input class="w-[300px]" type="text" id="Residence-address" placeholder="Dirección de residencia" />
+                <Input class="w-[300px]" type="text" id="Residence-address" placeholder="Dirección de residencia" bind:value={data.declaradireccion} />
             </div>
             <div class=" flex flex-col gap-1.5" >
                 <label for="">Municipio <strong class=" text-red-600" >*</strong> </label>
-                <Select.Root >
+                <Select.Root onSelectedChange={(v)=>{
+                  data.declarareside = v.value
+                  data.declarareside_label_frontend = v.label
+                }} >
                   <Select.Trigger class="w-[300px]">
                     <Select.Value placeholder="Municipio" />
                   </Select.Trigger>
@@ -1359,34 +1458,34 @@
         </div>
         <div class=" flex items-center justify-center gap-10 flex-wrap mt-5" >
             <div class="flex flex-col gap-1.5 items-center">
-                <label for="">¿Realiza alguna de estas operaciones? <strong class=" text-red-600" >*</strong> </label>
-                <RadioGroup.Root value="comfortable">
-                    <div class="flex items-center space-x-2">
-                      <RadioGroup.Item value="Ninguna" id="r1" />
-                      <label for="r1">Ninguna</label>
-                    </div>
-                    <div class="flex items-center space-x-2">
-                      <RadioGroup.Item value="Importaciones" id="r2" />
-                      <label for="r2">Importaciones</label>
-                    </div>
-                    <div class="flex items-center space-x-2">
-                      <RadioGroup.Item value="Exportaciones" id="r3" />
-                      <label for="r3">Exportaciones</label>
-                    </div>
-                    <div class="flex items-center space-x-2">
-                      <RadioGroup.Item value="Inversiones" id="r5" />
-                      <label for="r5">Inversiones</label>
-                    </div>
-                    <div class="flex items-center space-x-2">
-                      <RadioGroup.Item value="Transferencias" id="r6" />
-                      <label for="r6">Transferencias</label>
-                    </div>
-                    <div class="flex items-center space-x-2">
-                      <RadioGroup.Item value="Otras" id="r7" />
-                      <label for="r7">Otras</label>
-                    </div>
-                </RadioGroup.Root>
-            </div>
+                <p>¿Realiza alguna de estas operaciones? <strong class=" text-red-600" >*</strong> </p>
+                <div>
+                <div class="flex items-center space-x-2" >
+                  <Checkbox id="terms" aria-labelledby="terms-label" />
+                  <label for="">Ninguna</label>
+                </div>
+                <div class="flex items-center space-x-2" >
+                  <Checkbox id="terms" aria-labelledby="terms-label" />
+                  <label for="">Importaciones</label>
+                </div>
+                <div class="flex items-center space-x-2" >
+                  <Checkbox id="terms" aria-labelledby="terms-label" />
+                  <label for="">Exportaciones</label>
+                </div>
+                <div class="flex items-center space-x-2" >
+                  <Checkbox id="terms" aria-labelledby="terms-label" />
+                  <label for="">Inversiones</label>
+                </div>
+                <div class="flex items-center space-x-2" >
+                  <Checkbox id="terms" aria-labelledby="terms-label" />
+                  <label for="">Transferencias</label>
+                </div>
+                <div class="flex items-center space-x-2" >
+                  <Checkbox id="terms" aria-labelledby="terms-label" />
+                  <label for="">Otras</label>
+                </div>
+                </div>
+           </div>
         </div>
         <div class=" flex items-center justify-center gap-10 flex-wrap mt-5" >
             <div class=" flex flex-col gap-1.5 items-center" >

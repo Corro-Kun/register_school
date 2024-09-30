@@ -8,18 +8,20 @@
 
     let data = {};
 
-    let fail = false;
+    let loading = 0;
 
     async function search(){
-        fail = false;
+        loading = 1;
 
         const res = await fetch('/api/searcher/'+document);
         if(res.status === 404){
-            fail = true;
+            loading = 2;
             return
-        }   
+        }  
 
         data = await res.json();
+
+        loading = 0;
     }
 
     function redirect(){
@@ -43,7 +45,10 @@
         <p class="text-sm" >{data.lastnames}</p>
     </div>
     {/if}
-    {#if fail}
+
+    {#if loading === 1}
+        <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="animate-spin icon icon-tabler icons-tabler-outline icon-tabler-loader-2"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 3a9 9 0 1 0 9 9" /></svg>
+    {:else if loading === 2}
         <p>No se encontro al estudiante</p>
     {/if}
 </div>
