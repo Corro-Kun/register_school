@@ -12,8 +12,6 @@
     import * as Pagination from '$lib/components/ui/pagination';
     import toast from "svelte-french-toast";
     import { PDFDocument, rgb } from 'pdf-lib';
-  import { on } from "events";
-  import AlertDialogAction from "./ui/alert-dialog/alert-dialog-action.svelte";
 
     let page = 1;
     let title = 'Datos del estudiante'
@@ -223,6 +221,8 @@
         data.declaratipoid_label_frontend = data.tipoidmadre_label_frontend;
         data.declaralugarexpide_label_frontend = data.munexpmadre_label_frontend;
       }
+
+      data.declarafechanace = `${data.declarafechanace.year}-${data.declarafechanace.month}-${data.declarafechanace.day}`;
 
       fillOutForm();
     }
@@ -580,7 +580,7 @@
         body: JSON.stringify(data)
       });
 
-      console.log(res);
+      console.log(await res.json());
     }
 
 </script>

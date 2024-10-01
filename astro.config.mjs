@@ -11,7 +11,9 @@ import node from '@astrojs/node';
 export default defineConfig({
   integrations: [svelte(), tailwind()],
   output: 'server',
-
+  devToolbar: {
+		enabled: false,
+	},
   adapter: node({
     mode: 'standalone'
   })

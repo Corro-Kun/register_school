@@ -8,7 +8,7 @@ export const GET: APIRoute = async ({ params, request }) => {
         const [ocupation] = await sql.query('select * from ocupacion;');
         const [parents] = await sql.query('select * from parentesco where descripcion != "Padre" and descripcion != "Madre" and descripcion != "Acudiente";');
         let [student] = await sql.query('select id, nombres, apellidos, documento, idtipoid as tipoid_id, mupioexp, nacefecha, direccion, municipio_id, barrio_id, telefono, enfermedad, matricula_id from estudiante where documento = ?;', [params.id]);
-        let [neighborhood] = await sql.query('select * from barrio where municipio_id = ?;', [student[0].municipio_id]);
+        let [neighborhood] = await sql.query('select * from barrio;');
         student[0].fechanace = new Date(student[0].nacefecha).toISOString().split('T')[0];
         let [father] = await sql.query('select id, nombres, apellidos, documento, email, celular from estudiante_familia where idestudiante = ?  and idparentesco = 1 ;', [student[0].id]);
         let [mother] = await sql.query('select id, nombres, apellidos, documento, email, celular from estudiante_familia where idestudiante = ?  and idparentesco = 2 ;', [student[0].id]);
@@ -55,7 +55,7 @@ export const POST: APIRoute = async ({ params, request }) => {
         let id = 0;
 
         if (verify.length > 0){
-            await sql.query('update reservacupo apellido = ?, nombres = ?, documento = ?, tipoid_id = ?, mupioexp_id = ?, fechanace = ?, direccion = ?, municipio_id = ?, barrio_id = ?, telefono = ?, observacion = ?, fecha = ?, padrevivo = ?, madrevive = ?, emernombre = ?, emertelefono = ?, tipoemer = ? where estudiante_id = ?;', [body.apellidos, body.nombres, params.id, body.tipoid_id, body.mupioexp, body.fechanace, body.direccion, body.municipio_id, body.barrio_id, body.telefono, body.enfermedad, currentDate, body.padrevivo, body.madreviva, body.emernombre, body.emertelefono, body.tipoemer, student[0].id]);
+            await sql.query('update reservacupo set apellidos = ?, nombres = ?, documento = ?, tipoid_id = ?, mupioexp_id = ?, fechanace = ?, direccion = ?, municipio_id = ?, barrio_id = ?, telefono = ?, observacion = ?, fecha = ?, padrevivo = ?, madrevive = ?, emernombre = ?, emertelefono = ?, tipoemer = ? where estudiante_id = ?;', [body.apellidos, body.nombres, params.id, body.tipoid_id, body.mupioexp, body.fechanace, body.direccion, body.municipio_id, body.barrio_id, body.telefono, body.enfermedad, currentDate, body.padrevivo, body.madreviva, body.emernombre, body.emertelefono, body.tipoemer, student[0].id]);
             id = verify[0].id;
         }else{
             const [insert] = await sql.query('insert into reservacupo (estudiante_id, estado, apellidos, nombres, documento, tipoid_id, mupioexp_id, fechanace, direccion, municipio_id, barrio_id, telefono, observacion, anyo, institucion_id, fecha, padrevivo, madrevive, emernombre, emertelefono, tipoemer ) values (?, 1, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);', [student[0].id, body.apellidos, body.nombres, params.id, body.tipoid_id, body.mupioexp, body.fechanace, body.direccion, body.municipio_id, body.barrio_id, body.telefono, body.enfermedad, '2025', student[0].idinstitucion, currentDate, body.padrevivo, body.madreviva, body.emernombre, body.emertelefono, body.tipoemer]);
