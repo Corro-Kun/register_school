@@ -31,7 +31,7 @@
 </script>
 
 <div class="w-screen h-screen flex items-center justify-center flex-col" >
-    <h2 class="text-3xl font-bold transition" >Escribe el documento del estudiante</h2>
+    <h2 class="text-3xl font-bold transition text-center" >Escribe el documento del estudiante</h2>
     <div class="m-5 flex flex-col items-center transition" >
         <Input class="w-[400px]" type="text" id="document" placeholder="Documento" bind:value={document} />
         <Button class="mt-5" on:click={search} >Buscar</Button>

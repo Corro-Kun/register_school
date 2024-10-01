@@ -12,6 +12,8 @@
     import * as Pagination from '$lib/components/ui/pagination';
     import toast from "svelte-french-toast";
     import { PDFDocument, rgb } from 'pdf-lib';
+  import { on } from "events";
+  import AlertDialogAction from "./ui/alert-dialog/alert-dialog-action.svelte";
 
     let page = 1;
     let title = 'Datos del estudiante'
@@ -92,6 +94,11 @@
       decvincpublico: null,
       decextranjero: null,
       decorigen: '',
+      decimporta: 0,
+      decexporta: 0,
+      decinversiones: 0,
+      dectransferencias: 0,
+      decotrasmact: 0,
       decmonextern: null,
       deccuentasme: null,
     }
@@ -578,11 +585,11 @@
 
 </script>
 
-<div class=" m-16 text-center " >
+<div class=" m-10 text-center " >
     <h1 class=" text-3xl font-bold" >{title}</h1>
 </div>
 
-<div class=" h-2/3 mx-5 overflow-x-hidden overflow-y-auto" >
+<div class=" h-2/3 mx-5 pb-4 overflow-x-hidden overflow-y-auto" >
     {#if page === 1}
         <div class=" flex items-center justify-center gap-10 flex-wrap" >
             <div class="flex flex-col gap-1.5">
@@ -1158,7 +1165,7 @@
                 <Select.Root onSelectedChange={(v)=> {
                   data.declaratipoid = v.value
                   data.declaratipoid_label_frontend = v.label
-                  }} >
+                  }} disabled={dec === '2'? false: true} >
                   <Select.Trigger class="w-[300px]">
                     <Select.Value placeholder="Tipo de Documento" />
                   </Select.Trigger>
@@ -1192,7 +1199,7 @@
                 <Select.Root onSelectedChange={(v)=> {
                   data.declaralugarexpide = v.value
                   data.declaralugarexpide_label_frontend = v.label
-                }} >
+                }} disabled={dec === '2'? false: true} >
                   <Select.Trigger class="w-[300px]">
                     <Select.Value placeholder="Expedición del documento" />
                   </Select.Trigger>
@@ -1465,23 +1472,23 @@
                   <label for="">Ninguna</label>
                 </div>
                 <div class="flex items-center space-x-2" >
-                  <Checkbox id="terms" aria-labelledby="terms-label" />
+                  <Checkbox id="terms" aria-labelledby="terms-label" on:change={(e)=> data.decimporta = e.target.checked? 1: 0} />
                   <label for="">Importaciones</label>
                 </div>
                 <div class="flex items-center space-x-2" >
-                  <Checkbox id="terms" aria-labelledby="terms-label" />
+                  <Checkbox id="terms" aria-labelledby="terms-label" on:change={(e)=> data.decexporta = e.target.checked? 1: 0} />
                   <label for="">Exportaciones</label>
                 </div>
                 <div class="flex items-center space-x-2" >
-                  <Checkbox id="terms" aria-labelledby="terms-label" />
+                  <Checkbox id="terms" aria-labelledby="terms-label" on:change={(e)=> data.decinversiones = e.target.checked? 1: 0} />
                   <label for="">Inversiones</label>
                 </div>
                 <div class="flex items-center space-x-2" >
-                  <Checkbox id="terms" aria-labelledby="terms-label" />
+                  <Checkbox id="terms" aria-labelledby="terms-label" on:change={(e)=> data.dectransferencias = e.target.checked? 1: 0} />
                   <label for="">Transferencias</label>
                 </div>
                 <div class="flex items-center space-x-2" >
-                  <Checkbox id="terms" aria-labelledby="terms-label" />
+                  <Checkbox id="terms" aria-labelledby="terms-label" on:change={(e)=> data.decotrasmact = e.target.checked? 1: 0} />
                   <label for="">Otras</label>
                 </div>
                 </div>
