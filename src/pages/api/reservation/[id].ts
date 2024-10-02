@@ -3,15 +3,15 @@ import type { APIRoute } from "astro";
 
 export const GET: APIRoute = async ({ params, request }) => {
     try{
-        const [municipality] = await sql.query('select * from municipio where departamento_id = 13;');
-        const [dni] = await sql.query('select * from tipoid;');
-        const [ocupation] = await sql.query('select * from ocupacion;');
-        const [parents] = await sql.query('select * from parentesco where descripcion != "Padre" and descripcion != "Madre" and descripcion != "Acudiente";');
-        let [student] = await sql.query('select id, nombres, apellidos, documento, idtipoid as tipoid_id, mupioexp, nacefecha, direccion, municipio_id, barrio_id, telefono, enfermedad, matricula_id from estudiante where documento = ?;', [params.id]);
-        let [neighborhood] = await sql.query('select * from barrio;');
+        const [municipality]: any[] = await sql.query('select * from municipio where departamento_id = 13;');
+        const [dni]: any[] = await sql.query('select * from tipoid;');
+        const [ocupation]: any[] = await sql.query('select * from ocupacion;');
+        const [parents]: any[] = await sql.query('select * from parentesco where descripcion != "Padre" and descripcion != "Madre" and descripcion != "Acudiente";');
+        let [student]: any[] = await sql.query('select id, nombres, apellidos, documento, idtipoid as tipoid_id, mupioexp, nacefecha, direccion, municipio_id, barrio_id, telefono, enfermedad, matricula_id from estudiante where documento = ?;', [params.id]);
+        let [neighborhood]: any[] = await sql.query('select * from barrio;');
         student[0].fechanace = new Date(student[0].nacefecha).toISOString().split('T')[0];
-        let [father] = await sql.query('select id, nombres, apellidos, documento, email, celular from estudiante_familia where idestudiante = ?  and idparentesco = 1 ;', [student[0].id]);
-        let [mother] = await sql.query('select id, nombres, apellidos, documento, email, celular from estudiante_familia where idestudiante = ?  and idparentesco = 2 ;', [student[0].id]);
+        let [father]: any[] = await sql.query('select id, nombres, apellidos, documento, email, celular from estudiante_familia where idestudiante = ?  and idparentesco = 1 ;', [student[0].id]);
+        let [mother]: any[] = await sql.query('select id, nombres, apellidos, documento, email, celular from estudiante_familia where idestudiante = ?  and idparentesco = 2 ;', [student[0].id]);
         const data = {
             municipality: municipality,
             dni: dni,
@@ -38,7 +38,7 @@ export const POST: APIRoute = async ({ params, request }) => {
     try {
         const body = await request.json();
 
-        let [student] = await sql.query('select id, idinstitucion from estudiante where documento = ?;', [params.id]);
+        let [student]: any[] = await sql.query('select id, idinstitucion from estudiante where documento = ?;', [params.id]);
 
         await sql.query('update estudiante set mupioexp = ?, direccion = ?, municipio_id = ?, barrio_id = ?, telefono = ?, enfermedad = ? where id = ?;', [body.mupioexp, body.direccion, body.municipio_id, body.barrio_id, body.telefono, body.enfermedad, student[0].id]);
 
@@ -50,7 +50,7 @@ export const POST: APIRoute = async ({ params, request }) => {
 
         const currentDate = `${year}/${month}/${day}`;
 
-        const [verify] = await sql.query('select * from reservacupo where estudiante_id = ?;', [student[0].id]);
+        const [verify]: any[] = await sql.query('select * from reservacupo where estudiante_id = ?;', [student[0].id]);
 
         let id = 0;
 
@@ -58,7 +58,7 @@ export const POST: APIRoute = async ({ params, request }) => {
             await sql.query('update reservacupo set apellidos = ?, nombres = ?, documento = ?, tipoid_id = ?, mupioexp_id = ?, fechanace = ?, direccion = ?, municipio_id = ?, barrio_id = ?, telefono = ?, observacion = ?, fecha = ?, padrevivo = ?, madrevive = ?, emernombre = ?, emertelefono = ?, tipoemer = ? where estudiante_id = ?;', [body.apellidos, body.nombres, params.id, body.tipoid_id, body.mupioexp, body.fechanace, body.direccion, body.municipio_id, body.barrio_id, body.telefono, body.enfermedad, currentDate, body.padrevivo, body.madreviva, body.emernombre, body.emertelefono, body.tipoemer, student[0].id]);
             id = verify[0].id;
         }else{
-            const [insert] = await sql.query('insert into reservacupo (estudiante_id, estado, apellidos, nombres, documento, tipoid_id, mupioexp_id, fechanace, direccion, municipio_id, barrio_id, telefono, observacion, anyo, institucion_id, fecha, padrevivo, madrevive, emernombre, emertelefono, tipoemer ) values (?, 1, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);', [student[0].id, body.apellidos, body.nombres, params.id, body.tipoid_id, body.mupioexp, body.fechanace, body.direccion, body.municipio_id, body.barrio_id, body.telefono, body.enfermedad, '2025', student[0].idinstitucion, currentDate, body.padrevivo, body.madreviva, body.emernombre, body.emertelefono, body.tipoemer]);
+            const [insert]: any[] = await sql.query('insert into reservacupo (estudiante_id, estado, apellidos, nombres, documento, tipoid_id, mupioexp_id, fechanace, direccion, municipio_id, barrio_id, telefono, observacion, anyo, institucion_id, fecha, padrevivo, madrevive, emernombre, emertelefono, tipoemer ) values (?, 1, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);', [student[0].id, body.apellidos, body.nombres, params.id, body.tipoid_id, body.mupioexp, body.fechanace, body.direccion, body.municipio_id, body.barrio_id, body.telefono, body.enfermedad, '2025', student[0].idinstitucion, currentDate, body.padrevivo, body.madreviva, body.emernombre, body.emertelefono, body.tipoemer]);
             id = insert.insertId;
         }
 
@@ -71,7 +71,7 @@ export const POST: APIRoute = async ({ params, request }) => {
             await sql.query('update reservacupo set nommadre = ?, apellmadre = ?, docmadre = ?, madreemail = ?, madrecelular = ?, tipoidmadre_id = ?, munexpmadre_id = ? where id = ?', [body.nommadre, body.apellmadre, body.docmadre, body.madreemail, body.madrecelular, body.tipoidmadre_id, body.munexpmadre_id, id]);
         }
         
-        await sql.query('update reservacupo set acuparentesco_id = ?, nomacu = ?, apellacu = ?, docacu = ?, tipoidacu_id = ?, munexpacu_id = ?, acuemail = ?, acucelular = ?, declaratipo = ?, declaranombres = ?, declaraapellidos = ?, declaradocumento = ?, declaratipoid = ?, declaraemail = ?, declaracelular = ?, declarafechanace = ?, declaralugarnace = ?, declaradireccion = ?, declarareside = ?, declaraocupacion = ?, declaralugarexpide = ?, decactivos = ?, decpasivos = ?, decpatrimonio = ?, decotrosing = ?, decconcepto = ?, decrpublicos = ?, decppublic = ?, decvincpublico = ?, decextranjero = ?, decorigen = ?, decimporta = ?, decexporta = ?, decinversiones = ?, dectransferencias = ?, decmonextern = ?, deccuentasme = ?, kpsystem = ? where id = ?;', [body.acuparentesco_id, body.nomacu, body.apellacu, body.docacu, body.tipoidacu_id, body.munexpacu_id, body.acuemail, body.acucelular, body.declaratipo, body.declaranombres, body.declaraapellidos, body.declaradocumento, body.declaratipoid, body.declaraemail, body.declaracelular, body.declarafechanace, body.declaralugarnace, body.declaradireccion, body.declarareside, body.declaraocupacion, body.declaralugarexpide, body.decactivos, body.decpasivos, body.decpatrimonio, body.decotrosing, body.decconcepto, body.decrpublicos, body.decppublic, body.decvincpublico, body.decextranjero, body.decorigen, body.decimporta, body.decexporta, body.decinversiones, body.dectransferencias, body.decmonextern, body.deccuentasme, 1,id]);
+        await sql.query('update reservacupo set acuparentesco_id = ?, nomacu = ?, apellacu = ?, docacu = ?, tipoidacu_id = ?, munexpacu_id = ?, acuemail = ?, acucelular = ?, declaratipo = ?, declaranombres = ?, declaraapellidos = ?, declaradocumento = ?, declaratipoid = ?, declaraemail = ?, declaracelular = ?, declarafechanace = ?, declaralugarnace = ?, declaradireccion = ?, declarareside = ?, declaraocupacion = ?, declaralugarexpide = ?, decactivos = ?, decpasivos = ?, decpatrimonio = ?, decotrosing = ?, decconcepto = ?, decrpublicos = ?, decppublic = ?, decvincpublico = ?, decextranjero = ?, decorigen = ?, decimporta = ?, decexporta = ?, decinversiones = ?, dectransferencias = ?, decmonextern = ?, deccuentasme = ?, kpsystem = ?, declaraparentesco = ? where id = ?;', [body.acuparentesco_id, body.nomacu, body.apellacu, body.docacu, body.tipoidacu_id, body.munexpacu_id, body.acuemail, body.acucelular, body.declaratipo, body.declaranombres, body.declaraapellidos, body.declaradocumento, body.declaratipoid, body.declaraemail, body.declaracelular, body.declarafechanace, body.declaralugarnace, body.declaradireccion, body.declarareside, body.declaraocupacion, body.declaralugarexpide, body.decactivos, body.decpasivos, body.decpatrimonio, body.decotrosing, body.decconcepto, body.decrpublicos, body.decppublic, body.decvincpublico, body.decextranjero, body.decorigen, body.decimporta, body.decexporta, body.decinversiones, body.dectransferencias, body.decmonextern, body.deccuentasme, 1, body.declaraparentesco, id]);
 
         return new Response(JSON.stringify({message: 'ok'}), {
             status: 200,

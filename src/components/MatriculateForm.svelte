@@ -65,6 +65,7 @@
       munexpacu_label_frontend: '',
       acuemail: '',
       acucelular: '',
+      declaraparentesco: null,
       declaratipo: 0,
       declaranombres: '',
       declaraapellidos: '',
@@ -602,7 +603,7 @@
             </div>
             <div class=" flex flex-col gap-1.5" >
                 <label for="">Tipo de identificación <strong class=" text-red-600" >*</strong> </label>
-                <Select.Root onSelectedChange={(v)=> {
+                <Select.Root selected={{label:data.tipoid_label_frontend}} onSelectedChange={(v)=> {
                   data.tipoid_id = v.value
                   data.tipoid_label_frontend = v.label
                   }}>
@@ -630,7 +631,7 @@
         <div class=" flex items-center justify-center gap-10 flex-wrap mt-5" >
             <div class=" flex flex-col gap-1.5" >
                 <label for="">Expedición del documento <strong class=" text-red-600" >*</strong> </label>
-                <Select.Root onSelectedChange={(v)=> {
+                <Select.Root selected={{label: data.mupioexp_label_frontend}} onSelectedChange={(v)=> {
                   data.mupioexp_id = v.value
                   data.mupioexp_label_frontend = v.label
                   }} >
@@ -676,7 +677,7 @@
             </div>
             <div class=" flex flex-col gap-1.5" >
                 <label for="">Municipio <strong class=" text-red-600" >*</strong> </label>
-                <Select.Root onSelectedChange={(v)=> {
+                <Select.Root selected={{label:data.municipio_label_frontend}} onSelectedChange={(v)=> {
                   data.municipio_id = v.value
                   data.municipio_label_frontend = v.label
                   }}>
@@ -700,7 +701,7 @@
         <div class=" flex items-center justify-center gap-10 flex-wrap mt-5" >
             <div class=" flex flex-col gap-1.5" >
                 <label for="">Barrio <strong class=" text-red-600" >*</strong> </label>
-                <Select.Root onSelectedChange={(v)=> {
+                <Select.Root selected={{label: data.barrio_label_frontend}} onSelectedChange={(v)=> {
                   data.barrio_id = v.value
                   data.barrio_label_frontend = v.label
                   }}>
@@ -778,7 +779,7 @@
             </div>
             <div class=" flex flex-col gap-1.5" >
                 <label for="">Tipo de identificación <strong class=" text-red-600" >*</strong> </label>
-                <Select.Root onSelectedChange={(v)=> {
+                <Select.Root selected={{label: data.tipoidpadre_label_frontend}} onSelectedChange={(v)=> {
                   data.tipoidpadre_id = v.value
                   data.tipoidpadre_label_frontend = v.label
                   }} >
@@ -806,7 +807,7 @@
         <div class=" flex items-center justify-center gap-10 flex-wrap mt-5" >
             <div class=" flex flex-col gap-1.5" >
                 <label for="">Expedición del documento <strong class=" text-red-600" >*</strong> </label>
-                <Select.Root onSelectedChange={(v)=> {
+                <Select.Root selected={{label:data.munexppadre_label_frontend}} onSelectedChange={(v)=> {
                   data.munexppadre_id = v.value
                   data.munexppadre_label_frontend = v.label
                   }} >
@@ -875,7 +876,7 @@
             </div>
             <div class=" flex flex-col gap-1.5" >
                 <label for="">Tipo de identificación <strong class=" text-red-600" >*</strong> </label>
-                <Select.Root onSelectedChange={(v)=> {
+                <Select.Root selected={{label: data.tipoidmadre_label_frontend}} onSelectedChange={(v)=> {
                   data.tipoidmadre_id = v.value
                   data.tipoidmadre_label_frontend = v.label
                   }} >
@@ -903,7 +904,7 @@
         <div class=" flex items-center justify-center gap-10 flex-wrap mt-5" >
             <div class=" flex flex-col gap-1.5" >
                 <label for="">Expedición del documento <strong class=" text-red-600" >*</strong> </label>
-                <Select.Root onSelectedChange={(v)=> {
+                <Select.Root selected={{label: data.munexpmadre_label_frontend}} onSelectedChange={(v)=> {
                   data.munexpmadre_id = v.value
                   data.munexpmadre_label_frontend = v.label
                   }} >
@@ -1010,7 +1011,7 @@
             </div>
             <div class=" flex flex-col gap-1.5" >
                 <label for="">Tipo de identificación <strong class=" text-red-600" >*</strong> </label>
-                <Select.Root onSelectedChange={(v)=> {
+                <Select.Root selected={{label: data.tipoidacu_label_frontend}} onSelectedChange={(v)=> {
                   data.tipoidacu_id = v.value
                   data.tipoidacu_label_frontend = v.label
                   }} disabled={acu === '2'? false: true} >
@@ -1044,7 +1045,7 @@
         <div class=" flex items-center justify-center gap-10 flex-wrap mt-5" >
             <div class=" flex flex-col gap-1.5" >
                 <label for="">Expedición del documento <strong class=" text-red-600" >*</strong> </label>
-                <Select.Root onSelectedChange={(v)=>{
+                <Select.Root selected={{label:data.munexpacu_label_frontend}} onSelectedChange={(v)=>{
                   data.munexpacu_id = v.value
                   data.munexpacu_label_frontend = v.label
                 }} disabled={acu === '2'? false: true} >
@@ -1119,7 +1120,7 @@
             {#if dec === '2'}
             <div class="flex flex-col gap-1.5 items-center">
                 <label for="">Tipo de relación con el estudiante <strong class=" text-red-600" >*</strong> </label>
-                <Select.Root>
+                <Select.Root onSelectedChange={(v)=> data.declaraparentesco = v.value} >
                   <Select.Trigger class="w-[300px]">
                     <Select.Value placeholder="Parentesco" />
                   </Select.Trigger>
@@ -1162,7 +1163,7 @@
             </div>
             <div class=" flex flex-col gap-1.5" >
                 <label for="">Tipo de identificación <strong class=" text-red-600" >*</strong> </label>
-                <Select.Root onSelectedChange={(v)=> {
+                <Select.Root selected={{label:data.declaratipoid_label_frontend}} onSelectedChange={(v)=> {
                   data.declaratipoid = v.value
                   data.declaratipoid_label_frontend = v.label
                   }} disabled={dec === '2'? false: true} >
@@ -1196,7 +1197,7 @@
         <div class=" flex items-center justify-center gap-10 flex-wrap mt-5" >
             <div class=" flex flex-col gap-1.5" >
                 <label for="">Expedición del documento <strong class=" text-red-600" >*</strong> </label>
-                <Select.Root onSelectedChange={(v)=> {
+                <Select.Root selected={{label:data.declaralugarexpide_label_frontend}} onSelectedChange={(v)=> {
                   data.declaralugarexpide = v.value
                   data.declaralugarexpide_label_frontend = v.label
                 }} disabled={dec === '2'? false: true} >
@@ -1301,7 +1302,7 @@
             </div>
             <div class=" flex flex-col gap-1.5" >
                 <label for="">Municipio <strong class=" text-red-600" >*</strong> </label>
-                <Select.Root onSelectedChange={(v)=>{
+                <Select.Root selected={{label:data.declarareside_label_frontend}} onSelectedChange={(v)=>{
                   data.declarareside = v.value
                   data.declarareside_label_frontend = v.label
                 }} >
