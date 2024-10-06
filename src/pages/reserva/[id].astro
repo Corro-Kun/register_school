@@ -5,6 +5,9 @@ import MatriculateForm from '$lib/components/MatriculateForm.svelte';
 const { id } = Astro.params;
 
 const result = await fetch(`${Astro.url.origin}/api/reservation/${id}`);
+if (result.status !== 200) {
+  return Astro.redirect("/reserva");
+}
 const data = await result.json();
 if (data.father !== null){
 	data.student[0].nompadre = data.father.nombres;
@@ -28,7 +31,7 @@ if (data.mother !== null){
 }
 ---
 
-<Layout title="Welcome to Astro.">
+<Layout title={`Reserva de cupo de ${data.student[0].nombres}`} >
 	<MatriculateForm client:load 
 	Municipality={data.municipality} 
 	typeOfDocument={data.dni} 

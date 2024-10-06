@@ -16,6 +16,7 @@
         const res = await fetch('/api/searcher/'+document);
         if(res.status === 404){
             loading = 2;
+            data = {};
             return
         }  
 

@@ -181,16 +181,19 @@
       loading = 1;
       messageLoading = 'Ordenando datos...';
 
-      if (data.tipoid_id === null || data.mupioexp_id === null || data.municipio_id === null || data.barrio_id === null || data.direccion === null || data.telefono === null || data.emernombre === null || data.emertelefono === null || data.tipoemer === null){
+      if (data.tipoid_id === undefined || data.mupioexp_id === undefined || data.municipio_id === undefined || data.barrio_id === undefined || data.direccion === undefined || data.telefono === undefined || data.emernombre === undefined || data.emertelefono === undefined || data.tipoemer === undefined){
         loading = 0;
+        messageLoading = '¿Enviar formulario?';
         toast.error('Llene todos los campos del estudiante');
         return;
-      }else if (data.tipoidpadre_id === null || data.munexppadre_id === null || data.padrecelular === null || data.emailpadre ===  null){
+      }else if (data.tipoidpadre_id === undefined || data.munexppadre_id === undefined || data.padrecelular === undefined || data.emailpadre ===  undefined){
         loading = 0;
+        messageLoading = '¿Enviar formulario?';
         toast.error('Llene todos los campos del padre');
         return;
-      }else if (data.tipoidmadre_id === null || data.munexpmadre_id === null || data.madrecelular === null || data.madreemail === null){
+      }else if (data.tipoidmadre_id === undefined || data.munexpmadre_id === undefined || data.madrecelular === undefined || data.madreemail === undefined){
         loading = 0;
+        messageLoading = '¿Enviar formulario?';
         toast.error('Llene todos los campos de la madre');
         return;
       }
@@ -237,18 +240,28 @@
         data.declaralugarexpide_label_frontend = data.munexpmadre_label_frontend;
       }
 
-      data.declarafechanace = `${data.declarafechanace.year}-${data.declarafechanace.month}-${data.declarafechanace.day}`;
-
-      if(data.nomacu === null || data.apellacu === null || data.docacu === null || data.tipoidacu_id === null || data.munexpacu_id === null || data.acuemail === null || data.acucelular === null){
+      if (data.declarafechanace === undefined){
         loading = 0;
-        toast.error('Llene todos los campos del acudiente');
-        return;
-      }else if (data.declaraparentesco === null || data.declaranombres === null || data.declaraapellidos === null || data.declaradocumento === null || data.declaratipoid === null || data.declaralugarnace === null || data.declaradireccion === null || data.declarareside === null || data.declaralugarexpide === null || data.declaraemail === null || data.declaracelular === null || data.declarafechanace === null || data.declaraocupacion === null){
-        loading = 0;
+        messageLoading = '¿Enviar formulario?';
         toast.error('Llene todos los campos del declarante');
         return;
-      }else if (data.decactivos === null || data.decpasivos === null || data.decpatrimonio === null || data.decrpublicos === null || data.decvincpublico === null || data.decextranjero === null || data.decorigen === null || data.decmonextern === null || data.deccuentasme === null){
+      }
+
+      data.declarafechanace = `${data.declarafechanace.year}-${data.declarafechanace.month}-${data.declarafechanace.day}`;
+
+      if(data.nomacu === undefined || data.apellacu === undefined || data.docacu === undefined || data.tipoidacu_id === undefined || data.munexpacu_id === undefined || data.acuemail === undefined || data.acucelular === undefined){
         loading = 0;
+        messageLoading = '¿Enviar formulario?';
+        toast.error('Llene todos los campos del acudiente');
+        return;
+      }else if (data.declaraparentesco === undefined || data.declaranombres === undefined || data.declaraapellidos === undefined || data.declaradocumento === undefined || data.declaratipoid === undefined || data.declaralugarnace === undefined || data.declaradireccion === undefined || data.declarareside === undefined || data.declaralugarexpide === undefined || data.declaraemail === undefined || data.declaracelular === undefined || data.declarafechanace === undefined || data.declaraocupacion === undefined){
+        loading = 0;
+        messageLoading = '¿Enviar formulario?';
+        toast.error('Llene todos los campos del declarante');
+        return;
+      }else if (data.decactivos === undefined || data.decpasivos === undefined || data.decpatrimonio === undefined || data.decrpublicos === undefined || data.decvincpublico === undefined || data.decextranjero === undefined || data.decorigen === undefined || data.decmonextern === undefined || data.deccuentasme === undefined){
+        loading = 0;
+        messageLoading = '¿Enviar formulario?';
         toast.error('Llene todos los campos financieros del declarante');
         return;
       }
