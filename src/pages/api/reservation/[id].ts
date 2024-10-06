@@ -12,6 +12,10 @@ export const GET: APIRoute = async ({ params, request }) => {
         student[0].fechanace = new Date(student[0].nacefecha).toISOString().split('T')[0];
         let [father]: any[] = await sql.query('select id, nombres, apellidos, documento, email, celular from estudiante_familia where idestudiante = ?  and idparentesco = 1 ;', [student[0].id]);
         let [mother]: any[] = await sql.query('select id, nombres, apellidos, documento, email, celular from estudiante_familia where idestudiante = ?  and idparentesco = 2 ;', [student[0].id]);
+        let [grade]: any[] = await sql.query('select g.titulo from matricula m JOIN grupo u ON m.idgrupo = u.id JOIN grado g ON u.idgrado = g.id where m.idestudiante = ?;', [student[0].id]);
+        let [eps]: any[] = await sql.query('select eps.nombre from estudiante JOIN eps ON estudiante.ideps = eps.id where estudiante.id = ?;', [student[0].id]);
+        student[0].grado = grade.length > 0 ? grade[0].titulo : null;
+        student[0].eps = eps.length > 0 ? eps[0].nombre : null;
         const data = {
             municipality: municipality,
             dni: dni,

@@ -56,6 +56,7 @@
       munexpmadre_label_frontend: '',
       madrevive: null,
       acuparentesco_id: null,
+      acuparentesco_label_frontend: '',
       nomacu: null,
       apellacu: null,
       docacu: null,
@@ -81,6 +82,7 @@
       declarareside: null,
       declarareside_label_frontend: '',
       declaraocupacion: null,
+      declaraocupacion_label_frontend: '',
       declaralugarexpide: null,
       declaralugarexpide_label_frontend: '',
       decactivos: null,
@@ -187,15 +189,19 @@
         toast.error('Llene todos los campos del estudiante');
         return;
       }else if (data.tipoidpadre_id === undefined || data.munexppadre_id === undefined || data.padrecelular === undefined || data.emailpadre ===  undefined){
-        loading = 0;
-        messageLoading = '¿Enviar formulario?';
-        toast.error('Llene todos los campos del padre');
-        return;
+        if (data.padrevivo === '1'){
+          loading = 0;
+          messageLoading = '¿Enviar formulario?';
+          toast.error('Llene todos los campos del padre');
+          return;
+        }
       }else if (data.tipoidmadre_id === undefined || data.munexpmadre_id === undefined || data.madrecelular === undefined || data.madreemail === undefined){
-        loading = 0;
-        messageLoading = '¿Enviar formulario?';
-        toast.error('Llene todos los campos de la madre');
-        return;
+        if (data.madrevive === '1'){
+          loading = 0;
+          messageLoading = '¿Enviar formulario?';
+          toast.error('Llene todos los campos de la madre');
+          return;
+        }
       }
 
       if (acu === '0'){
@@ -247,9 +253,9 @@
         return;
       }
 
-      data.declarafechanace = `${data.declarafechanace.year}-${data.declarafechanace.month}-${data.declarafechanace.day}`;
+      data.declfechanace = `${data.declarafechanace.day}/${data.declarafechanace.month}/${data.declarafechanace.year}`;
 
-      if(data.nomacu === undefined || data.apellacu === undefined || data.docacu === undefined || data.tipoidacu_id === undefined || data.munexpacu_id === undefined || data.acuemail === undefined || data.acucelular === undefined){
+      if(data.nomacu === undefined || data.apellacu === undefined || data.docacu === undefined || data.tipoidacu_id === undefined || data.munexpacu_id === undefined || data.acuemail === undefined || data.acucelular === undefined || data.acuparentesco_id === undefined){
         loading = 0;
         messageLoading = '¿Enviar formulario?';
         toast.error('Llene todos los campos del acudiente');
@@ -686,7 +692,10 @@
             {#if acu === '2'}
             <div class="flex flex-col gap-1.5 items-center">
                 <label for="">Tipo de relación con el estudiante <strong class=" text-red-600" >*</strong> </label>
-                <Select.Root onSelectedChange={(v)=> data.acuparentesco_id = v.value} >
+                <Select.Root selected={{label: data.acuparentesco_label_frontend}}
+                onSelectedChange={(v)=> {
+                  data.acuparentesco_label_frontend = v.label
+                  data.acuparentesco_id = v.value}} >
                   <Select.Trigger class="w-[300px]">
                     <Select.Value placeholder="Parentesco" />
                   </Select.Trigger>
@@ -997,7 +1006,10 @@
             </div>
             <div class=" flex flex-col gap-1.5" >
                 <label for="">Ocupación y oficio <strong class=" text-red-600" >*</strong> </label>
-                <Select.Root onSelectedChange={(v)=> data.declaraocupacion = v.label} >
+                <Select.Root selected={{label:data.declaraocupacion_label_frontend}}
+                onSelectedChange={(v)=> {
+                  data.declaraocupacion_label_frontend = v.label
+                  data.declaraocupacion = v.label}} >
                   <Select.Trigger class="w-[300px]">
                     <Select.Value placeholder="Ocupación y oficio" />
                   </Select.Trigger>
