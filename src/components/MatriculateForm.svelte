@@ -11,7 +11,7 @@
     import * as RadioGroup from '$lib/components/ui/radio-group';
     import * as Pagination from '$lib/components/ui/pagination';
     import toast from "svelte-french-toast";
-    import { PDFDocument, rgb } from 'pdf-lib';
+    import {Acudiente} from '$lib/lib/pdf_doc';
 
     let page = 1;
     let title = 'Datos del estudiante'
@@ -20,79 +20,79 @@
       nombres: '',
       apellidos: '',
       documento: '',
-      tipoid_id: 0,
+      tipoid_id: null,
       tipoid_label_frontend: '',
-      mupioexp_id: 0,
+      mupioexp_id: null,
       mupioexp_label_frontend: '',
       fechanace: '',
-      direccion: '',
-      municipio_id: 0,
+      direccion: null,
+      municipio_id: null,
       municipio_label_frontend: '',
-      barrio_id: 0,
+      barrio_id: null,
       barrio_label_frontend: '',
-      telefono: '',
+      telefono: null,
       enfermedad: '',
-      emernombre: '',
-      emertelefono: '',
-      tipoemer: '',
+      emernombre: null,
+      emertelefono: null,
+      tipoemer: null,
       nompadre: '',
       apellpadre: '',
       docpadre: '',
-      emailpadre: '',
-      padrecelular: '',
-      tipoidpadre_id: 0,
+      emailpadre: null,
+      padrecelular: null,
+      tipoidpadre_id: null,
       tipoidpadre_label_frontend: '',
-      munexppadre_id: 0,
+      munexppadre_id: null,
       munexppadre_label_frontend: '',
       padrevivo: null,
       nommadre: '',
       apellmadre: '',
       docmadre: '',
-      madreemail: '',
-      madrecelular: '',
-      tipoidmadre_id: 0,
+      madreemail: null,
+      madrecelular: null,
+      tipoidmadre_id: null,
       tipoidmadre_label_frontend: '',
-      munexpmadre_id: 0,
+      munexpmadre_id: null,
       munexpmadre_label_frontend: '',
       madrevive: null,
       acuparentesco_id: null,
-      nomacu: '',
-      apellacu: '',
-      docacu: '',
-      tipoidacu_id: 0,
+      nomacu: null,
+      apellacu: null,
+      docacu: null,
+      tipoidacu_id: null,
       tipoidacu_label_frontend: '',
-      munexpacu_id: 0,
+      munexpacu_id: null,
       munexpacu_label_frontend: '',
-      acuemail: '',
-      acucelular: '',
+      acuemail: null,
+      acucelular: null,
       declaraparentesco: null,
       declaratipo: 0,
-      declaranombres: '',
-      declaraapellidos: '',
-      declaradocumento: '',
-      declaratipoid: 0,
+      declaranombres: null,
+      declaraapellidos: null,
+      declaradocumento: null,
+      declaratipoid: null,
       declaratipoid_label_frontend: '',
-      declaraemail: '',
-      declaracelular: '',
-      declarafechanace: '',
-      declaralugarnace: 0,
+      declaraemail: null,
+      declaracelular: null,
+      declarafechanace: null,
+      declaralugarnace: null,
       declaralugarnace_label_frontend: '',
-      declaradireccion: '',
-      declarareside: 0,
+      declaradireccion: null,
+      declarareside: null,
       declarareside_label_frontend: '',
-      declaraocupacion: '',
-      declaralugarexpide: 0,
+      declaraocupacion: null,
+      declaralugarexpide: null,
       declaralugarexpide_label_frontend: '',
-      decactivos: '',
-      decpasivos: '',
-      decpatrimonio: '',
+      decactivos: null,
+      decpasivos: null,
+      decpatrimonio: null,
       decotrosing: '',
       decconcepto: '',
       decrpublicos: null,
       decppublic: null,
       decvincpublico: null,
       decextranjero: null,
-      decorigen: '',
+      decorigen: null,
       decimporta: 0,
       decexporta: 0,
       decinversiones: 0,
@@ -181,6 +181,20 @@
       loading = 1;
       messageLoading = 'Ordenando datos...';
 
+      if (data.tipoid_id === null || data.mupioexp_id === null || data.municipio_id === null || data.barrio_id === null || data.direccion === null || data.telefono === null || data.emernombre === null || data.emertelefono === null || data.tipoemer === null){
+        loading = 0;
+        toast.error('Llene todos los campos del estudiante');
+        return;
+      }else if (data.tipoidpadre_id === null || data.munexppadre_id === null || data.padrecelular === null || data.emailpadre ===  null){
+        loading = 0;
+        toast.error('Llene todos los campos del padre');
+        return;
+      }else if (data.tipoidmadre_id === null || data.munexpmadre_id === null || data.madrecelular === null || data.madreemail === null){
+        loading = 0;
+        toast.error('Llene todos los campos de la madre');
+        return;
+      }
+
       if (acu === '0'){
         data.nomacu = data.nompadre;
         data.apellacu = data.apellpadre;
@@ -225,6 +239,20 @@
 
       data.declarafechanace = `${data.declarafechanace.year}-${data.declarafechanace.month}-${data.declarafechanace.day}`;
 
+      if(data.nomacu === null || data.apellacu === null || data.docacu === null || data.tipoidacu_id === null || data.munexpacu_id === null || data.acuemail === null || data.acucelular === null){
+        loading = 0;
+        toast.error('Llene todos los campos del acudiente');
+        return;
+      }else if (data.declaraparentesco === null || data.declaranombres === null || data.declaraapellidos === null || data.declaradocumento === null || data.declaratipoid === null || data.declaralugarnace === null || data.declaradireccion === null || data.declarareside === null || data.declaralugarexpide === null || data.declaraemail === null || data.declaracelular === null || data.declarafechanace === null || data.declaraocupacion === null){
+        loading = 0;
+        toast.error('Llene todos los campos del declarante');
+        return;
+      }else if (data.decactivos === null || data.decpasivos === null || data.decpatrimonio === null || data.decrpublicos === null || data.decvincpublico === null || data.decextranjero === null || data.decorigen === null || data.decmonextern === null || data.deccuentasme === null){
+        loading = 0;
+        toast.error('Llene todos los campos financieros del declarante');
+        return;
+      }
+
       fillOutForm();
     }
 
@@ -232,338 +260,15 @@
       messageLoading = 'Creando pdf...';
 
       try {
-        const pdfUrl = '/Reserva.pdf';
-        const existingPdfBytes = await fetch(pdfUrl).then(res => res.arrayBuffer());  
 
-        const pdfDoc = await PDFDocument.load(existingPdfBytes);
-
-        // student data
-
-        pdfDoc.getPage(0).drawText(data.nombres,{
-          x: 120,
-          y: pdfDoc.getPage(0).getHeight() - 138,
-          size: 10,
-          color: rgb(0,0,0)
-        })
-
-        pdfDoc.getPage(0).drawText(data.apellidos,{
-          x: 357,
-          y: pdfDoc.getPage(0).getHeight() - 138,
-          size: 10,
-          color: rgb(0,0,0)
-        })
-
-        pdfDoc.getPage(0).drawText(data.tipoid_label_frontend,{
-          x: 168,
-          y: pdfDoc.getPage(0).getHeight() - 150.5,
-          size: 10,
-          color: rgb(0,0,0)
-        })
-
-        pdfDoc.getPage(0).drawText(data.documento,{
-          x: 435,
-          y: pdfDoc.getPage(0).getHeight() - 151,
-          size: 10,
-          color: rgb(0,0,0)
-        })
-
-        pdfDoc.getPage(0).drawText(data.mupioexp_label_frontend,{
-          x: 325,
-          y: pdfDoc.getPage(0).getHeight() - 162.5,
-          size: 10,
-          color: rgb(0,0,0)
-        })
-
-        pdfDoc.getPage(0).drawText(data.fechanace,{
-          x: 168,
-          y: pdfDoc.getPage(0).getHeight() - 175,
-          size: 10,
-          color: rgb(0,0,0)
-        });
-
-        pdfDoc.getPage(0).drawText(data.municipio_label_frontend,{
-          x: 420,
-          y: pdfDoc.getPage(0).getHeight() - 175,
-          size: 10,
-          color: rgb(0,0,0)
-        });
-
-        pdfDoc.getPage(0).drawText(data.direccion,{
-          x: 184,
-          y: pdfDoc.getPage(0).getHeight() - 187.5,
-          size: 10,
-          color: rgb(0,0,0)
-        });
-
-        pdfDoc.getPage(0).drawText(data.barrio_label_frontend,{
-          x: 452,
-          y: pdfDoc.getPage(0).getHeight() - 187.5,
-          size: 10,
-          color: rgb(0,0,0)
-        });
-
-        pdfDoc.getPage(0).drawText(data.telefono,{
-          x: 184,
-          y: pdfDoc.getPage(0).getHeight() - 199.5,
-          size: 10,
-          color: rgb(0,0,0)
-        });
-
-        pdfDoc.getPage(0).drawText(data.emernombre,{
-          x: 370,
-          y: 178,
-          size: 10,
-          color: rgb(0,0,0)
-        });
-
-        pdfDoc.getPage(0).drawText(data.emertelefono,{
-          x: 420,
-          y: 165,
-          size: 10,
-          color: rgb(0,0,0)
-        });
-
-        pdfDoc.getPage(0).drawText(data.tipoemer,{
-          x: 387,
-          y: 153.5,
-          size: 10,
-          color: rgb(0,0,0)
-        });
-
-        // father data
-
-        pdfDoc.getPage(0).drawText(data.nompadre,{
-          x: 120,
-          y: pdfDoc.getPage(0).getHeight() - 236,
-          size: 10,
-          color: rgb(0,0,0)
-        })
-
-        pdfDoc.getPage(0).drawText(data.apellpadre,{
-          x: 357,
-          y: pdfDoc.getPage(0).getHeight() - 236,
-          size: 10,
-          color: rgb(0,0,0)
-        })
-
-        pdfDoc.getPage(0).drawText(data.tipoidpadre_label_frontend,{
-          x: 168,
-          y: pdfDoc.getPage(0).getHeight() - 248.5,
-          size: 10,
-          color: rgb(0,0,0)
-        })
-
-        pdfDoc.getPage(0).drawText(data.docpadre,{
-          x: 435,
-          y: pdfDoc.getPage(0).getHeight() - 248.5,
-          size: 10,
-          color: rgb(0,0,0)
-        })
-
-        pdfDoc.getPage(0).drawText(data.munexppadre_label_frontend,{
-          x: 325,
-          y: pdfDoc.getPage(0).getHeight() - 260.5,
-          size: 10,
-          color: rgb(0,0,0)
-        })
-
-        pdfDoc.getPage(0).drawText(data.emailpadre,{
-          x: 90,
-          y: pdfDoc.getPage(0).getHeight() - 272.5,
-          size: 10,
-          color: rgb(0,0,0)
-        });
-
-        pdfDoc.getPage(0).drawText(data.padrecelular,{
-          x: 405,
-          y: pdfDoc.getPage(0).getHeight() - 285,
-          size: 10,
-          color: rgb(0,0,0)
-        });
-
-        // mother data
-
-        pdfDoc.getPage(0).drawText(data.nommadre,{
-          x: 120,
-          y: pdfDoc.getPage(0).getHeight() - 321.5,
-          size: 10,
-          color: rgb(0,0,0)
-        })
-
-        pdfDoc.getPage(0).drawText(data.apellmadre,{
-          x: 357,
-          y: pdfDoc.getPage(0).getHeight() - 321.5,
-          size: 10,
-          color: rgb(0,0,0)
-        })
-
-        pdfDoc.getPage(0).drawText(data.tipoidmadre_label_frontend,{
-          x: 168,
-          y: pdfDoc.getPage(0).getHeight() - 334,
-          size: 10,
-          color: rgb(0,0,0)
-        })
-
-        pdfDoc.getPage(0).drawText(data.docmadre,{
-          x: 435,
-          y: pdfDoc.getPage(0).getHeight() - 334,
-          size: 10,
-          color: rgb(0,0,0)
-        })
-
-        pdfDoc.getPage(0).drawText(data.munexpmadre_label_frontend,{
-          x: 325,
-          y: pdfDoc.getPage(0).getHeight() - 346,
-          size: 10,
-          color: rgb(0,0,0)
-        })
-
-        pdfDoc.getPage(0).drawText(data.madreemail,{
-          x: 90,
-          y: pdfDoc.getPage(0).getHeight() - 358,
-          size: 10,
-          color: rgb(0,0,0)
-        });
-
-        pdfDoc.getPage(0).drawText(data.madrecelular,{
-          x: 405,
-          y: pdfDoc.getPage(0).getHeight() - 370,
-          size: 10,
-          color: rgb(0,0,0)
-        });
-
-        // acudiente data
-
-        pdfDoc.getPage(0).drawText(data.nomacu,{
-          x: 120,
-          y: 275,
-          size: 10,
-          color: rgb(0,0,0)
-        });
-
-        pdfDoc.getPage(0).drawText(data.apellacu,{
-          x: 357,
-          y: 275,
-          size: 10,
-          color: rgb(0,0,0)
-        })
-
-        pdfDoc.getPage(0).drawText(data.tipoidacu_label_frontend,{
-          x: 168,
-          y: 262.5,
-          size: 10,
-          color: rgb(0,0,0)
-        })
-
-        pdfDoc.getPage(0).drawText(data.docacu,{
-          x: 435,
-          y: 262.5,
-          size: 10,
-          color: rgb(0,0,0)
-        })
-
-        pdfDoc.getPage(0).drawText(data.munexpacu_label_frontend,{
-          x: 325,
-          y: 251,
-          size: 10,
-          color: rgb(0,0,0)
-        })
-
-        pdfDoc.getPage(0).drawText(data.acuemail,{
-          x: 90,
-          y: 238.5,
-          size: 10,
-          color: rgb(0,0,0)
-        });
-
-        pdfDoc.getPage(0).drawText(data.acucelular,{
-          x: 405,
-          y: 226,
-          size: 10,
-          color: rgb(0,0,0)
-        });
-
-        // declarante data
-
-        pdfDoc.getPage(0).drawText(data.declaranombres,{
-          x: 120,
-          y: pdfDoc.getPage(0).getHeight() -406.5,
-          size: 10,
-          color: rgb(0,0,0)
-        }); 
-
-        pdfDoc.getPage(0).drawText(data.declaraapellidos,{
-          x: 357,
-          y: pdfDoc.getPage(0).getHeight() -406.5,
-          size: 10,
-          color: rgb(0,0,0)
-        });
-
-        pdfDoc.getPage(0).drawText(data.declaratipoid_label_frontend,{
-          x: 168,
-          y: pdfDoc.getPage(0).getHeight() -419,
-          size: 10,
-          color: rgb(0,0,0)
-        });
-
-        pdfDoc.getPage(0).drawText(data.declaradocumento,{
-          x: 435,
-          y: pdfDoc.getPage(0).getHeight() -419,
-          size: 10,
-          color: rgb(0,0,0)
-        });
-
-        pdfDoc.getPage(0).drawText(data.declaralugarexpide_label_frontend,{
-          x: 325,
-          y: pdfDoc.getPage(0).getHeight() -431,
-          size: 10,
-          color: rgb(0,0,0)
-        });
-
-        pdfDoc.getPage(0).drawText(data.declaradireccion,{
-          x: 168,
-          y: pdfDoc.getPage(0).getHeight() -443.5,
-          size: 10,
-          color: rgb(0,0,0)
-        });
-
-        pdfDoc.getPage(0).drawText(data.declarareside_label_frontend,{
-          x: 467,
-          y: pdfDoc.getPage(0).getHeight() -443.5,
-          size: 10,
-          color: rgb(0,0,0)
-        });
-
-        pdfDoc.getPage(0).drawText(data.declaraemail,{
-          x: 90,
-          y: pdfDoc.getPage(0).getHeight() -456,
-          size: 10,
-          color: rgb(0,0,0)
-        });
-
-        pdfDoc.getPage(0).drawText(data.declaracelular,{
-          x: 390,
-          y: pdfDoc.getPage(0).getHeight() -456,
-          size: 10,
-          color: rgb(0,0,0)
-        });
-
-        const pdfBytes = await pdfDoc.save();
-
-        const blob = new Blob([pdfBytes], { type: 'application/pdf' });
-
-        const link = document.createElement('a');
-        link.href = window.URL.createObjectURL(blob);
-        link.download = 'Reserva.pdf';
-
-        link.click();
-
-        link.remove();
+        if (data.padrevivo !== '1' & data.madrevive !== '1'){
+          Acudiente(data);
+        }
 
         messageLoading = 'Terminado'
         loading = 2;
 
-        save();
+        //save();
 
       } catch (error) {
         messageLoading = '¿Enviar formulario?';
@@ -1086,7 +791,7 @@
                 {/if}
             </div>
             <div class="flex flex-col gap-1.5">
-                <label for="work-phone">Teléfono del trabajo <strong class=" text-red-600" >*</strong> </label>
+                <label for="work-phone">Teléfono del trabajo</label>
                 <div class="flex gap-3" >
                     <Input class="w-[50px]" type="number" placeholder="601" />
                     <Input class="w-[240px]" type="number" id="work-phone" placeholder="Teléfono del trabajo" />
@@ -1350,7 +1055,8 @@
             </div>
             <div class=" flex flex-col gap-1.5" >
                 <label for="">¿Por su cargo maneja recursos públicos? <strong class=" text-red-600" >*</strong> </label>
-                <Select.Root onSelectedChange={(e) => data.decrpublicos = e.value} >
+                <Select.Root selected={{label: data.decrpublicos === '1'? 'Si': 'No'}}
+                onSelectedChange={(e) => data.decrpublicos = e.value} >
                   <Select.Trigger class="w-[300px]">
                     <Select.Value placeholder="Seleccione su respuesta" />
                   </Select.Trigger>
@@ -1372,7 +1078,8 @@
         <div class=" flex items-center justify-center gap-10 flex-wrap mt-5" >
             <div class=" flex flex-col gap-1.5 items-center" >
                 <label for="">¿Por su cargo o actividad ejerce algún grado de poder público?</label>
-                <Select.Root onSelectedChange={(e) => data.decppublic = e.value} >
+                <Select.Root selected={{label: data.decppublic === '1'? 'Si': 'No'}} 
+                onSelectedChange={(e) => data.decppublic = e.value} >
                   <Select.Trigger class="w-[300px]">
                     <Select.Value placeholder="Seleccione su respuesta" />
                   </Select.Trigger>
@@ -1394,7 +1101,8 @@
         <div class=" flex items-center justify-center gap-10 flex-wrap mt-5" >
             <div class=" flex flex-col gap-1.5 items-center" >
                 <label for="">¿Existe algún vínculo entre usted y una persona considerada públicamente expuesta? <strong class=" text-red-600" >*</strong> </label>
-                <Select.Root onSelectedChange={(e) => data.decvincpublico = e.value} >
+                <Select.Root selected={{label: data.decvincpublico === '1'? 'Si': 'No'}} 
+                onSelectedChange={(e) => data.decvincpublico = e.value} >
                   <Select.Trigger class="w-[300px]">
                     <Select.Value placeholder="Seleccione su respuesta" />
                   </Select.Trigger>
@@ -1416,7 +1124,8 @@
         <div class=" flex items-center justify-center gap-10 flex-wrap mt-5" >
             <div class=" flex flex-col gap-1.5 items-center" >
                 <label for="">¿Es usted sujeto de obligaciones tributarias en otro país o grupo de países? <strong class=" text-red-600" >*</strong> </label>
-                <Select.Root onSelectedChange={(e) => data.decextranjero = e.value} >
+                <Select.Root  selected={{label: data.decextranjero === '1'? 'Si': 'No'}}
+                onSelectedChange={(e) => data.decextranjero = e.value} >
                   <Select.Trigger class="w-[300px]">
                     <Select.Value placeholder="Seleccione su respuesta" />
                   </Select.Trigger>
@@ -1445,7 +1154,8 @@
         <div class=" flex items-center justify-center gap-10 flex-wrap mt-5" >
             <div class=" flex flex-col gap-1.5 items-center" >
                 <label for="">¿Realiza operaciones en moneda extranjera? <strong class=" text-red-600" >*</strong> </label>
-                <Select.Root onSelectedChange={(v) => data.decmonextern = v.value} >
+                <Select.Root selected={{label: data.decmonextern === '1'? 'Si': 'No'}}
+                onSelectedChange={(v) => data.decmonextern = v.value} >
                   <Select.Trigger class="w-[300px]">
                     <Select.Value placeholder="Seleccione su respuesta" />
                   </Select.Trigger>
@@ -1498,7 +1208,8 @@
         <div class=" flex items-center justify-center gap-10 flex-wrap mt-5" >
             <div class=" flex flex-col gap-1.5 items-center" >
                 <label for="">¿Posee cuentas bancarias en moneda extranjera? <strong class=" text-red-600" >*</strong> </label>
-                <Select.Root onSelectedChange={(v) => data.deccuentasme = v.value} >
+                <Select.Root selected={{label: data.deccuentasme === '1'? 'Si': 'No'}}
+                onSelectedChange={(v) => data.deccuentasme = v.value} >
                   <Select.Trigger class="w-[300px]">
                     <Select.Value placeholder="Seleccione su respuesta" />
                   </Select.Trigger>
