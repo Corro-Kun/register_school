@@ -6,6 +6,7 @@ export const GET: APIRoute = async ({ params, request }) => {
         const [municipality]: any[] = await sql.query('select * from municipio where departamento_id = 13;');
         const [dni]: any[] = await sql.query('select * from tipoid;');
         const [ocupation]: any[] = await sql.query('select * from ocupacion;');
+        const [country]: any[] = await sql.query('select * from pais;');
         const [parents]: any[] = await sql.query('select * from parentesco where descripcion != "Padre" and descripcion != "Madre" and descripcion != "Acudiente";');
         let [student]: any[] = await sql.query('select id, nombres, apellidos, documento, idtipoid as tipoid_id, mupioexp, nacefecha, direccion, municipio_id, barrio_id, telefono, enfermedad, matricula_id from estudiante where documento = ?;', [params.id]);
         let [neighborhood]: any[] = await sql.query('select * from barrio;');
@@ -22,6 +23,7 @@ export const GET: APIRoute = async ({ params, request }) => {
             parents: parents,
             ocupation: ocupation,
             student: student,
+            country: country,
             neighborhood: neighborhood,
             father: father.length > 0 ? father[0] : null,
             mother: mother.length > 0 ? mother[0] : null
@@ -68,14 +70,14 @@ export const POST: APIRoute = async ({ params, request }) => {
 
         if (body.padrevivo === '1'){
             await sql.query('update estudiante_familia set email = ?, celular = ? where idestudiante = ? and idparentesco = 1;', [body.emailpadre, body.padrecelular, student[0].id]);
-            await sql.query('update reservacupo set nompadre = ?, apellpadre = ?, docpadre = ?, emailpadre = ?, padrecelular = ?, tipoidpadre_id = ?, munexppadre_id = ? where id = ?;', [body.nompadre, body.apellpadre, body.docpadre, body.emailpadre, body.padrecelular, body.tipoidpadre_id, body.munexppadre_id, id]);
+            await sql.query('update reservacupo set nompadre = ?, apellpadre = ?, docpadre = ?, emailpadre = ?, padrecelular = ?, tipoidpadre_id = ?, munexppadre_id = ?, padreoficina = ? where id = ?;', [body.nompadre, body.apellpadre, body.docpadre, body.emailpadre, body.padrecelular, body.tipoidpadre_id, body.munexppadre_id, body.padreoficina ,id]);
         }
         if (body.madreviva === '1'){
             await sql.query('update estudiante_familia set email = ?, celular = ? where idestudiante = ? and idparentesco = 2;', [body.madreemail, body.madrecelular, student[0].id]);
-            await sql.query('update reservacupo set nommadre = ?, apellmadre = ?, docmadre = ?, madreemail = ?, madrecelular = ?, tipoidmadre_id = ?, munexpmadre_id = ? where id = ?', [body.nommadre, body.apellmadre, body.docmadre, body.madreemail, body.madrecelular, body.tipoidmadre_id, body.munexpmadre_id, id]);
+            await sql.query('update reservacupo set nommadre = ?, apellmadre = ?, docmadre = ?, madreemail = ?, madrecelular = ?, tipoidmadre_id = ?, munexpmadre_id = ?, madreoficina = ? where id = ?', [body.nommadre, body.apellmadre, body.docmadre, body.madreemail, body.madrecelular, body.tipoidmadre_id, body.munexpmadre_id, body.madreoficina, id]);
         }
         
-        await sql.query('update reservacupo set acuparentesco_id = ?, nomacu = ?, apellacu = ?, docacu = ?, tipoidacu_id = ?, munexpacu_id = ?, acuemail = ?, acucelular = ?, declaratipo = ?, declaranombres = ?, declaraapellidos = ?, declaradocumento = ?, declaratipoid = ?, declaraemail = ?, declaracelular = ?, declarafechanace = ?, declaralugarnace = ?, declaradireccion = ?, declarareside = ?, declaraocupacion = ?, declaralugarexpide = ?, decactivos = ?, decpasivos = ?, decpatrimonio = ?, decotrosing = ?, decconcepto = ?, decrpublicos = ?, decppublic = ?, decvincpublico = ?, decextranjero = ?, decorigen = ?, decimporta = ?, decexporta = ?, decinversiones = ?, dectransferencias = ?, decmonextern = ?, deccuentasme = ?, kpsystem = ?, declaraparentesco = ? where id = ?;', [body.acuparentesco_id, body.nomacu, body.apellacu, body.docacu, body.tipoidacu_id, body.munexpacu_id, body.acuemail, body.acucelular, body.declaratipo, body.declaranombres, body.declaraapellidos, body.declaradocumento, body.declaratipoid, body.declaraemail, body.declaracelular, body.declarafechanace, body.declaralugarnace, body.declaradireccion, body.declarareside, body.declaraocupacion, body.declaralugarexpide, body.decactivos, body.decpasivos, body.decpatrimonio, body.decotrosing, body.decconcepto, body.decrpublicos, body.decppublic, body.decvincpublico, body.decextranjero, body.decorigen, body.decimporta, body.decexporta, body.decinversiones, body.dectransferencias, body.decmonextern, body.deccuentasme, 1, body.declaraparentesco, id]);
+        await sql.query('update reservacupo set acuparentesco_id = ?, nomacu = ?, apellacu = ?, docacu = ?, tipoidacu_id = ?, munexpacu_id = ?, acuemail = ?, acucelular = ?, declaratipo = ?, declaranombres = ?, declaraapellidos = ?, declaradocumento = ?, declaratipoid = ?, declaraemail = ?, declaracelular = ?, declarafechanace = ?, declaralugarnace = ?, declaradireccion = ?, declarareside = ?, declaraocupacion = ?, declaralugarexpide = ?, decactivos = ?, decpasivos = ?, decpatrimonio = ?, decotrosing = ?, decconcepto = ?, decrpublicos = ?, decppublic = ?, decvincpublico = ?, decextranjero = ?, decorigen = ?, decimporta = ?, decexporta = ?, decinversiones = ?, dectransferencias = ?, decmonextern = ?, deccuentasme = ?, kpsystem = ?, declaraparentesco = ?, declarapais = ?, acuoficina= ? where id = ?;', [body.acuparentesco_id, body.nomacu, body.apellacu, body.docacu, body.tipoidacu_id, body.munexpacu_id, body.acuemail, body.acucelular, body.declaratipo, body.declaranombres, body.declaraapellidos, body.declaradocumento, body.declaratipoid, body.declaraemail, body.declaracelular, body.declfechanacedb , body.declaralugarnace, body.declaradireccion, body.declarareside, body.declaraocupacion, body.declaralugarexpide, body.decactivos, body.decpasivos, body.decpatrimonio, body.decotrosing, body.decconcepto, body.decrpublicos, body.decppublic, body.decvincpublico, body.decextranjero, body.decorigen, body.decimporta, body.decexporta, body.decinversiones, body.dectransferencias, body.decmonextern, body.deccuentasme, 1, body.declaraparentesco, body.declarapais , body.acuoficina ,id]);
 
         return new Response(JSON.stringify({message: 'ok'}), {
             status: 200,

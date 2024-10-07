@@ -11,7 +11,7 @@
     import * as RadioGroup from '$lib/components/ui/radio-group';
     import * as Pagination from '$lib/components/ui/pagination';
     import toast from "svelte-french-toast";
-    import {Acudiente} from '$lib/lib/pdf_doc';
+    import {Acudiente, PadreMadre} from '$lib/lib/pdf_doc';
 
     let page = 1;
     let title = 'Datos del estudiante'
@@ -40,6 +40,9 @@
       docpadre: '',
       emailpadre: null,
       padrecelular: null,
+      padreoficina: null,
+      padretelcorto: null,
+      padretelcompleto: null,
       tipoidpadre_id: null,
       tipoidpadre_label_frontend: '',
       munexppadre_id: null,
@@ -50,6 +53,9 @@
       docmadre: '',
       madreemail: null,
       madrecelular: null,
+      madreoficina: null,
+      madretelcorto: null,
+      madretelcompleto: null,
       tipoidmadre_id: null,
       tipoidmadre_label_frontend: '',
       munexpmadre_id: null,
@@ -66,6 +72,9 @@
       munexpacu_label_frontend: '',
       acuemail: null,
       acucelular: null,
+      acuoficina: null,
+      acutelcorto: null,
+      acutelcompleto: null,
       declaraparentesco: null,
       declaratipo: 0,
       declaranombres: null,
@@ -76,7 +85,6 @@
       declaraemail: null,
       declaracelular: null,
       declarafechanace: null,
-      declaralugarnace: null,
       declaralugarnace_label_frontend: '',
       declaradireccion: null,
       declarareside: null,
@@ -85,6 +93,7 @@
       declaraocupacion_label_frontend: '',
       declaralugarexpide: null,
       declaralugarexpide_label_frontend: '',
+      declarapais: null,
       decactivos: null,
       decpasivos: null,
       decpatrimonio: null,
@@ -108,49 +117,21 @@
 
     let dec = null;
 
-    export let typeOfDocument = []
+    let directioDec = {
+      type: '',
+      type_label: '',
+      name: '',
+      numberone: '',
+      numbertwo: '',
+    }
+
+    export let typeOfDocument = [];
 
     export let Municipality = [];
 
-    export let neighborhood = []
+    export let neighborhood = [];
 
-    const nationality = [
-        {value: '1', label: 'Colombiano'},
-        {value: '2', label: 'Venezolano'},
-        {value: '3', label: 'Ecuatoriano'},
-        {value: '4', label: 'Peruano'},
-        {value: '5', label: 'Brasileño'},
-        {value: '6', label: 'Argentino'},
-        {value: '7', label: 'Chileno'},
-        {value: '8', label: 'Uruguayo'},
-        {value: '9', label: 'Paraguayo'},
-        {value: '10', label: 'Boliviano'},
-        {value: '11', label: 'Mexicano'},
-        {value: '12', label: 'Estadounidense'},
-        {value: '13', label: 'Canadiense'},
-        {value: '14', label: 'Español'},
-        {value: '15', label: 'Portugués'},
-        {value: '16', label: 'Francés'},
-        {value: '17', label: 'Alemán'},
-        {value: '18', label: 'Italiano'},
-        {value: '19', label: 'Inglés'},
-        {value: '20', label: 'Holandés'},
-        {value: '21', label: 'Sueco'},
-        {value: '22', label: 'Noruego'},
-        {value: '23', label: 'Danés'},
-        {value: '24', label: 'Finlandés'},
-        {value: '25', label: 'Ruso'},
-        {value: '26', label: 'Chino'},
-        {value: '27', label: 'Japonés'},
-        {value: '28', label: 'Coreano'},
-        {value: '29', label: 'Indio'},
-        {value: '30', label: 'Australiano'},
-        {value: '31', label: 'Neozelandés'},
-        {value: '32', label: 'Sudafricano'},
-        {value: '33', label: 'Nigeriano'},
-        {value: '34', label: 'Argelino'},
-        {value: '35', label: 'Marroquí'},
-    ]
+    export let country = [];
 
     export let occupation = [];
 
@@ -214,6 +195,9 @@
         data.acucelular = data.padrecelular;
         data.tipoidacu_label_frontend = data.tipoidpadre_label_frontend;
         data.munexpacu_label_frontend = data.munexppadre_label_frontend;
+        data.acuparentesco_id = '1';
+        data.acutelcorto = data.padretelcorto;
+        data.acutelcompleto = data.padretelcompleto;
       }else if(acu === '1'){
         data.nomacu = data.nommadre;
         data.apellacu = data.apellmadre;
@@ -224,6 +208,9 @@
         data.acucelular = data.madrecelular;
         data.tipoidacu_label_frontend = data.tipoidmadre_label_frontend;
         data.munexpacu_label_frontend = data.munexpmadre_label_frontend;
+        data.acuparentesco_id = '2';
+        data.acutelcorto = data.madretelcorto;
+        data.acutelcompleto = data.madretelcompleto;
       }
 
       if (dec === '0'){
@@ -235,6 +222,8 @@
         data.declaracelular = data.padrecelular;
         data.declaratipoid_label_frontend = data.tipoidpadre_label_frontend;
         data.declaralugarexpide_label_frontend = data.munexppadre_label_frontend;
+        data.declaralugarexpide = data.munexppadre_id;
+        data.declaraparentesco = '1';
       }else if (dec === '1'){
         data.declaranombres = data.nommadre;
         data.declaraapellidos = data.apellmadre;
@@ -244,6 +233,8 @@
         data.declaracelular = data.madrecelular;
         data.declaratipoid_label_frontend = data.tipoidmadre_label_frontend;
         data.declaralugarexpide_label_frontend = data.munexpmadre_label_frontend;
+        data.declaralugarexpide = data.munexpmadre_id;
+        data.declaraparentesco = '2';
       }
 
       if (data.declarafechanace === undefined){
@@ -254,13 +245,37 @@
       }
 
       data.declfechanace = `${data.declarafechanace.day}/${data.declarafechanace.month}/${data.declarafechanace.year}`;
+      data.declfechanacedb = `${data.declarafechanace.year}-${data.declarafechanace.month}-${data.declarafechanace.day}`;
+
+      data.padreoficina = `${data.padretelcorto}${data.padretelcompleto}`;
+      data.madreoficina = `${data.madretelcorto}${data.madretelcompleto}`;
+      data.acuoficina = `${data.acutelcorto}${data.acutelcompleto}`;
+
+      if (data.padreoficina.length > 20){
+        loading = 0;
+        messageLoading = '¿Enviar formulario?';
+        toast.error('El teléfono del trabajo no puede tener más de 20 caracteres');
+        return;
+      }else if (data.madreoficina.length > 20){
+        loading = 0;
+        messageLoading = '¿Enviar formulario?';
+        toast.error('El teléfono del trabajo no puede tener más de 20 caracteres');
+        return;
+      }else if (data.acuoficina.length > 20){
+        loading = 0;
+        messageLoading = '¿Enviar formulario?';
+        toast.error('El teléfono del trabajo no puede tener más de 20 caracteres');
+        return;
+      }
+
+      data.declaradireccion = `${directioDec.type} ${directioDec.name} ${directioDec.numberone} ${directioDec.numbertwo}`;
 
       if(data.nomacu === undefined || data.apellacu === undefined || data.docacu === undefined || data.tipoidacu_id === undefined || data.munexpacu_id === undefined || data.acuemail === undefined || data.acucelular === undefined || data.acuparentesco_id === undefined){
         loading = 0;
         messageLoading = '¿Enviar formulario?';
         toast.error('Llene todos los campos del acudiente');
         return;
-      }else if (data.declaraparentesco === undefined || data.declaranombres === undefined || data.declaraapellidos === undefined || data.declaradocumento === undefined || data.declaratipoid === undefined || data.declaralugarnace === undefined || data.declaradireccion === undefined || data.declarareside === undefined || data.declaralugarexpide === undefined || data.declaraemail === undefined || data.declaracelular === undefined || data.declarafechanace === undefined || data.declaraocupacion === undefined){
+      }else if (data.declaraparentesco === undefined || data.declaranombres === undefined || data.declaraapellidos === undefined || data.declaradocumento === undefined || data.declaratipoid === undefined || data.declarapais === undefined || data.declaradireccion === undefined || data.declarareside === undefined || data.declaralugarexpide === undefined || data.declaraemail === undefined || data.declaracelular === undefined || data.declarafechanace === undefined || data.declaraocupacion === undefined){
         loading = 0;
         messageLoading = '¿Enviar formulario?';
         toast.error('Llene todos los campos del declarante');
@@ -276,23 +291,34 @@
     }
 
     async function fillOutForm(){
-      messageLoading = 'Creando pdf...';
+      messageLoading = 'Actualizando datos...';
 
       try {
 
+        let res = await save();
+
+        if (!res){
+          loading = 0;
+          messageLoading = '¿Enviar formulario?';
+          return;
+        }
+
+        messageLoading = 'Generando PDF...';
+        /*
         if (data.padrevivo !== '1' & data.madrevive !== '1'){
           Acudiente(data);
+        }else if (data.padrevivo === '1' & data.madrevive === '1'){
+          PadreMadre(data);
         }
+        */
 
         messageLoading = 'Terminado'
         loading = 2;
 
-        //save();
-
       } catch (error) {
         messageLoading = '¿Enviar formulario?';
         loading = 0;
-        toast.error('Llene todos los campos requeridos');
+        toast.error('Llene todos los campos requeridos sin errores');
       }
     }
 
@@ -305,7 +331,14 @@
         body: JSON.stringify(data)
       });
 
-      console.log(await res.json());
+      if (res.status !== 200){
+        toast.error('Error al enviar el formulario');
+        return false;
+      }
+
+      toast.success('Datos actualizados correctamente');
+
+      return true;
     }
 
 </script>
@@ -562,8 +595,8 @@
             <div class="flex flex-col gap-1.5">
                 <label for="work-phone">Teléfono del trabajo</label>
                 <div class="flex gap-3" >
-                    <Input class="w-[50px]" type="number" placeholder="601" />
-                    <Input class="w-[240px]" type="number" id="work-phone" placeholder="Teléfono del trabajo" />
+                    <Input class="w-[50px]" type="number" placeholder="601" bind:value={data.padretelcorto} />
+                    <Input class="w-[240px]" type="number" id="work-phone" placeholder="Teléfono del trabajo" bind:value={data.padretelcompleto} />
                 </div>
             </div>
         </div>
@@ -659,8 +692,8 @@
             <div class="flex flex-col gap-1.5">
                 <label for="work-phone">Teléfono del trabajo</label>
                 <div class="flex gap-3" >
-                    <Input class="w-[50px]" type="number" placeholder="601" />
-                    <Input class="w-[240px]" type="number" id="work-phone" placeholder="Teléfono del trabajo" />
+                    <Input class="w-[50px]" type="number" placeholder="601" bind:value={data.madretelcorto} />
+                    <Input class="w-[240px]" type="number" id="work-phone" placeholder="Teléfono del trabajo" bind:value={data.madretelcompleto} />
                 </div>
             </div>
         </div>
@@ -815,8 +848,16 @@
             <div class="flex flex-col gap-1.5">
                 <label for="work-phone">Teléfono del trabajo</label>
                 <div class="flex gap-3" >
-                    <Input class="w-[50px]" type="number" placeholder="601" />
-                    <Input class="w-[240px]" type="number" id="work-phone" placeholder="Teléfono del trabajo" />
+                    {#if acu === '0'}
+                        <Input class="w-[50px]" type="number" placeholder="601" bind:value={data.padretelcorto} disabled />
+                        <Input class="w-[240px]" type="number" id="work-phone" placeholder="Teléfono del trabajo" disabled bind:value={data.padretelcompleto} />
+                    {:else if acu === '1'}
+                        <Input class="w-[50px]" type="number" placeholder="601" bind:value={data.madretelcorto} disabled />
+                        <Input class="w-[240px]" type="number" id="work-phone" placeholder="Teléfono del trabajo" disabled bind:value={data.madretelcompleto} />
+                    {:else if acu === '2'}
+                        <Input class="w-[50px]" type="number" placeholder="601" bind:value={data.acutelcorto} />
+                        <Input class="w-[240px]" type="number" id="work-phone" placeholder="Teléfono del trabajo" bind:value={data.acutelcompleto} />
+                    {/if}
                 </div>
             </div>
         </div>
@@ -987,16 +1028,16 @@
         <div class=" flex items-center justify-center gap-10 flex-wrap mt-5" >
             <div class=" flex flex-col gap-1.5" >
                 <label for="">Nacionalidad <strong class=" text-red-600" >*</strong> </label>
-                <Select.Root onSelectedChange={(v)=> data.declaralugarnace = v.value} >
+                <Select.Root onSelectedChange={(v)=> data.declarapais = v.value} >
                   <Select.Trigger class="w-[300px]">
                     <Select.Value placeholder="Nacionalidad" />
                   </Select.Trigger>
                   <Select.Content class="h-40 overflow-auto" >
                     <Select.Group>
                       <Select.Label>Nacionalidades</Select.Label>
-                      {#each nationality as item}
-                        <Select.Item value={item.value} label={item.label}
-                          >{item.label}</Select.Item
+                      {#each country as item}
+                        <Select.Item value={item.id} label={item.nombre}
+                          >{item.nombre}</Select.Item
                         >
                       {/each}
                     </Select.Group>
@@ -1028,9 +1069,52 @@
             </div>
             <div class="flex flex-col gap-1.5">
                 <label for="Residence-address">Dirección de residencia <strong class=" text-red-600" >*</strong> </label>
-                <Input class="w-[300px]" type="text" id="Residence-address" placeholder="Dirección de residencia" bind:value={data.declaradireccion} />
+                <div class="flex gap-2 items-center flex-wrap" >
+                <Select.Root selected={{label:directioDec.type_label}}
+                onSelectedChange={(v)=> {
+                  directioDec.type = v.value
+                  directioDec.type_label = v.label}} >
+                  <Select.Trigger class="w-[150px]">
+                    <Select.Value placeholder="Tipo de calle" />
+                  </Select.Trigger>
+                  <Select.Content class="h-40 overflow-auto" >
+                    <Select.Group>
+                      <Select.Label>Tipo de calle</Select.Label>
+                        <Select.Item value={'AV'} label="Avenida"
+                          >Avenida</Select.Item
+                        >
+                        <Select.Item value={'CL'} label="Calle"
+                          >Calle</Select.Item
+                        >
+                        <Select.Item value={'CR'} label="Carrera"
+                          >Calle</Select.Item
+                        >
+                        <Select.Item value={'DG'} label="Diagonal"
+                          >Diagonal</Select.Item
+                        >
+                        <Select.Item value={'TV'} label="Transversal"
+                          >Transversal</Select.Item
+                        >
+                        <Select.Item value={'AC'} label="Avenida Carrera"
+                          >Avenida Carrera</Select.Item
+                        >
+                        <Select.Item value={'AK'} label="Avenida Calle"
+                          >Avenida Calle</Select.Item
+                        >
+                    </Select.Group>
+                  </Select.Content>
+                  <Select.Input name="document issuance" />
+                </Select.Root>
+                <Input class="w-[100px]" type="text" placeholder="5 SUR" bind:value={directioDec.name} />
+                <p>#</p>
+                <Input class="w-[50px]" type="text" placeholder="" bind:value={directioDec.numberone} />
+                <p>-</p>
+                <Input class="w-[50px]" type="text" placeholder="" bind:value={directioDec.numbertwo} />
+                </div>
             </div>
-            <div class=" flex flex-col gap-1.5" >
+        </div>
+        <div class=" flex items-center justify-center gap-10 flex-wrap mt-5" >
+          <div class=" flex flex-col gap-1.5" >
                 <label for="">Municipio <strong class=" text-red-600" >*</strong> </label>
                 <Select.Root selected={{label:data.declarareside_label_frontend}} onSelectedChange={(v)=>{
                   data.declarareside = v.value
