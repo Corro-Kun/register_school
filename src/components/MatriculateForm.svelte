@@ -11,7 +11,7 @@
     import * as RadioGroup from '$lib/components/ui/radio-group';
     import * as Pagination from '$lib/components/ui/pagination';
     import toast from "svelte-french-toast";
-    import {Acudiente, PadreMadre} from '$lib/lib/pdf_doc';
+    import {Acudiente, PadreMadre, PadreAcudiente, MadreAcudiente} from '$lib/lib/pdf_doc';
 
     let page = 1;
     let title = 'Datos del estudiante'
@@ -99,18 +99,25 @@
       decpatrimonio: null,
       decotrosing: '',
       decconcepto: '',
-      decrpublicos: null,
-      decppublic: null,
-      decvincpublico: null,
-      decextranjero: null,
+      decrpublicos: '0',
+      decppublic: '0',
+      decvincpublico: '0',
+      decextranjero: '0',
       decorigen: null,
       decimporta: 0,
       decexporta: 0,
       decinversiones: 0,
       dectransferencias: 0,
       decotrasmact: 0,
-      decmonextern: null,
-      deccuentasme: null,
+      decmonextern: '0',
+      deccuentasme: '0',
+      prodtypeex: null,
+      prodident: null,
+      prodnum: null,
+      prodmonto: null,
+      prodcountr: null,
+      prodmuni: null,
+      prodmoneda: null
     }
 
     let acu = null;
@@ -196,6 +203,7 @@
         data.tipoidacu_label_frontend = data.tipoidpadre_label_frontend;
         data.munexpacu_label_frontend = data.munexppadre_label_frontend;
         data.acuparentesco_id = '1';
+        data.acuparentesco_label_frontend = 'Padre';
         data.acutelcorto = data.padretelcorto;
         data.acutelcompleto = data.padretelcompleto;
       }else if(acu === '1'){
@@ -209,6 +217,7 @@
         data.tipoidacu_label_frontend = data.tipoidmadre_label_frontend;
         data.munexpacu_label_frontend = data.munexpmadre_label_frontend;
         data.acuparentesco_id = '2';
+        data.acuparentesco_label_frontend = 'Madre';
         data.acutelcorto = data.madretelcorto;
         data.acutelcompleto = data.madretelcompleto;
       }
@@ -281,6 +290,7 @@
         toast.error('Llene todos los campos del declarante');
         return;
       }else if (data.decactivos === undefined || data.decpasivos === undefined || data.decpatrimonio === undefined || data.decrpublicos === undefined || data.decvincpublico === undefined || data.decextranjero === undefined || data.decorigen === undefined || data.decmonextern === undefined || data.deccuentasme === undefined){
+        console.log(data.decactivos, data.decpasivos, data.decpatrimonio, data.decrpublicos, data.decvincpublico, data.decextranjero, data.decorigen, data.decmonextern, data.deccuentasme);
         loading = 0;
         messageLoading = '¿Enviar formulario?';
         toast.error('Llene todos los campos financieros del declarante');
@@ -304,13 +314,20 @@
         }
 
         messageLoading = 'Generando PDF...';
-        /*
-        if (data.padrevivo !== '1' & data.madrevive !== '1'){
-          Acudiente(data);
-        }else if (data.padrevivo === '1' & data.madrevive === '1'){
-          PadreMadre(data);
+
+        console.log(import.meta.env.PUBLIC_SCHOOL);
+
+        if (import.meta.env.PUBLIC_SCHOOL === 'medellin'){
+          if (data.padrevivo !== '1' & data.madrevive !== '1'){
+            await Acudiente(data);
+          }else if (data.padrevivo === '1' & data.madrevive !== '1'){
+            await PadreAcudiente(data);
+          }else if (data.padrevivo !== '1' & data.madrevive === '1'){
+            await MadreAcudiente(data);
+          }else if (data.padrevivo === '1' & data.madrevive === '1'){
+            await PadreMadre(data);
+          }
         }
-        */
 
         messageLoading = 'Terminado'
         loading = 2;
@@ -1337,8 +1354,74 @@
                 </Select.Root>
             </div>
         </div>
+        <div class=" flex items-center justify-center gap-10 flex-wrap mt-5" >
+          <div class=" flex flex-col gap-1.5 items-center" >
+            <label for="">Tipo de producto financiero en el exterior.</label>
+            <Input class="w-[300px]" type="text" placeholder="Tipo de producto financiero en el exterior." />
+          </div>
+          <div>
+            <label for="">Identificación del producto.</label>
+            <Input class="w-[300px]" type="number" placeholder="Identificación del producto." />
+          </div>
+          <div>
+            <label for="">N° del producto.</label>
+            <Input class="w-[300px]" type="number" placeholder="N° del producto." />
+          </div>
+        </div>
+        <div class=" flex items-center justify-center gap-10 flex-wrap mt-5" >
+          <div  >
+            <label for="">Monto.</label>
+            <Input class="w-[300px]" type="number" placeholder="Monto." />
+          </div>
+          <div>
+            <label for="">País.</label>
+            <Select.Root selected={{label: 'Colombia'}} >
+              <Select.Trigger class="w-[300px]">
+                <Select.Value placeholder="País." />
+              </Select.Trigger>
+              <Select.Content class="h-40 overflow-auto" >
+                <Select.Group>
+                  <Select.Label>Países</Select.Label>
+                  {#each country as item}
+                    <Select.Item value={item.id} label={item.nombre}
+                      >{item.nombre}</Select.Item
+                    >
+                  {/each}
+                </Select.Group>
+              </Select.Content>
+              <Select.Input name="document issuance" />
+            </Select.Root>
+          </div>
+          <div>
+            <label for="">Ciudad.</label>
+            <Select.Root selected={{label: 'Bogotá'}} 
+              onSelectedChange={(v)=> data.prodmuni = v.label}
+            >
+              <Select.Trigger class="w-[300px]">
+                <Select.Value placeholder="Ciudad." />
+              </Select.Trigger>
+              <Select.Content class="h-40 overflow-auto" >
+                <Select.Group>
+                  <Select.Label>Ciudades</Select.Label>
+                  {#each Municipality as item}
+                    <Select.Item value={item.id} label={item.nombre}
+                      >{item.nombre}</Select.Item
+                    >
+                  {/each}
+                </Select.Group>
+              </Select.Content>
+              <Select.Input name="document issuance" />
+            </Select.Root>
+          </div>
+        </div>
     {:else if page === 8}
-        <div class="flex items-center justify-center flex-col gap-2" >
+        <div class=" flex items-center justify-center gap-10 flex-wrap mt-5" >
+          <div>
+            <label for="">Moneda.</label>
+            <Input class="w-[300px]" type="text" placeholder="Moneda." bind:value={data.prodmoneda} />
+          </div>
+        </div>
+        <div class="flex items-center justify-center flex-col gap-2 mt-4" >
           <p>{messageLoading}</p>
           {#if loading === 0}
           <button class="px-5 py-2 bg-slate-900 text-white rounded-sm" on:click={formartData} >Enviar</button>

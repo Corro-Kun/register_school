@@ -68,6 +68,8 @@ export const POST: APIRoute = async ({ params, request }) => {
             id = insert.insertId;
         }
 
+        await sql.query('update estudiante set reservacupo_id = ? where id = ?;', [id, student[0].id]);
+
         if (body.padrevivo === '1'){
             await sql.query('update estudiante_familia set email = ?, celular = ? where idestudiante = ? and idparentesco = 1;', [body.emailpadre, body.padrecelular, student[0].id]);
             await sql.query('update reservacupo set nompadre = ?, apellpadre = ?, docpadre = ?, emailpadre = ?, padrecelular = ?, tipoidpadre_id = ?, munexppadre_id = ?, padreoficina = ? where id = ?;', [body.nompadre, body.apellpadre, body.docpadre, body.emailpadre, body.padrecelular, body.tipoidpadre_id, body.munexppadre_id, body.padreoficina ,id]);
