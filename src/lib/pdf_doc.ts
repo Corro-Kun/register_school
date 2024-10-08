@@ -3238,3 +3238,148 @@ export async function MadreAcudiente(data: any){
     link.click();
     link.remove();
 }
+
+export async function Chia(data:any) {
+    const pdfUrl = '/Reserva_Bogota.pdf';
+    const existingPdfBytes = await fetch(pdfUrl).then(res => res.arrayBuffer());  
+
+    const pdfDoc = await PDFDocument.load(existingPdfBytes);
+
+    // student data
+
+    let namesStudent = data.nombres + ' ' + data.apellidos;
+
+    pdfDoc.setTitle('2025 ' + namesStudent);
+
+    let datanew = new Date();
+    let dateBirth = new Date(data.fechanace+'T00:00:00');
+
+    pdfDoc.getPage(0).drawText('2025',{
+        x: 310,
+        y: pdfDoc.getPage(0).getHeight() - 93.5,
+        size: 10,
+        color: rgb(0,0,0)
+    });
+
+    pdfDoc.getPage(0).drawText('2025'+data.documento,{
+        x: 87,
+        y: pdfDoc.getPage(0).getHeight() - 156,
+        size: 10,
+        color: rgb(0,0,0)
+    });
+
+    pdfDoc.getPage(0).drawText(data.grado,{
+        x: 290,
+        y: pdfDoc.getPage(0).getHeight() - 156,
+        size: 10,
+        color: rgb(0,0,0)
+    });
+
+    pdfDoc.getPage(0).drawText(namesStudent,{
+        x: 185,
+        y: pdfDoc.getPage(0).getHeight() - 176,
+        size: 10,
+        color: rgb(0,0,0)
+    });
+
+    pdfDoc.getPage(0).drawText(data.documento,{
+        x: 120,
+        y: pdfDoc.getPage(0).getHeight() - 195.5,
+        size: 10,
+        color: rgb(0,0,0)
+    });
+
+    pdfDoc.getPage(0).drawText(data.tipoid_label_frontend.length > 29 ? data.tipoid_label_frontend.substring(0,29) + '...' : data.tipoid_label_frontend,{
+        x: 247,
+        y: pdfDoc.getPage(0).getHeight() - 195.5,
+        size: 10,
+        color: rgb(0,0,0)
+    });
+
+    pdfDoc.getPage(0).drawText(data.mupioexp_label_frontend,{
+        x: 428,
+        y: pdfDoc.getPage(0).getHeight() - 195.5,
+        size: 10,
+        color: rgb(0,0,0)
+    });
+
+    pdfDoc.getPage(0).drawText(data.fechanace,{
+        x: 240,
+        y: pdfDoc.getPage(0).getHeight() - 215,
+        size: 10,
+        color: rgb(0,0,0)
+    });
+
+    pdfDoc.getPage(0).drawText(data.municipio_label_frontend,{
+        x: 292,
+        y: pdfDoc.getPage(0).getHeight() - 235,
+        size: 10,
+        color: rgb(0,0,0)
+    });
+
+    pdfDoc.getPage(0).drawText('Colombia',{
+        x: 450,
+        y: pdfDoc.getPage(0).getHeight() - 235,
+        size: 10,
+        color: rgb(0,0,0)
+    });
+
+    pdfDoc.getPage(0).drawText(data.direccion,{
+        x: 110,
+        y: pdfDoc.getPage(0).getHeight() - 255,
+        size: 10,
+        color: rgb(0,0,0)
+    });
+
+    pdfDoc.getPage(0).drawText(data.telefono,{
+        x: 430,
+        y: pdfDoc.getPage(0).getHeight() - 255,
+        size: 10,
+        color: rgb(0,0,0)
+    });
+
+    if (data.nompadre.length > 0){
+        pdfDoc.getPage(0).drawText(data.nompadre,{
+            x: 92,
+            y: pdfDoc.getPage(0).getHeight() - 305,
+            size: 10,
+            color: rgb(0,0,0)
+        });
+        pdfDoc.getPage(0).drawText(data.docpadre,{
+            x: 455,
+            y: pdfDoc.getPage(0).getHeight() - 305,
+            size: 10,
+            color: rgb(0,0,0)
+        });
+        pdfDoc.getPage(0).drawText(data.padreoficina,{
+            x: 468,
+            y: pdfDoc.getPage(0).getHeight() - 324.5,
+            size: 10,
+            color: rgb(0,0,0)
+        });
+        pdfDoc.getPage(0).drawText(data.emailpadre,{
+            x: 145,
+            y: pdfDoc.getPage(0).getHeight() - 345,
+            size: 10,
+            color: rgb(0,0,0)
+        });
+        pdfDoc.getPage(0).drawText(data.padrecelular,{
+            x: 420,
+            y: pdfDoc.getPage(0).getHeight() - 345,
+            size: 10,
+            color: rgb(0,0,0)
+        });
+    }
+
+    const pdfBytes = await pdfDoc.save();
+
+    const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+
+    const link = document.createElement('a');
+    link.href = window.URL.createObjectURL(blob);
+
+    link.download = 'Reserva.pdf';
+
+    link.click();
+    link.remove();
+}

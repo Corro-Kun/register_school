@@ -11,7 +11,7 @@
     import * as RadioGroup from '$lib/components/ui/radio-group';
     import * as Pagination from '$lib/components/ui/pagination';
     import toast from "svelte-french-toast";
-    import {Acudiente, PadreMadre, PadreAcudiente, MadreAcudiente} from '$lib/lib/pdf_doc';
+    import {Acudiente, PadreMadre, PadreAcudiente, MadreAcudiente, Chia} from '$lib/lib/pdf_doc';
 
     let page = 1;
     let title = 'Datos del estudiante'
@@ -256,9 +256,9 @@
       data.declfechanace = `${data.declarafechanace.day}/${data.declarafechanace.month}/${data.declarafechanace.year}`;
       data.declfechanacedb = `${data.declarafechanace.year}-${data.declarafechanace.month}-${data.declarafechanace.day}`;
 
-      data.padreoficina = `${data.padretelcorto}${data.padretelcompleto}`;
-      data.madreoficina = `${data.madretelcorto}${data.madretelcompleto}`;
-      data.acuoficina = `${data.acutelcorto}${data.acutelcompleto}`;
+      data.padreoficina = data.padretelcompleto !== undefined ? `${data.padretelcorto}${data.padretelcompleto}` : '';
+      data.madreoficina = data.madretelcompleto !== undefined ? `${data.madretelcorto}${data.madretelcompleto}` : '';
+      data.acuoficina = data.acutelcompleto !== undefined ? `${data.acutelcorto}${data.acutelcompleto}` : '';
 
       if (data.padreoficina.length > 20){
         loading = 0;
@@ -277,7 +277,7 @@
         return;
       }
 
-      data.declaradireccion = `${directioDec.type} ${directioDec.name} ${directioDec.numberone} ${directioDec.numbertwo}`;
+      data.declaradireccion = `${directioDec.type.toUpperCase()} ${directioDec.name.toUpperCase()} ${directioDec.numberone.toUpperCase()} ${directioDec.numbertwo.toUpperCase()}`;
 
       if(data.nomacu === undefined || data.apellacu === undefined || data.docacu === undefined || data.tipoidacu_id === undefined || data.munexpacu_id === undefined || data.acuemail === undefined || data.acucelular === undefined || data.acuparentesco_id === undefined){
         loading = 0;
@@ -290,7 +290,6 @@
         toast.error('Llene todos los campos del declarante');
         return;
       }else if (data.decactivos === undefined || data.decpasivos === undefined || data.decpatrimonio === undefined || data.decrpublicos === undefined || data.decvincpublico === undefined || data.decextranjero === undefined || data.decorigen === undefined || data.decmonextern === undefined || data.deccuentasme === undefined){
-        console.log(data.decactivos, data.decpasivos, data.decpatrimonio, data.decrpublicos, data.decvincpublico, data.decextranjero, data.decorigen, data.decmonextern, data.deccuentasme);
         loading = 0;
         messageLoading = '¿Enviar formulario?';
         toast.error('Llene todos los campos financieros del declarante');
@@ -305,6 +304,8 @@
 
       try {
 
+        /*
+
         let res = await save();
 
         if (!res){
@@ -312,10 +313,9 @@
           messageLoading = '¿Enviar formulario?';
           return;
         }
+        */
 
         messageLoading = 'Generando PDF...';
-
-        console.log(import.meta.env.PUBLIC_SCHOOL);
 
         if (import.meta.env.PUBLIC_SCHOOL === 'medellin'){
           if (data.padrevivo !== '1' & data.madrevive !== '1'){
@@ -327,6 +327,8 @@
           }else if (data.padrevivo === '1' & data.madrevive === '1'){
             await PadreMadre(data);
           }
+        }else if (import.meta.env.PUBLIC_SCHOOL === 'chia'){
+          await Chia(data);
         }
 
         messageLoading = 'Terminado'
@@ -1414,14 +1416,14 @@
             </Select.Root>
           </div>
         </div>
-    {:else if page === 8}
         <div class=" flex items-center justify-center gap-10 flex-wrap mt-5" >
           <div>
             <label for="">Moneda.</label>
             <Input class="w-[300px]" type="text" placeholder="Moneda." bind:value={data.prodmoneda} />
           </div>
         </div>
-        <div class="flex items-center justify-center flex-col gap-2 mt-4" >
+    {:else if page === 8}
+        <div class="flex items-center justify-center flex-col gap-2" >
           <p>{messageLoading}</p>
           {#if loading === 0}
           <button class="px-5 py-2 bg-slate-900 text-white rounded-sm" on:click={formartData} >Enviar</button>
