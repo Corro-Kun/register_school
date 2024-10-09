@@ -3370,6 +3370,101 @@ export async function Chia(data:any) {
             color: rgb(0,0,0)
         });
     }
+    if(data.nommadre.length > 0){
+        pdfDoc.getPage(0).drawText(data.nommadre,{
+            x: 92,
+            y: pdfDoc.getPage(0).getHeight() - 394,
+            size: 10,
+            color: rgb(0,0,0)
+        });
+        pdfDoc.getPage(0).drawText(data.docmadre,{
+            x: 455,
+            y: pdfDoc.getPage(0).getHeight() - 394,
+            size: 10,
+            color: rgb(0,0,0)
+        });
+        pdfDoc.getPage(0).drawText(data.madreoficina,{
+            x: 468,
+            y: pdfDoc.getPage(0).getHeight() - 413.5,
+            size: 10,
+            color: rgb(0,0,0)
+        });
+        pdfDoc.getPage(0).drawText(data.madreemail,{
+            x: 145,
+            y: pdfDoc.getPage(0).getHeight() - 434,
+            size: 10,
+            color: rgb(0,0,0)
+        });
+        pdfDoc.getPage(0).drawText(data.madrecelular,{
+            x: 420,
+            y: pdfDoc.getPage(0).getHeight() - 434,
+            size: 10,
+            color: rgb(0,0,0)
+        });
+    }
+
+    pdfDoc.getPage(0).drawText(data.acuparentesco_label_frontend,{
+        x: 92,
+        y: pdfDoc.getPage(0).getHeight() - 466,
+        size: 10,
+        color: rgb(0,0,0)
+    });
+
+    pdfDoc.getPage(0).drawText(data.nomacu + ' ' + data.apellacu,{
+        x: 92,
+        y: pdfDoc.getPage(0).getHeight() - 485.5,
+        size: 10,
+        color: rgb(0,0,0)
+    });
+
+    pdfDoc.getPage(0).drawText(data.docacu,{
+        x: 455,
+        y: pdfDoc.getPage(0).getHeight() - 485.5,
+        size: 10,
+        color: rgb(0,0,0)
+    });
+
+    pdfDoc.getPage(0).drawText(data.acuoficina,{
+        x: 440,
+        y: pdfDoc.getPage(0).getHeight() - 505,
+        size: 10,
+        color: rgb(0,0,0)
+    });
+
+    pdfDoc.getPage(0).drawText(data.acuemail,{
+        x: 145,
+        y: pdfDoc.getPage(0).getHeight() - 523.8,
+        size: 10,
+        color: rgb(0,0,0)
+    });
+
+    pdfDoc.getPage(0).drawText(data.acucelular,{
+        x: 422,
+        y: pdfDoc.getPage(0).getHeight() - 523.8,
+        size: 10,
+        color: rgb(0,0,0)
+    });
+
+    pdfDoc.getPage(0).drawText(data.eps,{
+        x: 180,
+        y: pdfDoc.getPage(0).getHeight() - 562,
+        size: 10,
+        color: rgb(0,0,0)
+    });
+
+    pdfDoc.getPage(0).drawText(data.emernombre,{
+        x: 100,
+        y: pdfDoc.getPage(0).getHeight() - 637,
+        size: 10,
+        color: rgb(0,0,0)
+    });
+
+    pdfDoc.getPage(0).drawText(data.emertelefono,{
+        x: 400,
+        y: pdfDoc.getPage(0).getHeight() - 637,
+        size: 10,
+        color: rgb(0,0,0)
+    });
 
     const pdfBytes = await pdfDoc.save();
 

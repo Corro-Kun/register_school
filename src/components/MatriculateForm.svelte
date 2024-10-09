@@ -12,6 +12,7 @@
     import * as Pagination from '$lib/components/ui/pagination';
     import toast from "svelte-french-toast";
     import {Acudiente, PadreMadre, PadreAcudiente, MadreAcudiente, Chia} from '$lib/lib/pdf_doc';
+    import {navigate} from 'astro:transitions/client';
 
     let page = 1;
     let title = 'Datos del estudiante'
@@ -304,8 +305,6 @@
 
       try {
 
-        /*
-
         let res = await save();
 
         if (!res){
@@ -313,7 +312,6 @@
           messageLoading = '¿Enviar formulario?';
           return;
         }
-        */
 
         messageLoading = 'Generando PDF...';
 
@@ -334,6 +332,7 @@
         messageLoading = 'Terminado'
         loading = 2;
 
+        navigate('/reserva/finalizar');
       } catch (error) {
         messageLoading = '¿Enviar formulario?';
         loading = 0;
