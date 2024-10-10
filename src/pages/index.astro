@@ -4,7 +4,8 @@ import Layout from '$lib/layouts/Layout.astro';
 ---
 
 <Layout title='Inicio | Manyanet medellin'>
-    <div class="flex justify-center items-center w-full h-full gap-10" >
+    <div class="flex justify-center items-center w-full h-full gap-10 flex-col" >
+      <div class="flex gap-10" >
         <a class="flex p-1 flex-col border-2 cursor-pointer items-center rounded-lg border-slate-400 text-slate-400" >
             <svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-report-medical">
               <path stroke="none" d="M0 0h24v24H0z" fill="none" />
@@ -13,7 +14,7 @@ import Layout from '$lib/layouts/Layout.astro';
               <path d="M10 14l4 0" />
               <path d="M12 12l0 4" />
             </svg>
-            <h2>Prematricula</h2>
+            <h2>Nuevos Alumnos</h2>
         </a>
         <a href="/reserva" class="flex p-1 flex-col border-2 cursor-pointer items-center rounded-lg border-slate-900 hover:bg-slate-100 delay-75" >
             <svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-file-check">
@@ -22,7 +23,8 @@ import Layout from '$lib/layouts/Layout.astro';
               <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" />
               <path d="M9 15l2 2l4 -4" />
             </svg>
-            <h2>Reserva de Cupo</h2>
+            <h2>Antiguos Alumnos</h2>
         </a>
+      </div>
     </div>
 </Layout>
