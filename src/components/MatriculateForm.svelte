@@ -13,6 +13,7 @@
     import toast from "svelte-french-toast";
     import {Acudiente, PadreMadre, PadreAcudiente, MadreAcudiente, Chia} from '$lib/lib/pdf_doc';
     import {navigate} from 'astro:transitions/client';
+    import {onMount} from 'svelte';
 
     let page = 1;
     let title = 'Datos del estudiante'
@@ -118,7 +119,8 @@
       prodmonto: null,
       prodcountr: null,
       prodmuni: null,
-      prodmoneda: null
+      prodmoneda: null,
+
     }
 
     let acu = null;
@@ -167,6 +169,15 @@
             title = 'Finalizar'
         }
     }
+
+    onMount(()=>{
+      data.decmonextern = '0'
+      data.deccuentasme = '0'
+      data.decrpublicos = '0'
+      data.decppublic = '0'
+      data.decvincpublico = '0'
+      data.decextranjero = '0'
+    })
 
     async function formartData(){
       loading = 1;
@@ -1358,25 +1369,25 @@
         <div class=" flex items-center justify-center gap-10 flex-wrap mt-5" >
           <div class=" flex flex-col gap-1.5 items-center" >
             <label for="">Tipo de producto financiero en el exterior.</label>
-            <Input class="w-[300px]" type="text" placeholder="Tipo de producto financiero en el exterior." />
+            <Input class="w-[300px]" type="text" placeholder="Tipo de producto financiero en el exterior." bind:value={data.prodtypeex} />
           </div>
           <div>
             <label for="">Identificación del producto.</label>
-            <Input class="w-[300px]" type="number" placeholder="Identificación del producto." />
+            <Input class="w-[300px]" type="number" placeholder="Identificación del producto." bind:value={data.prodident} />
           </div>
           <div>
             <label for="">N° del producto.</label>
-            <Input class="w-[300px]" type="number" placeholder="N° del producto." />
+            <Input class="w-[300px]" type="number" placeholder="N° del producto." bind:value={data.prodnum} />
           </div>
         </div>
         <div class=" flex items-center justify-center gap-10 flex-wrap mt-5" >
           <div  >
             <label for="">Monto.</label>
-            <Input class="w-[300px]" type="number" placeholder="Monto." />
+            <Input class="w-[300px]" type="number" placeholder="Monto." bind:value={data.prodmonto} />
           </div>
           <div>
             <label for="">País.</label>
-            <Select.Root selected={{label: 'Colombia'}} >
+            <Select.Root onSelectedChange={(v)=> data.prodcountr = v.label} >
               <Select.Trigger class="w-[300px]">
                 <Select.Value placeholder="País." />
               </Select.Trigger>
@@ -1395,7 +1406,7 @@
           </div>
           <div>
             <label for="">Ciudad.</label>
-            <Select.Root selected={{label: 'Bogotá'}} 
+            <Select.Root
               onSelectedChange={(v)=> data.prodmuni = v.label}
             >
               <Select.Trigger class="w-[300px]">
