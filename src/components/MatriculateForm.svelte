@@ -1,6 +1,7 @@
 <script>
     import CalendarIcon from "lucide-svelte/icons/calendar";
-    import {Calendar} from '$lib/components/ui/calendar';
+    import * as Calendar from '$lib/components/ui/calendar';
+    import { Calendar as CalendarPrimitive } from "bits-ui";
     import * as Popover from "$lib/components/ui/popover";
     import {Input} from '$lib/components/ui/input';
     import * as Select from '$lib/components/ui/select';
@@ -14,9 +15,33 @@
     import {Acudiente, PadreMadre, PadreAcudiente, MadreAcudiente, Chia} from '$lib/lib/pdf_doc';
     import {navigate} from 'astro:transitions/client';
     import {onMount} from 'svelte';
+    import {today, getLocalTimeZone} from "@internationalized/date";
+  import { S } from "dist/client/_astro/index.Bt3a6u4n";
 
     let page = 1;
-    let title = 'Datos del estudiante'
+    let title = 'Datos del estudiante';
+
+    const monthOptions = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December"
+    ].map((month, i) => ({ value: i + 1, label: month }));
+
+    const yearOptions = Array.from({ length: 100 }, (_, i) => ({
+      label: String(new Date().getFullYear() - i),
+      value: new Date().getFullYear() - i
+    }));
+
+    let placeholder = today(getLocalTimeZone());
 
     export let data = {
       nombres: '',
@@ -79,6 +104,7 @@
       acutelcompleto: null,
       declaraparentesco: null,
       declaratipo: 0,
+      declaraempresa: '',
       declaranombres: null,
       declaraapellidos: null,
       declaradocumento: null,
@@ -120,7 +146,11 @@
       prodcountr: null,
       prodmuni: null,
       prodmoneda: null,
-
+      inftributaria: {
+        ResponsableIVA: false,
+        CIUU: '',
+        Persona: '',
+      }
     }
 
     let acu = null;
@@ -177,6 +207,11 @@
       data.decppublic = '0'
       data.decvincpublico = '0'
       data.decextranjero = '0'
+      data.inftributaria = {
+        ResponsableIVA: false,
+        CIUU: '',
+        Persona: undefined,
+      }
     })
 
     async function formartData(){
@@ -301,12 +336,14 @@
         messageLoading = '¿Enviar formulario?';
         toast.error('Llene todos los campos del declarante');
         return;
-      }else if (data.decactivos === undefined || data.decpasivos === undefined || data.decpatrimonio === undefined || data.decrpublicos === undefined || data.decvincpublico === undefined || data.decextranjero === undefined || data.decorigen === undefined || data.decmonextern === undefined || data.deccuentasme === undefined){
+      }else if (data.decactivos === undefined || data.decpasivos === undefined || data.decpatrimonio === undefined || data.decrpublicos === undefined || data.decvincpublico === undefined || data.decextranjero === undefined || data.decorigen === undefined || data.decmonextern === undefined || data.deccuentasme === undefined || data.inftributaria.Persona === undefined){
         loading = 0;
         messageLoading = '¿Enviar formulario?';
         toast.error('Llene todos los campos financieros del declarante');
         return;
       }
+
+      data.inftributaria = JSON.stringify(data.inftributaria);
 
       fillOutForm();
     }
@@ -935,6 +972,12 @@
                 </Select.Root>
             </div>
             {/if}
+            {#if dec !== null}
+            <div class="flex flex-col gap-1.5">
+              <label for="name">Empresa</label>
+              <Input class="w-[300px]" type="text" id="name" placeholder="Empresa" bind:value={data.declaraempresa} />
+            </div>
+            {/if}
         </div>
         {#if dec !== null}
         <div class=" flex items-center justify-center gap-10 flex-wrap mt-5" >
@@ -1049,7 +1092,85 @@
                     </Button>
                   </Popover.Trigger>
                   <Popover.Content class="w-auto p-0">
-                    <Calendar bind:value={data.declarafechanace} />
+                    <CalendarPrimitive.Root  
+                      bind:value={data.declarafechanace}
+                      bind:placeholder={placeholder}
+                      let:months
+                      let:weekdays
+                      class="rounded-md border p-3"
+                      >
+                      <Calendar.Header>
+                        <Calendar.Heading class="flex w-full items-center justify-between gap-2">
+                          <Select.Root
+                            selected={''}
+                            items={monthOptions}
+                            onSelectedChange={(v) => {
+                              if (!v || !placeholder) return;
+                              if (v.value === placeholder?.month) return;
+                              placeholder = placeholder.set({ month: v.value });
+                            }}
+                          >
+                            <Select.Trigger aria-label="Select month" class="w-[60%]">
+                              <Select.Value placeholder="Select month" />
+                            </Select.Trigger>
+                            <Select.Content class="max-h-[200px] overflow-y-auto">
+                              {#each monthOptions as { value, label }}
+                                <Select.Item {value} {label}>
+                                  {label}
+                                </Select.Item>
+                              {/each}
+                            </Select.Content>
+                          </Select.Root>
+                          <Select.Root
+                            selected={''}
+                            items={yearOptions}
+                            onSelectedChange={(v) => {
+                              if (!v || !placeholder) return;
+                              if (v.value === placeholder?.month) return;
+                              placeholder.set({year: v.value});
+                              placeholder = placeholder.set({ year: v.value });
+                            }}
+                          >
+                            <Select.Trigger aria-label="Select year" class="w-[40%]">
+                              <Select.Value placeholder="Select year" />
+                            </Select.Trigger>
+                            <Select.Content class="max-h-[200px] overflow-y-auto">
+                              {#each yearOptions as { value, label }}
+                                <Select.Item {value} {label}>
+                                  {label}
+                                </Select.Item>
+                              {/each}
+                            </Select.Content>
+                          </Select.Root>
+                        </Calendar.Heading>
+                      </Calendar.Header>
+                      <Calendar.Months>
+                        {#each months as month}
+                          <Calendar.Grid>
+                            <Calendar.GridHead>
+                              <Calendar.GridRow class="flex">
+                                {#each weekdays as weekday}
+                                  <Calendar.HeadCell>
+                                    {weekday.slice(0, 2)}
+                                  </Calendar.HeadCell>
+                                {/each}
+                              </Calendar.GridRow>
+                            </Calendar.GridHead>
+                            <Calendar.GridBody>
+                              {#each month.weeks as weekDates}
+                                <Calendar.GridRow class="mt-2 w-full">
+                                  {#each weekDates as date}
+                                    <Calendar.Cell {date}>
+                                      <Calendar.Day {date} month={month.value} />
+                                    </Calendar.Cell>
+                                  {/each}
+                                </Calendar.GridRow>
+                              {/each}
+                            </Calendar.GridBody>
+                          </Calendar.Grid>
+                        {/each}
+                      </Calendar.Months>
+                    </CalendarPrimitive.Root>
                   </Popover.Content>
                 </Popover.Root>
             </div>
@@ -1164,6 +1285,61 @@
                   </Select.Content>
                   <Select.Input name="municipality" />
                 </Select.Root>
+            </div>
+            <div class=" flex flex-col gap-1.5" >
+                <label for="">ResponsableIVA <strong class=" text-red-600" >*</strong> </label>
+                <Select.Root selected={{label: data.inftributaria?.ResponsableIVA === true? 'Si': 'No'}}
+                onSelectedChange={(e) => data.inftributaria.ResponsableIVA = e.value} >
+                  <Select.Trigger class="w-[300px]">
+                    <Select.Value placeholder="Seleccione su respuesta" />
+                  </Select.Trigger>
+                  <Select.Content class="h-40 overflow-auto" >
+                    <Select.Group>
+                      <Select.Label>Seleccione su respuesta</Select.Label>
+                        <Select.Item value={true} label="Si"
+                          >Si</Select.Item
+                        >
+                        <Select.Item value={false} label="No"
+                          >No</Select.Item
+                        >
+                    </Select.Group>
+                  </Select.Content>
+                  <Select.Input name="municipality" />
+                </Select.Root> 
+            </div>
+            <div class="flex flex-col gap-1.5">
+                <label for="passive">CIUU </label>
+                <Input class="w-[300px]" type="number" id="ciuu" placeholder="CIUU" bind:value={data.inftributaria.CIUU} />
+            </div>
+            <div class="flex flex-col gap-1.5">
+                <label for="passive">Tipo de Persona <strong class=" text-red-600" >*</strong> </label>
+                <Select.Root selected={{label: data.inftributaria?.Persona}}
+                onSelectedChange={(e) => data.inftributaria.Persona= e.value} >
+                  <Select.Trigger class="w-[300px]">
+                    <Select.Value placeholder="Seleccione su respuesta" />
+                  </Select.Trigger>
+                  <Select.Content class="h-40 overflow-auto" >
+                    <Select.Group>
+                      <Select.Label>Tipos de persona</Select.Label>
+                        <Select.Item value="COMÚN" label="Común"
+                          >Común</Select.Item
+                        >
+                        <Select.Item value="SIMPLIFICADO" label="Simplificado"
+                          >Simplificado</Select.Item
+                        >
+                        <Select.Item value="PERSONA NATURAL" label="Persona Natural"
+                          >Persona Natural</Select.Item
+                        >
+                        <Select.Item value="TRIBUTACION SIMPLE" label="Tributación Simple"
+                          >Tributación Simple</Select.Item
+                        >
+                        <Select.Item value="GRAN CONTRIBUYENTE" label="Gran Contribuyente"
+                          >Gran Contribuyente</Select.Item
+                        >
+                    </Select.Group>
+                  </Select.Content>
+                  <Select.Input name="municipality" />
+                </Select.Root> 
             </div>
         </div>
         {/if}
