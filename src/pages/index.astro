@@ -1,9 +1,10 @@
 ---
 export const prerender = true;
 import Layout from '$lib/layouts/Layout.astro';
+const title = import.meta.env.PUBLIC_SCHOOL === 'medellin'? 'Inicio | Manyanet Medellín' : 'Inicio | Manyanet Chía';
 ---
 
-<Layout title='Inicio | Manyanet medellin'>
+<Layout title={title}>
     <div class="flex justify-center items-center w-full h-full gap-10 flex-col" >
       <div class="flex gap-10" >
         <a class="flex p-1 flex-col border-2 cursor-pointer items-center rounded-lg border-slate-400 text-slate-400" >

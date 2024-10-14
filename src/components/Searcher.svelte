@@ -40,7 +40,7 @@
     {#if data.names !== undefined}
     <div class="flex w-48 h-52 flex-col items-center justify-center border-solid border-2 border-primary cursor-pointer rounded-md" on:click={redirect} >
         <picture class="flex w-[100px] h-[133px] mb-2 items-center justify-center overflow-hidden rounded-md" >
-            <img class="flex w-52 h-52" src={`data:${data.type};base64,${data.photo}`} alt="">
+            <img class="flex w-52 h-52" src={data.photo === null? 'https://muytecnologicos.com/wp-content/uploads/2023/04/Autenticacion-de-usuario.png': `data:${data.type};base64,${data.photo}`} alt="">
         </picture>
         <p class="text-sm" >{data.names}</p>
         <p class="text-sm" >{data.lastnames}</p>

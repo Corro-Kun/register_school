@@ -1,0 +1,9 @@
+---
+import Layout from "$lib/layouts/Layout.astro";
+import DataTable from "$lib/components/DataTable.svelte";
+export const prerender = true;
+---
+
+<Layout title="Estudiantes con Reserva de Cupo">
+    <DataTable client:load />
+</Layout>

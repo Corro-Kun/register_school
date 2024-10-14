@@ -2,9 +2,11 @@
 import Layout from '$lib/layouts/Layout.astro';
 import Searcher from '$lib/components/Searcher.svelte';
 
+const title = import.meta.env.PUBLIC_SCHOOL === 'medellin'? 'Reserva de cupo | Manyanet Medellín' : 'Reserva de cupo | Manyanet Chía';
+
 export const prerender = true;
 ---
 
-<Layout title='Reserva de cupo | Manyanet medellin'>
+<Layout title={title}>
     <Searcher client:load />
 </Layout>

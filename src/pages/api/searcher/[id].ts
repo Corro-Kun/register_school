@@ -11,8 +11,8 @@ export const GET: APIRoute = async ({ params }) => {
     const data = {
         names: student[0].nombres,
         lastnames: student[0].apellidos,
-        photo: photo[0].data.toString('base64'),
-        type: photo[0].imagetype
+        photo: photo[0] === undefined ? null : photo[0].data.toString('base64'),
+        type: photo[0] === undefined ? null : photo[0].imagetype
     }
     return new Response(JSON.stringify(data), {
         status: 200,

@@ -1,0 +1,11 @@
+---
+import Layout from '$lib/layouts/Layout.astro';
+import AdminLogin from '$lib/components/AdminLogin.svelte';
+const title = import.meta.env.PUBLIC_SCHOOL === 'medellin'? 'Administrador | Manyanet Medellín' : 'Administrador | Chia';
+
+export const prerender = true;
+---
+
+<Layout title={title}>
+    <AdminLogin client:load />
+</Layout>

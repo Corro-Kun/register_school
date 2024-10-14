@@ -32,7 +32,7 @@ export async function Acudiente(data:any){
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(0).drawText(namesStudent,{
+    pdfDoc.getPage(0).drawText(namesStudent? namesStudent : '',{
         x: 185,
         y: pdfDoc.getPage(0).getHeight() - 216.5,
         size: 10,
@@ -76,14 +76,14 @@ export async function Acudiente(data:any){
         color: rgb(0,0,0)
     });
     
-    pdfDoc.getPage(0).drawText(data.telefono,{
+    pdfDoc.getPage(0).drawText(data.telefono? data.telefono : '',{
         x: 260,
         y: pdfDoc.getPage(0).getHeight() - 312.5,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(0).drawText(data.eps,{
+    pdfDoc.getPage(0).drawText(data.eps? data.eps : '',{
         x: 370,
         y: pdfDoc.getPage(0).getHeight() - 312.5,
         size: 10,
@@ -92,7 +92,7 @@ export async function Acudiente(data:any){
 
     // acudiente data
 
-    pdfDoc.getPage(0).drawText(data.acuparentesco_label_frontend,{
+    pdfDoc.getPage(0).drawText(data.acuparentesco_label_frontend? data.acuparentesco_label_frontend : '',{
         x: 380,
         y: pdfDoc.getPage(0).getHeight() - 350.5,
         size: 10,
@@ -120,14 +120,14 @@ export async function Acudiente(data:any){
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(0).drawText(data.acuemail,{
+    pdfDoc.getPage(0).drawText(data.acuemail? data.acuemail : '',{
         x: 200,
         y: pdfDoc.getPage(0).getHeight() - 425,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(0).drawText(data.acucelular,{
+    pdfDoc.getPage(0).drawText(data.acucelular? data.acucelular : '',{
         x: 200,
         y: pdfDoc.getPage(0).getHeight() - 445,
         size: 10,
@@ -157,42 +157,42 @@ export async function Acudiente(data:any){
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(0).drawText(data.declfechanace,{
+    pdfDoc.getPage(0).drawText(data.declfechanace? data.declfechanace : '',{
         x: 195,
         y: pdfDoc.getPage(0).getHeight() - 558,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(0).drawText(data.declaraemail,{
+    pdfDoc.getPage(0).drawText(data.declaraemail? data.declaraemail : '',{
         x: 200,
         y: pdfDoc.getPage(0).getHeight() - 576.5,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(0).drawText(data.declaracelular,{
+    pdfDoc.getPage(0).drawText(data.declaracelular? data.declaracelular : '',{
         x: 200,
         y: pdfDoc.getPage(0).getHeight() - 596.5,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(0).drawText(data.declaraocupacion_label_frontend,{
+    pdfDoc.getPage(0).drawText(data.declaraocupacion_label_frontend? data.declaraocupacion_label_frontend : '',{
         x: 143,
         y: pdfDoc.getPage(0).getHeight() - 615.8,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(0).drawText(data.declaradireccion,{
+    pdfDoc.getPage(0).drawText(data.declaradireccion? data.declaradireccion : '',{
         x: 141,
         y: pdfDoc.getPage(0).getHeight() - 634.8,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(0).drawText(data.declaraemail,{
+    pdfDoc.getPage(0).drawText(data.declaraemail? data.declaraemail : '',{
         x: 230,
         y: pdfDoc.getPage(0).getHeight() - 671.5,
         size: 10,
@@ -256,7 +256,7 @@ export async function Acudiente(data:any){
 
     // data page 4
 
-    pdfDoc.getPage(3).drawText(data.grado,{
+    pdfDoc.getPage(3).drawText(data.grado? data.grado : '',{
         x: 377,
         y: pdfDoc.getPage(3).getHeight() - 186.5,
         size: 10,
@@ -265,7 +265,7 @@ export async function Acudiente(data:any){
 
     // data page 5
 
-    pdfDoc.getPage(4).drawText(data.grado,{
+    pdfDoc.getPage(4).drawText(data.grado? data.grado : '',{
         x: 182,
         y: 138,
         size: 10,
@@ -274,21 +274,21 @@ export async function Acudiente(data:any){
 
     // data page 6
 
-    pdfDoc.getPage(5).drawText(data.grado,{
+    pdfDoc.getPage(5).drawText(data.grado? data.grado : '',{
         x: 263,
         y: pdfDoc.getPage(5).getHeight() - 240,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(5).drawText(data.grado,{
+    pdfDoc.getPage(5).drawText(data.grado? data.grado : '',{
         x: 184,
         y: 245,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(5).drawText(data.grado,{
+    pdfDoc.getPage(5).drawText(data.grado? data.grado : '',{
         x: 271,
         y: 180,
         size: 10,
@@ -304,7 +304,7 @@ export async function Acudiente(data:any){
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(7).drawText(namesOfAcu,{
+    pdfDoc.getPage(7).drawText(namesOfAcu? namesOfAcu : '',{
         x: 76,
         y: pdfDoc.getPage(7).getHeight() - 365,
         size: 10,
@@ -350,21 +350,21 @@ export async function Acudiente(data:any){
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(9).drawText(data.declaraemail,{
+    pdfDoc.getPage(9).drawText(data.declaraemail? data.declaraemail : '',{
         x: 200,
         y: 192.5,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(9).drawText(data.declaracelular,{
+    pdfDoc.getPage(9).drawText(data.declaracelular? data.declaracelular : '',{
         x: 200,
         y: 177,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(9).drawText(data.declaradireccion,{
+    pdfDoc.getPage(9).drawText(data.declaradireccion? data.declaradireccion : '',{
         x: 139,
         y: 162.5,
         size: 10,
@@ -408,35 +408,35 @@ export async function Acudiente(data:any){
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(10).drawText(data.declfechanace,{
+    pdfDoc.getPage(10).drawText(data.declfechanace? data.declfechanace : '',{
         x: 196,
         y: pdfDoc.getPage(10).getHeight() - 202,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(10).drawText(data.declaraemail,{
+    pdfDoc.getPage(10).drawText(data.declaraemail? data.declaraemail : '',{
         x: 200,
         y: pdfDoc.getPage(10).getHeight() - 216,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(10).drawText(data.declaracelular,{
+    pdfDoc.getPage(10).drawText(data.declaracelular? data.declaracelular : '',{
         x: 200,
         y: pdfDoc.getPage(10).getHeight() - 231,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(10).drawText(data.declaraocupacion_label_frontend,{
+    pdfDoc.getPage(10).drawText(data.declaraocupacion_label_frontend? data.declaraocupacion_label_frontend : '',{
         x: 141,
         y: pdfDoc.getPage(10).getHeight() - 245.5,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(10).drawText(data.declaradireccion,{
+    pdfDoc.getPage(10).drawText(data.declaradireccion? data.declaradireccion : '',{
         x: 139,
         y: pdfDoc.getPage(10).getHeight() - 260.3,
         size: 10,
@@ -557,21 +557,21 @@ export async function Acudiente(data:any){
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(11).drawText(data.declaraemail,{
+    pdfDoc.getPage(11).drawText(data.declaraemail? data.declaraemail : '',{
         x: 200,
         y: 117,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(11).drawText(data.declaracelular,{
+    pdfDoc.getPage(11).drawText(data.declaracelular? data.declaracelular : '',{
         x: 200,
         y: 102,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(11).drawText(data.declaradireccion,{
+    pdfDoc.getPage(11).drawText(data.declaradireccion? data.declaradireccion : '',{
         x: 139,
         y: 87.8,
         size: 10,
@@ -615,21 +615,21 @@ export async function Acudiente(data:any){
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(12).drawText(data.declfechanace,{
+    pdfDoc.getPage(12).drawText(data.declfechanace? data.declfechanace : '',{
         x: 196,
         y: pdfDoc.getPage(12).getHeight() - 217,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(12).drawText(data.declaraemail,{
+    pdfDoc.getPage(12).drawText(data.declaraemail? data.declaraemail : '',{
         x: 200,
         y: pdfDoc.getPage(12).getHeight() - 231.3,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(12).drawText(data.declaracelular,{
+    pdfDoc.getPage(12).drawText(data.declaracelular? data.declaracelular : '',{
         x: 200,
         y: pdfDoc.getPage(12).getHeight() - 246,
         size: 10,
@@ -657,7 +657,7 @@ export async function Acudiente(data:any){
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(12).drawText(data.grado,{
+    pdfDoc.getPage(12).drawText(data.grado? data.grado : '',{
         x: 350,
         y: pdfDoc.getPage(12).getHeight() - 416,
         size: 10,
@@ -692,21 +692,21 @@ export async function Acudiente(data:any){
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(12).drawText(data.declaraemail,{
+    pdfDoc.getPage(12).drawText(data.declaraemail? data.declaraemail : '',{
         x: 200,
         y: 161.5,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(12).drawText(data.declaracelular,{
+    pdfDoc.getPage(12).drawText(data.declaracelular? data.declaracelular : '',{
         x: 200,
         y: 146.5,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(12).drawText(data.declaradireccion,{
+    pdfDoc.getPage(12).drawText(data.declaradireccion? data.declaradireccion : '',{
         x: 139,
         y: 132,
         size: 10,
@@ -715,14 +715,14 @@ export async function Acudiente(data:any){
 
     // data page 14
 
-    pdfDoc.getPage(13).drawText(namesStudent,{
+    pdfDoc.getPage(13).drawText(namesStudent? namesStudent : '',{
         x: 260,
         y: pdfDoc.getPage(13).getHeight() - 160,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(13).drawText(namesOfAcu,{
+    pdfDoc.getPage(13).drawText(namesOfAcu? namesOfAcu : '',{
         x: 150,
         y: pdfDoc.getPage(13).getHeight() - 239,
         size: 10,
@@ -736,7 +736,7 @@ export async function Acudiente(data:any){
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(13).drawText(namesStudent,{
+    pdfDoc.getPage(13).drawText(namesStudent? namesStudent : '',{
         x: 290,
         y: pdfDoc.getPage(13).getHeight() - 315,
         size: 10,
@@ -785,7 +785,7 @@ export async function PadreMadre(data:any){
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(0).drawText(namesStudent,{
+    pdfDoc.getPage(0).drawText(namesStudent? namesStudent : '',{
         x: 185,
         y: pdfDoc.getPage(0).getHeight() - 216.5,
         size: 10,
@@ -829,14 +829,14 @@ export async function PadreMadre(data:any){
         color: rgb(0,0,0)
     });
     
-    pdfDoc.getPage(0).drawText(data.telefono,{
+    pdfDoc.getPage(0).drawText(data.telefono? data.telefono : '',{
         x: 260,
         y: pdfDoc.getPage(0).getHeight() - 311.5,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(0).drawText(data.eps,{
+    pdfDoc.getPage(0).drawText(data.eps? data.eps : '',{
         x: 365,
         y: pdfDoc.getPage(0).getHeight() - 311.5,
         size: 10,
@@ -859,14 +859,14 @@ export async function PadreMadre(data:any){
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(0).drawText(data.emailpadre,{
+    pdfDoc.getPage(0).drawText(data.emailpadre? data.emailpadre : '',{
         x: 200,
         y: pdfDoc.getPage(0).getHeight() - 425,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(0).drawText(data.padrecelular,{
+    pdfDoc.getPage(0).drawText(data.padrecelular? data.padrecelular : '',{
         x: 200,
         y: pdfDoc.getPage(0).getHeight() - 444,
         size: 10,
@@ -889,14 +889,14 @@ export async function PadreMadre(data:any){
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(0).drawText(data.madreemail,{
+    pdfDoc.getPage(0).drawText(data.madreemail? data.madreemail : '',{
         x: 200,
         y: pdfDoc.getPage(0).getHeight() - 557,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(0).drawText(data.madrecelular,{
+    pdfDoc.getPage(0).drawText(data.madrecelular? data.madrecelular : '',{
         x: 200,
         y: pdfDoc.getPage(0).getHeight() - 576,
         size: 10,
@@ -905,7 +905,7 @@ export async function PadreMadre(data:any){
 
     // declarante data
 
-    pdfDoc.getPage(0).drawText(data.declaranombres,{
+    pdfDoc.getPage(0).drawText(data.declaranombres? data.declaranombres : '',{
         x: 185,
         y: pdfDoc.getPage(0).getHeight() - 650,
         size: 10,
@@ -919,42 +919,42 @@ export async function PadreMadre(data:any){
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(0).drawText(data.declfechanace,{
+    pdfDoc.getPage(0).drawText(data.declfechanace? data.declfechanace : '',{
         x: 195,
         y: pdfDoc.getPage(0).getHeight() - 685,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(1).drawText(data.declaraemail,{
+    pdfDoc.getPage(1).drawText(data.declaraemail? data.declaraemail : '',{
         x: 200,
         y: pdfDoc.getPage(1).getHeight() - 83,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(1).drawText(data.declaracelular,{
+    pdfDoc.getPage(1).drawText(data.declaracelular? data.declaracelular : '',{
         x: 200,
         y: pdfDoc.getPage(1).getHeight() - 102.5,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(1).drawText(data.declaraocupacion_label_frontend,{
+    pdfDoc.getPage(1).drawText(data.declaraocupacion_label_frontend? data.declaraocupacion_label_frontend : '',{
         x: 141,
         y: pdfDoc.getPage(1).getHeight() - 121.5,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(1).drawText(data.declaradireccion,{
+    pdfDoc.getPage(1).drawText(data.declaradireccion? data.declaradireccion : '',{
         x: 139,
         y: pdfDoc.getPage(1).getHeight() - 141,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(1).drawText(data.declaraemail,{
+    pdfDoc.getPage(1).drawText(data.declaraemail? data.declaraemail : '',{
         x: 230,
         y: pdfDoc.getPage(1).getHeight() - 178,
         size: 10,
@@ -1045,7 +1045,7 @@ export async function PadreMadre(data:any){
 
     // data page 4
 
-    pdfDoc.getPage(3).drawText(data.grado,{
+    pdfDoc.getPage(3).drawText(data.grado? data.grado : '',{
         x: 377,
         y: pdfDoc.getPage(3).getHeight() - 214,
         size: 10,
@@ -1054,7 +1054,7 @@ export async function PadreMadre(data:any){
 
     // data page 5
 
-    pdfDoc.getPage(4).drawText(data.grado,{
+    pdfDoc.getPage(4).drawText(data.grado? data.grado : '',{
         x: 182,
         y: 99,
         size: 10,
@@ -1063,21 +1063,21 @@ export async function PadreMadre(data:any){
 
     // data page 6
 
-    pdfDoc.getPage(5).drawText(data.grado,{
+    pdfDoc.getPage(5).drawText(data.grado? data.grado : '',{
         x: 258,
         y: pdfDoc.getPage(5).getHeight() - 265,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(5).drawText(data.grado,{
+    pdfDoc.getPage(5).drawText(data.grado? data.grado : '',{
         x: 184,
         y: 219.5,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(5).drawText(data.grado,{
+    pdfDoc.getPage(5).drawText(data.grado? data.grado : '',{
         x: 271,
         y: 154.5,
         size: 10,
@@ -1093,7 +1093,7 @@ export async function PadreMadre(data:any){
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(7).drawText(namesOfPadre,{
+    pdfDoc.getPage(7).drawText(namesOfPadre? namesOfPadre : '',{
         x: 72,
         y: pdfDoc.getPage(7).getHeight() - 410,
         size: 10,
@@ -1114,7 +1114,7 @@ export async function PadreMadre(data:any){
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(7).drawText(namesOfMadre,{
+    pdfDoc.getPage(7).drawText(namesOfMadre? namesOfMadre : '',{
         x: 312,
         y: pdfDoc.getPage(7).getHeight() - 410,
         size: 10,
@@ -1160,21 +1160,21 @@ export async function PadreMadre(data:any){
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(9).drawText(data.declaraemail,{
+    pdfDoc.getPage(9).drawText(data.declaraemail? data.declaraemail : '',{
         x: 200,
         y: 166.5,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(9).drawText(data.declaracelular,{
+    pdfDoc.getPage(9).drawText(data.declaracelular? data.declaracelular : '',{
         x: 200,
         y: 151.5,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(9).drawText(data.declaradireccion,{
+    pdfDoc.getPage(9).drawText(data.declaradireccion? data.declaradireccion : '',{
         x: 139,
         y: 136.5,
         size: 10,
@@ -1218,35 +1218,35 @@ export async function PadreMadre(data:any){
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(10).drawText(data.declfechanace,{
+    pdfDoc.getPage(10).drawText(data.declfechanace? data.declfechanace : '',{
         x: 196,
         y: pdfDoc.getPage(10).getHeight() - 202,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(10).drawText(data.declaraemail,{
+    pdfDoc.getPage(10).drawText(data.declaraemail? data.declaraemail : '',{
         x: 200,
         y: pdfDoc.getPage(10).getHeight() - 216,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(10).drawText(data.declaracelular,{
+    pdfDoc.getPage(10).drawText(data.declaracelular? data.declaracelular : '',{
         x: 200,
         y: pdfDoc.getPage(10).getHeight() - 231,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(10).drawText(data.declaraocupacion_label_frontend,{
+    pdfDoc.getPage(10).drawText(data.declaraocupacion_label_frontend? data.declaraocupacion_label_frontend : '',{
         x: 141,
         y: pdfDoc.getPage(10).getHeight() - 245.5,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(10).drawText(data.declaradireccion,{
+    pdfDoc.getPage(10).drawText(data.declaradireccion? data.declaradireccion : '',{
         x: 139,
         y: pdfDoc.getPage(10).getHeight() - 260.3,
         size: 10,
@@ -1367,21 +1367,21 @@ export async function PadreMadre(data:any){
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(11).drawText(data.declaraemail,{
+    pdfDoc.getPage(11).drawText(data.declaraemail? data.declaraemail : '',{
         x: 200,
         y: 117,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(11).drawText(data.declaracelular,{
+    pdfDoc.getPage(11).drawText(data.declaracelular? data.declaracelular : '',{
         x: 200,
         y: 102,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(11).drawText(data.declaradireccion,{
+    pdfDoc.getPage(11).drawText(data.declaradireccion? data.declaradireccion : '',{
         x: 139,
         y: 87.8,
         size: 10,
@@ -1425,35 +1425,35 @@ export async function PadreMadre(data:any){
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(12).drawText(data.declfechanace,{
+    pdfDoc.getPage(12).drawText(data.declfechanace? data.declfechanace : '',{
         x: 196,
         y: pdfDoc.getPage(12).getHeight() - 217,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(12).drawText(data.declaraemail,{
+    pdfDoc.getPage(12).drawText(data.declaraemail? data.declaraemail : '',{
         x: 200,
         y: pdfDoc.getPage(12).getHeight() - 231.3,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(12).drawText(data.declaracelular,{
+    pdfDoc.getPage(12).drawText(data.declaracelular? data.declaracelular : '',{
         x: 200,
         y: pdfDoc.getPage(12).getHeight() - 246,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(12).drawText(data.declaraocupacion_label_frontend,{
+    pdfDoc.getPage(12).drawText(data.declaraocupacion_label_frontend? data.declaraocupacion_label_frontend : '',{
         x: 141,
         y: pdfDoc.getPage(12).getHeight() - 260.5,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(12).drawText(data.declaradireccion,{
+    pdfDoc.getPage(12).drawText(data.declaradireccion? data.declaradireccion : '',{
         x: 139,
         y: pdfDoc.getPage(12).getHeight() - 275,
         size: 10,
@@ -1467,7 +1467,7 @@ export async function PadreMadre(data:any){
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(12).drawText(data.grado,{
+    pdfDoc.getPage(12).drawText(data.grado? data.grado : '',{
         x: 350,
         y: pdfDoc.getPage(12).getHeight() - 416,
         size: 10,
@@ -1502,21 +1502,21 @@ export async function PadreMadre(data:any){
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(12).drawText(data.declaraemail,{
+    pdfDoc.getPage(12).drawText(data.declaraemail? data.declaraemail : '',{
         x: 200,
         y: 161.5,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(12).drawText(data.declaracelular,{
+    pdfDoc.getPage(12).drawText(data.declaracelular? data.declaracelular : '',{
         x: 200,
         y: 146.5,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(12).drawText(data.declaradireccion,{
+    pdfDoc.getPage(12).drawText(data.declaradireccion? data.declaradireccion : '',{
         x: 139,
         y: 132,
         size: 10,
@@ -1525,21 +1525,21 @@ export async function PadreMadre(data:any){
 
     // data page 14
 
-    pdfDoc.getPage(13).drawText(namesStudent,{
+    pdfDoc.getPage(13).drawText(namesStudent? namesStudent : '',{
         x: 260,
         y: pdfDoc.getPage(13).getHeight() - 160,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(13).drawText(namesOfPadre,{
+    pdfDoc.getPage(13).drawText(namesOfPadre? namesOfPadre : '',{
         x: 150,
         y: pdfDoc.getPage(13).getHeight() - 237,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(13).drawText(namesOfMadre,{
+    pdfDoc.getPage(13).drawText(namesOfMadre? namesOfMadre : '',{
         x: 150,
         y: pdfDoc.getPage(13).getHeight() - 253,
         size: 10,
@@ -1553,7 +1553,7 @@ export async function PadreMadre(data:any){
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(13).drawText(namesStudent,{
+    pdfDoc.getPage(13).drawText(namesStudent? namesStudent : '',{
         x: 290,
         y: pdfDoc.getPage(13).getHeight() - 329.5,
         size: 10,
@@ -1602,7 +1602,7 @@ export async function PadreAcudiente(data:any){
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(0).drawText(namesStudent,{
+    pdfDoc.getPage(0).drawText(namesStudent? namesStudent : '',{
         x: 185,
         y: pdfDoc.getPage(0).getHeight() - 216.5,
         size: 10,
@@ -1646,14 +1646,14 @@ export async function PadreAcudiente(data:any){
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(0).drawText(data.telefono,{
+    pdfDoc.getPage(0).drawText(data.telefono? data.telefono : '',{
         x: 260,
         y: pdfDoc.getPage(0).getHeight() - 311.5,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(0).drawText(data.eps,{
+    pdfDoc.getPage(0).drawText(data.eps? data.eps : '',{
         x: 365,
         y: pdfDoc.getPage(0).getHeight() - 311.5,
         size: 10,
@@ -1676,14 +1676,14 @@ export async function PadreAcudiente(data:any){
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(0).drawText(data.emailpadre,{
+    pdfDoc.getPage(0).drawText(data.emailpadre? data.emailpadre : '',{
         x: 200,
         y: pdfDoc.getPage(0).getHeight() - 425,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(0).drawText(data.padrecelular,{
+    pdfDoc.getPage(0).drawText(data.padrecelular? data.padrecelular : '',{
         x: 200,
         y: pdfDoc.getPage(0).getHeight() - 444,
         size: 10,
@@ -1692,7 +1692,7 @@ export async function PadreAcudiente(data:any){
 
     // acudiente data
 
-    pdfDoc.getPage(0).drawText(data.acuparentesco_label_frontend,{
+    pdfDoc.getPage(0).drawText(data.acuparentesco_label_frontend? data.acuparentesco_label_frontend : '',{
         x: 380,
         y: pdfDoc.getPage(0).getHeight() - 481.3,
         size: 10,
@@ -1713,14 +1713,14 @@ export async function PadreAcudiente(data:any){
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(0).drawText(data.acuemail,{
+    pdfDoc.getPage(0).drawText(data.acuemail? data.acuemail : '',{
         x: 200,
         y: pdfDoc.getPage(0).getHeight() - 557,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(0).drawText(data.acucelular,{
+    pdfDoc.getPage(0).drawText(data.acucelular? data.acucelular : '',{
         x: 200,
         y: pdfDoc.getPage(0).getHeight() - 576,
         size: 10,
@@ -1729,7 +1729,7 @@ export async function PadreAcudiente(data:any){
 
     // declarante data
 
-    pdfDoc.getPage(0).drawText(data.declaranombres,{
+    pdfDoc.getPage(0).drawText(data.declaranombres? data.declaranombres : '',{
         x: 185,
         y: pdfDoc.getPage(0).getHeight() - 650,
         size: 10,
@@ -1743,42 +1743,42 @@ export async function PadreAcudiente(data:any){
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(0).drawText(data.declfechanace,{
+    pdfDoc.getPage(0).drawText(data.declfechanace? data.declfechanace : '',{
         x: 195,
         y: pdfDoc.getPage(0).getHeight() - 685,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(1).drawText(data.declaraemail,{
+    pdfDoc.getPage(1).drawText(data.declaraemail? data.declaraemail : '',{
         x: 200,
         y: pdfDoc.getPage(1).getHeight() - 83,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(1).drawText(data.declaracelular,{
+    pdfDoc.getPage(1).drawText(data.declaracelular? data.declaracelular : '',{
         x: 200,
         y: pdfDoc.getPage(1).getHeight() - 102.5,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(1).drawText(data.declaraocupacion_label_frontend,{
+    pdfDoc.getPage(1).drawText(data.declaraocupacion_label_frontend? data.declaraocupacion_label_frontend : '',{
         x: 141,
         y: pdfDoc.getPage(1).getHeight() - 121.5,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(1).drawText(data.declaradireccion,{
+    pdfDoc.getPage(1).drawText(data.declaradireccion? data.declaradireccion : '',{
         x: 139,
         y: pdfDoc.getPage(1).getHeight() - 141,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(1).drawText(data.declaraemail,{
+    pdfDoc.getPage(1).drawText(data.declaraemail? data.declaraemail : '',{
         x: 230,
         y: pdfDoc.getPage(1).getHeight() - 178,
         size: 10,
@@ -1871,7 +1871,7 @@ export async function PadreAcudiente(data:any){
 
     // data page 4
 
-    pdfDoc.getPage(3).drawText(data.grado,{
+    pdfDoc.getPage(3).drawText(data.grado? data.grado : '',{
         x: 377,
         y: pdfDoc.getPage(3).getHeight() - 214,
         size: 10,
@@ -1880,7 +1880,7 @@ export async function PadreAcudiente(data:any){
 
     // data page 5
 
-    pdfDoc.getPage(4).drawText(data.grado,{
+    pdfDoc.getPage(4).drawText(data.grado? data.grado : '',{
         x: 182,
         y: 99,
         size: 10,
@@ -1889,21 +1889,21 @@ export async function PadreAcudiente(data:any){
 
     // data page 6
 
-    pdfDoc.getPage(5).drawText(data.grado,{
+    pdfDoc.getPage(5).drawText(data.grado? data.grado : '',{
         x: 258,
         y: pdfDoc.getPage(5).getHeight() - 265,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(5).drawText(data.grado,{
+    pdfDoc.getPage(5).drawText(data.grado? data.grado : '',{
         x: 184,
         y: 219.5,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(5).drawText(data.grado,{
+    pdfDoc.getPage(5).drawText(data.grado? data.grado : '',{
         x: 271,
         y: 154.5,
         size: 10,
@@ -1919,7 +1919,7 @@ export async function PadreAcudiente(data:any){
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(7).drawText(namesOfPadre,{
+    pdfDoc.getPage(7).drawText(namesOfPadre? namesOfPadre : '',{
         x: 72,
         y: pdfDoc.getPage(7).getHeight() - 410,
         size: 10,
@@ -1933,21 +1933,21 @@ export async function PadreAcudiente(data:any){
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(7).drawText('de '+data.munexppadre_label_frontend,{
+    pdfDoc.getPage(7).drawText('de '+data.munexppadre_label_frontend? data.munexppadre_label_frontend : '',{
         x: 72,
         y: pdfDoc.getPage(7).getHeight() - 440,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(7).drawText(data.acuparentesco_label_frontend,{
+    pdfDoc.getPage(7).drawText(data.acuparentesco_label_frontend? data.acuparentesco_label_frontend : '',{
         x: 320,
         y: pdfDoc.getPage(7).getHeight() - 394,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(7).drawText(namesOfPadre,{
+    pdfDoc.getPage(7).drawText(namesOfPadre? namesOfPadre : '',{
         x: 312,
         y: pdfDoc.getPage(7).getHeight() - 410,
         size: 10,
@@ -1993,21 +1993,21 @@ export async function PadreAcudiente(data:any){
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(9).drawText(data.declaraemail,{
+    pdfDoc.getPage(9).drawText(data.declaraemail? data.declaraemail : '',{
         x: 200,
         y: 166.5,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(9).drawText(data.declaracelular,{
+    pdfDoc.getPage(9).drawText(data.declaracelular? data.declaracelular : '',{
         x: 200,
         y: 151.5,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(9).drawText(data.declaradireccion,{
+    pdfDoc.getPage(9).drawText(data.declaradireccion? data.declaradireccion : '',{
         x: 139,
         y: 136.5,
         size: 10,
@@ -2051,35 +2051,35 @@ export async function PadreAcudiente(data:any){
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(10).drawText(data.declfechanace,{
+    pdfDoc.getPage(10).drawText(data.declfechanace? data.declfechanace : '',{
         x: 196,
         y: pdfDoc.getPage(10).getHeight() - 202,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(10).drawText(data.declaraemail,{
+    pdfDoc.getPage(10).drawText(data.declaraemail? data.declaraemail : '',{
         x: 200,
         y: pdfDoc.getPage(10).getHeight() - 216,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(10).drawText(data.declaracelular,{
+    pdfDoc.getPage(10).drawText(data.declaracelular? data.declaracelular : '',{
         x: 200,
         y: pdfDoc.getPage(10).getHeight() - 231,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(10).drawText(data.declaraocupacion_label_frontend,{
+    pdfDoc.getPage(10).drawText(data.declaraocupacion_label_frontend? data.declaraocupacion_label_frontend : '',{
         x: 141,
         y: pdfDoc.getPage(10).getHeight() - 245.5,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(10).drawText(data.declaradireccion,{
+    pdfDoc.getPage(10).drawText(data.declaradireccion? data.declaradireccion : '',{
         x: 139,
         y: pdfDoc.getPage(10).getHeight() - 260.3,
         size: 10,
@@ -2200,21 +2200,21 @@ export async function PadreAcudiente(data:any){
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(11).drawText(data.declaraemail,{
+    pdfDoc.getPage(11).drawText(data.declaraemail? data.declaraemail : '',{
         x: 200,
         y: 117,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(11).drawText(data.declaracelular,{
+    pdfDoc.getPage(11).drawText(data.declaracelular? data.declaracelular : '',{
         x: 200,
         y: 102,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(11).drawText(data.declaradireccion,{
+    pdfDoc.getPage(11).drawText(data.declaradireccion? data.declaradireccion : '',{
         x: 139,
         y: 87.8,
         size: 10,
@@ -2258,35 +2258,35 @@ export async function PadreAcudiente(data:any){
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(12).drawText(data.declfechanace,{
+    pdfDoc.getPage(12).drawText(data.declfechanace? data.declfechanace : '',{
         x: 196,
         y: pdfDoc.getPage(12).getHeight() - 217,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(12).drawText(data.declaraemail,{
+    pdfDoc.getPage(12).drawText(data.declaraemail? data.declaraemail : '',{
         x: 200,
         y: pdfDoc.getPage(12).getHeight() - 231.3,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(12).drawText(data.declaracelular,{
+    pdfDoc.getPage(12).drawText(data.declaracelular? data.declaracelular : '',{
         x: 200,
         y: pdfDoc.getPage(12).getHeight() - 246,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(12).drawText(data.declaraocupacion_label_frontend,{
+    pdfDoc.getPage(12).drawText(data.declaraocupacion_label_frontend? data.declaraocupacion_label_frontend : '',{
         x: 141,
         y: pdfDoc.getPage(12).getHeight() - 260.5,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(12).drawText(data.declaradireccion,{
+    pdfDoc.getPage(12).drawText(data.declaradireccion? data.declaradireccion : '',{
         x: 139,
         y: pdfDoc.getPage(12).getHeight() - 275,
         size: 10,
@@ -2300,7 +2300,7 @@ export async function PadreAcudiente(data:any){
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(12).drawText(data.grado,{
+    pdfDoc.getPage(12).drawText(data.grado? data.grado : '',{
         x: 350,
         y: pdfDoc.getPage(12).getHeight() - 416,
         size: 10,
@@ -2335,21 +2335,21 @@ export async function PadreAcudiente(data:any){
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(12).drawText(data.declaraemail,{
+    pdfDoc.getPage(12).drawText(data.declaraemail? data.declaraemail : '',{
         x: 200,
         y: 161.5,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(12).drawText(data.declaracelular,{
+    pdfDoc.getPage(12).drawText(data.declaracelular? data.declaracelular : '',{
         x: 200,
         y: 146.5,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(12).drawText(data.declaradireccion,{
+    pdfDoc.getPage(12).drawText(data.declaradireccion? data.declaradireccion : '',{
         x: 139,
         y: 132,
         size: 10,
@@ -2358,14 +2358,14 @@ export async function PadreAcudiente(data:any){
 
     // data page 14
 
-    pdfDoc.getPage(13).drawText(namesStudent,{
+    pdfDoc.getPage(13).drawText(namesStudent? namesStudent : '',{
         x: 260,
         y: pdfDoc.getPage(13).getHeight() - 160,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(13).drawText(namesOfPadre,{
+    pdfDoc.getPage(13).drawText(namesOfPadre? namesOfPadre : '',{
         x: 150,
         y: pdfDoc.getPage(13).getHeight() - 237,
         size: 10,
@@ -2386,7 +2386,7 @@ export async function PadreAcudiente(data:any){
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(13).drawText(namesStudent,{
+    pdfDoc.getPage(13).drawText(namesStudent? namesStudent : '',{
         x: 290,
         y: pdfDoc.getPage(13).getHeight() - 329.5,
         size: 10,
@@ -2435,7 +2435,7 @@ export async function MadreAcudiente(data: any){
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(0).drawText(namesStudent,{
+    pdfDoc.getPage(0).drawText(namesStudent? namesStudent : '',{
         x: 185,
         y: pdfDoc.getPage(0).getHeight() - 216.5,
         size: 10,
@@ -2479,14 +2479,14 @@ export async function MadreAcudiente(data: any){
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(0).drawText(data.telefono,{
+    pdfDoc.getPage(0).drawText(data.telefono? data.telefono : '',{
         x: 260,
         y: pdfDoc.getPage(0).getHeight() - 311.5,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(0).drawText(data.eps,{
+    pdfDoc.getPage(0).drawText(data.eps? data.eps : '',{
         x: 365,
         y: pdfDoc.getPage(0).getHeight() - 311.5,
         size: 10,
@@ -2509,14 +2509,14 @@ export async function MadreAcudiente(data: any){
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(0).drawText(data.madreemail,{
+    pdfDoc.getPage(0).drawText(data.madreemail? data.madreemail : '',{
         x: 200,
         y: pdfDoc.getPage(0).getHeight() - 425,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(0).drawText(data.madrecelular,{
+    pdfDoc.getPage(0).drawText(data.madrecelular? data.madrecelular : '',{
         x: 200,
         y: pdfDoc.getPage(0).getHeight() - 444,
         size: 10,
@@ -2525,7 +2525,7 @@ export async function MadreAcudiente(data: any){
 
     // acudiente data
 
-    pdfDoc.getPage(0).drawText(data.acuparentesco_label_frontend,{
+    pdfDoc.getPage(0).drawText(data.acuparentesco_label_frontend? data.acuparentesco_label_frontend : '',{
         x: 380,
         y: pdfDoc.getPage(0).getHeight() - 481.3,
         size: 10,
@@ -2546,14 +2546,14 @@ export async function MadreAcudiente(data: any){
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(0).drawText(data.acuemail,{
+    pdfDoc.getPage(0).drawText(data.acuemail? data.acuemail : '',{
         x: 200,
         y: pdfDoc.getPage(0).getHeight() - 557,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(0).drawText(data.acucelular,{
+    pdfDoc.getPage(0).drawText(data.acucelular? data.acucelular : '',{
         x: 200,
         y: pdfDoc.getPage(0).getHeight() - 576,
         size: 10,
@@ -2562,7 +2562,7 @@ export async function MadreAcudiente(data: any){
 
     // declarante data
 
-    pdfDoc.getPage(0).drawText(data.declaranombres,{
+    pdfDoc.getPage(0).drawText(data.declaranombres? data.declaranombres : '',{
         x: 185,
         y: pdfDoc.getPage(0).getHeight() - 650,
         size: 10,
@@ -2576,42 +2576,42 @@ export async function MadreAcudiente(data: any){
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(0).drawText(data.declfechanace,{
+    pdfDoc.getPage(0).drawText(data.declfechanace? data.declfechanace : '',{
         x: 195,
         y: pdfDoc.getPage(0).getHeight() - 685,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(1).drawText(data.declaraemail,{
+    pdfDoc.getPage(1).drawText(data.declaraemail? data.declaraemail : '',{
         x: 200,
         y: pdfDoc.getPage(1).getHeight() - 83,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(1).drawText(data.declaracelular,{
+    pdfDoc.getPage(1).drawText(data.declaracelular? data.declaracelular : '',{
         x: 200,
         y: pdfDoc.getPage(1).getHeight() - 102.5,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(1).drawText(data.declaraocupacion_label_frontend,{
+    pdfDoc.getPage(1).drawText(data.declaraocupacion_label_frontend? data.declaraocupacion_label_frontend : '',{
         x: 141,
         y: pdfDoc.getPage(1).getHeight() - 121.5,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(1).drawText(data.declaradireccion,{
+    pdfDoc.getPage(1).drawText(data.declaradireccion? data.declaradireccion : '',{
         x: 139,
         y: pdfDoc.getPage(1).getHeight() - 141,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(1).drawText(data.declaraemail,{
+    pdfDoc.getPage(1).drawText(data.declaraemail? data.declaraemail : '',{
         x: 230,
         y: pdfDoc.getPage(1).getHeight() - 178,
         size: 10,
@@ -2704,7 +2704,7 @@ export async function MadreAcudiente(data: any){
 
     // data page 4
 
-    pdfDoc.getPage(3).drawText(data.grado,{
+    pdfDoc.getPage(3).drawText(data.grado? data.grado : '',{
         x: 377,
         y: pdfDoc.getPage(3).getHeight() - 214,
         size: 10,
@@ -2713,7 +2713,7 @@ export async function MadreAcudiente(data: any){
 
     // data page 5
 
-    pdfDoc.getPage(4).drawText(data.grado,{
+    pdfDoc.getPage(4).drawText(data.grado? data.grado : '',{
         x: 182,
         y: 99,
         size: 10,
@@ -2722,21 +2722,21 @@ export async function MadreAcudiente(data: any){
 
     // data page 6
 
-    pdfDoc.getPage(5).drawText(data.grado,{
+    pdfDoc.getPage(5).drawText(data.grado? data.grado : '',{
         x: 258,
         y: pdfDoc.getPage(5).getHeight() - 265,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(5).drawText(data.grado,{
+    pdfDoc.getPage(5).drawText(data.grado? data.grado : '',{
         x: 184,
         y: 219.5,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(5).drawText(data.grado,{
+    pdfDoc.getPage(5).drawText(data.grado? data.grado : '',{
         x: 271,
         y: 154.5,
         size: 10,
@@ -2752,7 +2752,7 @@ export async function MadreAcudiente(data: any){
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(7).drawText(namesOfMadre,{
+    pdfDoc.getPage(7).drawText(namesOfMadre? namesOfMadre : '',{
         x: 72,
         y: pdfDoc.getPage(7).getHeight() - 410,
         size: 10,
@@ -2773,14 +2773,14 @@ export async function MadreAcudiente(data: any){
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(7).drawText(data.acuparentesco_label_frontend,{
+    pdfDoc.getPage(7).drawText(data.acuparentesco_label_frontend? data.acuparentesco_label_frontend : '',{
         x: 320,
         y: pdfDoc.getPage(7).getHeight() - 394,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(7).drawText(namesOfAcu,{
+    pdfDoc.getPage(7).drawText(namesOfAcu? namesOfAcu : '',{
         x: 312,
         y: pdfDoc.getPage(7).getHeight() - 410,
         size: 10,
@@ -2826,21 +2826,21 @@ export async function MadreAcudiente(data: any){
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(9).drawText(data.declaraemail,{
+    pdfDoc.getPage(9).drawText(data.declaraemail? data.declaraemail : '',{
         x: 200,
         y: 166.5,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(9).drawText(data.declaracelular,{
+    pdfDoc.getPage(9).drawText(data.declaracelular? data.declaracelular : '',{
         x: 200,
         y: 151.5,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(9).drawText(data.declaradireccion,{
+    pdfDoc.getPage(9).drawText(data.declaradireccion? data.declaradireccion : '',{
         x: 139,
         y: 136.5,
         size: 10,
@@ -2884,35 +2884,35 @@ export async function MadreAcudiente(data: any){
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(10).drawText(data.declfechanace,{
+    pdfDoc.getPage(10).drawText(data.declfechanace? data.declfechanace : '',{
         x: 196,
         y: pdfDoc.getPage(10).getHeight() - 202,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(10).drawText(data.declaraemail,{
+    pdfDoc.getPage(10).drawText(data.declaraemail? data.declaraemail : '',{
         x: 200,
         y: pdfDoc.getPage(10).getHeight() - 216,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(10).drawText(data.declaracelular,{
+    pdfDoc.getPage(10).drawText(data.declaracelular? data.declaracelular : '',{
         x: 200,
         y: pdfDoc.getPage(10).getHeight() - 231,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(10).drawText(data.declaraocupacion_label_frontend,{
+    pdfDoc.getPage(10).drawText(data.declaraocupacion_label_frontend? data.declaraocupacion_label_frontend : '',{
         x: 141,
         y: pdfDoc.getPage(10).getHeight() - 245.5,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(10).drawText(data.declaradireccion,{
+    pdfDoc.getPage(10).drawText(data.declaradireccion? data.declaradireccion : '',{
         x: 139,
         y: pdfDoc.getPage(10).getHeight() - 260.3,
         size: 10,
@@ -3033,21 +3033,21 @@ export async function MadreAcudiente(data: any){
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(11).drawText(data.declaraemail,{
+    pdfDoc.getPage(11).drawText(data.declaraemail? data.declaraemail : '',{
         x: 200,
         y: 117,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(11).drawText(data.declaracelular,{
+    pdfDoc.getPage(11).drawText(data.declaracelular? data.declaracelular : '',{
         x: 200,
         y: 102,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(11).drawText(data.declaradireccion,{
+    pdfDoc.getPage(11).drawText(data.declaradireccion? data.declaradireccion : '',{
         x: 139,
         y: 87.8,
         size: 10,
@@ -3091,21 +3091,21 @@ export async function MadreAcudiente(data: any){
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(12).drawText(data.declfechanace,{
+    pdfDoc.getPage(12).drawText(data.declfechanace? data.declfechanace : '',{
         x: 196,
         y: pdfDoc.getPage(12).getHeight() - 217,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(12).drawText(data.declaraemail,{
+    pdfDoc.getPage(12).drawText(data.declaraemail? data.declaraemail : '',{
         x: 200,
         y: pdfDoc.getPage(12).getHeight() - 231.3,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(12).drawText(data.declaracelular,{
+    pdfDoc.getPage(12).drawText(data.declaracelular? data.declaracelular : '',{
         x: 200,
         y: pdfDoc.getPage(12).getHeight() - 246,
         size: 10,
@@ -3119,7 +3119,7 @@ export async function MadreAcudiente(data: any){
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(12).drawText(data.declaradireccion,{
+    pdfDoc.getPage(12).drawText(data.declaradireccion? data.declaradireccion : '',{
         x: 139,
         y: pdfDoc.getPage(12).getHeight() - 275,
         size: 10,
@@ -3133,7 +3133,7 @@ export async function MadreAcudiente(data: any){
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(12).drawText(data.grado,{
+    pdfDoc.getPage(12).drawText(data.grado? data.grado : '',{
         x: 350,
         y: pdfDoc.getPage(12).getHeight() - 416,
         size: 10,
@@ -3168,21 +3168,21 @@ export async function MadreAcudiente(data: any){
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(12).drawText(data.declaraemail,{
+    pdfDoc.getPage(12).drawText(data.declaraemail? data.declaraemail : '',{
         x: 200,
         y: 161.5,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(12).drawText(data.declaracelular,{
+    pdfDoc.getPage(12).drawText(data.declaracelular? data.declaracelular : '',{
         x: 200,
         y: 146.5,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(12).drawText(data.declaradireccion,{
+    pdfDoc.getPage(12).drawText(data.declaradireccion? data.declaradireccion : '',{
         x: 139,
         y: 132,
         size: 10,
@@ -3191,14 +3191,14 @@ export async function MadreAcudiente(data: any){
 
     // data page 14
 
-    pdfDoc.getPage(13).drawText(namesStudent,{
+    pdfDoc.getPage(13).drawText(namesStudent? namesStudent : '',{
         x: 260,
         y: pdfDoc.getPage(13).getHeight() - 160,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(13).drawText(namesOfMadre,{
+    pdfDoc.getPage(13).drawText(namesOfMadre? namesOfMadre : '',{
         x: 150,
         y: pdfDoc.getPage(13).getHeight() - 237,
         size: 10,
@@ -3219,7 +3219,7 @@ export async function MadreAcudiente(data: any){
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(13).drawText(namesStudent,{
+    pdfDoc.getPage(13).drawText(namesStudent? namesStudent : '',{
         x: 290,
         y: pdfDoc.getPage(13).getHeight() - 329.5,
         size: 10,
@@ -3268,21 +3268,21 @@ export async function Chia(data:any) {
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(0).drawText(data.grado,{
+    pdfDoc.getPage(0).drawText(data.grado? data.grado : '',{
         x: 290,
         y: pdfDoc.getPage(0).getHeight() - 156,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(0).drawText(namesStudent,{
+    pdfDoc.getPage(0).drawText(namesStudent? namesStudent : '',{
         x: 185,
         y: pdfDoc.getPage(0).getHeight() - 176,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(0).drawText(data.documento,{
+    pdfDoc.getPage(0).drawText(data.documento? data.documento : '',{
         x: 120,
         y: pdfDoc.getPage(0).getHeight() - 195.5,
         size: 10,
@@ -3296,21 +3296,21 @@ export async function Chia(data:any) {
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(0).drawText(data.mupioexp_label_frontend,{
+    pdfDoc.getPage(0).drawText(data.mupioexp_label_frontend? data.mupioexp_label_frontend : '',{
         x: 428,
         y: pdfDoc.getPage(0).getHeight() - 195.5,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(0).drawText(data.fechanace,{
+    pdfDoc.getPage(0).drawText(data.fechanace? data.fechanace : '',{
         x: 240,
         y: pdfDoc.getPage(0).getHeight() - 215,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(0).drawText(data.municipio_label_frontend,{
+    pdfDoc.getPage(0).drawText(data.municipio_label_frontend? data.municipio_label_frontend : '',{
         x: 292,
         y: pdfDoc.getPage(0).getHeight() - 235,
         size: 10,
@@ -3324,14 +3324,14 @@ export async function Chia(data:any) {
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(0).drawText(data.direccion,{
+    pdfDoc.getPage(0).drawText(data.direccion? data.direccion : '',{
         x: 110,
         y: pdfDoc.getPage(0).getHeight() - 255,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(0).drawText(data.telefono,{
+    pdfDoc.getPage(0).drawText(data.telefono? data.telefono : '',{
         x: 430,
         y: pdfDoc.getPage(0).getHeight() - 255,
         size: 10,
@@ -3339,31 +3339,31 @@ export async function Chia(data:any) {
     });
 
     if (data.nompadre.length > 0){
-        pdfDoc.getPage(0).drawText(data.nompadre,{
+        pdfDoc.getPage(0).drawText(data.nompadre? data.nompadre : '',{
             x: 92,
             y: pdfDoc.getPage(0).getHeight() - 305,
             size: 10,
             color: rgb(0,0,0)
         });
-        pdfDoc.getPage(0).drawText(data.docpadre,{
+        pdfDoc.getPage(0).drawText(data.docpadre? data.docpadre : '',{
             x: 455,
             y: pdfDoc.getPage(0).getHeight() - 305,
             size: 10,
             color: rgb(0,0,0)
         });
-        pdfDoc.getPage(0).drawText(data.padreoficina,{
+        pdfDoc.getPage(0).drawText(data.padreoficina? data.padreoficina : '',{
             x: 468,
             y: pdfDoc.getPage(0).getHeight() - 324.5,
             size: 10,
             color: rgb(0,0,0)
         });
-        pdfDoc.getPage(0).drawText(data.emailpadre,{
+        pdfDoc.getPage(0).drawText(data.emailpadre? data.emailpadre : '',{
             x: 145,
             y: pdfDoc.getPage(0).getHeight() - 345,
             size: 10,
             color: rgb(0,0,0)
         });
-        pdfDoc.getPage(0).drawText(data.padrecelular,{
+        pdfDoc.getPage(0).drawText(data.padrecelular? data.padrecelular : '',{
             x: 420,
             y: pdfDoc.getPage(0).getHeight() - 345,
             size: 10,
@@ -3371,31 +3371,31 @@ export async function Chia(data:any) {
         });
     }
     if(data.nommadre.length > 0){
-        pdfDoc.getPage(0).drawText(data.nommadre,{
+        pdfDoc.getPage(0).drawText(data.nommadre? data.nommadre : '',{
             x: 92,
             y: pdfDoc.getPage(0).getHeight() - 394,
             size: 10,
             color: rgb(0,0,0)
         });
-        pdfDoc.getPage(0).drawText(data.docmadre,{
+        pdfDoc.getPage(0).drawText(data.docmadre? data.docmadre : '',{
             x: 455,
             y: pdfDoc.getPage(0).getHeight() - 394,
             size: 10,
             color: rgb(0,0,0)
         });
-        pdfDoc.getPage(0).drawText(data.madreoficina,{
+        pdfDoc.getPage(0).drawText(data.madreoficina? data.madreoficina : '',{
             x: 468,
             y: pdfDoc.getPage(0).getHeight() - 413.5,
             size: 10,
             color: rgb(0,0,0)
         });
-        pdfDoc.getPage(0).drawText(data.madreemail,{
+        pdfDoc.getPage(0).drawText(data.madreemail? data.madreemail : '',{
             x: 145,
             y: pdfDoc.getPage(0).getHeight() - 434,
             size: 10,
             color: rgb(0,0,0)
         });
-        pdfDoc.getPage(0).drawText(data.madrecelular,{
+        pdfDoc.getPage(0).drawText(data.madrecelular? data.madrecelular : '',{
             x: 420,
             y: pdfDoc.getPage(0).getHeight() - 434,
             size: 10,
@@ -3403,7 +3403,7 @@ export async function Chia(data:any) {
         });
     }
 
-    pdfDoc.getPage(0).drawText(data.acuparentesco_label_frontend,{
+    pdfDoc.getPage(0).drawText(data.acuparentesco_label_frontend? data.acuparentesco_label_frontend : '',{
         x: 92,
         y: pdfDoc.getPage(0).getHeight() - 466,
         size: 10,
@@ -3417,49 +3417,49 @@ export async function Chia(data:any) {
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(0).drawText(data.docacu,{
+    pdfDoc.getPage(0).drawText(data.docacu? data.docacu : '',{
         x: 455,
         y: pdfDoc.getPage(0).getHeight() - 485.5,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(0).drawText(data.acuoficina,{
+    pdfDoc.getPage(0).drawText(data.acuoficina? data.acuoficina : '',{
         x: 440,
         y: pdfDoc.getPage(0).getHeight() - 505,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(0).drawText(data.acuemail,{
+    pdfDoc.getPage(0).drawText(data.acuemail? data.acuemail : '',{
         x: 145,
         y: pdfDoc.getPage(0).getHeight() - 523.8,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(0).drawText(data.acucelular,{
+    pdfDoc.getPage(0).drawText(data.acucelular? data.acucelular : '',{
         x: 422,
         y: pdfDoc.getPage(0).getHeight() - 523.8,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(0).drawText(data.eps,{
+    pdfDoc.getPage(0).drawText(data.eps? data.eps : '',{
         x: 180,
         y: pdfDoc.getPage(0).getHeight() - 562,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(0).drawText(data.emernombre,{
+    pdfDoc.getPage(0).drawText(data.emernombre? data.emernombre : '',{
         x: 100,
         y: pdfDoc.getPage(0).getHeight() - 637,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(0).drawText(data.emertelefono,{
+    pdfDoc.getPage(0).drawText(data.emertelefono? data.emertelefono : '',{
         x: 400,
         y: pdfDoc.getPage(0).getHeight() - 637,
         size: 10,

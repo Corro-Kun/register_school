@@ -105,6 +105,7 @@
       declaraparentesco: null,
       declaratipo: 0,
       declaraempresa: '',
+      declaranit: '',
       declaranombres: null,
       declaraapellidos: null,
       declaradocumento: null,
@@ -157,12 +158,14 @@
 
     let dec = null;
 
-    let directioDec = {
+    export let directioDec = {
       type: '',
       type_label: '',
       name: '',
       numberone: '',
       numbertwo: '',
+      house: '',
+      numberHouse: '',
     }
 
     export let typeOfDocument = [];
@@ -324,7 +327,14 @@
         return;
       }
 
-      data.declaradireccion = `${directioDec.type.toUpperCase()} ${directioDec.name.toUpperCase()} ${directioDec.numberone.toUpperCase()} ${directioDec.numbertwo.toUpperCase()}`;
+      if (directioDec.type === undefined || directioDec.name === undefined){
+        loading = 0;
+        messageLoading = '¿Enviar formulario?';
+        toast.error('Llene todos los campos de la dirección del declarante');
+        return;
+      }
+
+      data.declaradireccion = `${directioDec.type.toUpperCase()} ${directioDec.name.toUpperCase()}  ${directioDec.numberone.toUpperCase()}  ${directioDec.numbertwo.toUpperCase()} ${directioDec.house.toUpperCase()} ${directioDec.numberHouse.toUpperCase()}`;
 
       if(data.nomacu === undefined || data.apellacu === undefined || data.docacu === undefined || data.tipoidacu_id === undefined || data.munexpacu_id === undefined || data.acuemail === undefined || data.acucelular === undefined || data.acuparentesco_id === undefined){
         loading = 0;
@@ -977,6 +987,10 @@
               <label for="name">Empresa</label>
               <Input class="w-[300px]" type="text" id="name" placeholder="Empresa" bind:value={data.declaraempresa} />
             </div>
+            <div class="flex flex-col gap-1.5">
+              <label for="name">Nit</label>
+              <Input class="w-[300px]" type="number" id="name" placeholder="Nit" bind:value={data.declaranit} />
+            </div>
             {/if}
         </div>
         {#if dec !== null}
@@ -1178,8 +1192,12 @@
         <div class=" flex items-center justify-center gap-10 flex-wrap mt-5" >
             <div class=" flex flex-col gap-1.5" >
                 <label for="">Nacionalidad <strong class=" text-red-600" >*</strong> </label>
-                <Select.Root onSelectedChange={(v)=> data.declarapais = v.value} >
-                  <Select.Trigger class="w-[300px]">
+                <Select.Root selected={{label:data.declarapais_label_frontend}}
+                onSelectedChange={(v)=> {
+                  data.declarapais = v.value
+                  data.declarapais_label_frontend = v.label
+                  }} >
+                  <Select.Trigger class="w-[280px]">
                     <Select.Value placeholder="Nacionalidad" />
                   </Select.Trigger>
                   <Select.Content class="h-40 overflow-auto" >
@@ -1201,7 +1219,7 @@
                 onSelectedChange={(v)=> {
                   data.declaraocupacion_label_frontend = v.label
                   data.declaraocupacion = v.label}} >
-                  <Select.Trigger class="w-[300px]">
+                  <Select.Trigger class="w-[280px]">
                     <Select.Value placeholder="Ocupación y oficio" />
                   </Select.Trigger>
                   <Select.Content class="h-40 overflow-auto" >
@@ -1260,6 +1278,45 @@
                 <Input class="w-[50px]" type="text" placeholder="" bind:value={directioDec.numberone} />
                 <p>-</p>
                 <Input class="w-[50px]" type="text" placeholder="" bind:value={directioDec.numbertwo} />
+                <Select.Root selected={{label:directioDec.house_label}}
+                onSelectedChange={(v)=> {
+                  directioDec.house = v.value
+                  directioDec.house_label = v.label}} >
+                  <Select.Trigger class="w-[130px]">
+                    <Select.Value placeholder="Tipo de casa" />
+                  </Select.Trigger>
+                  <Select.Content class="h-40 overflow-auto" >
+                    <Select.Group>
+                      <Select.Label>Tipo de calle</Select.Label>
+                        <Select.Item value={'CA'} label="Casa"
+                          >Casa</Select.Item
+                        >
+                        <Select.Item value={'TO'} label="Torre"
+                          >Torre</Select.Item
+                        >
+                        <Select.Item value={'DPTO'} label="Departamento"
+                          >Departamento</Select.Item
+                        >
+                        <Select.Item value={'P'} label="Piso"
+                          >Piso</Select.Item
+                        >
+                        <Select.Item value={'ST'} label="Sotano"
+                          >Sotano</Select.Item
+                        >
+                        <Select.Item value={'FCA'} label="Finca"
+                          >Finca</Select.Item
+                        >
+                        <Select.Item value={'PQ'} label="Parqueadero"
+                          >Parqueadero</Select.Item
+                        >
+                        <Select.Item value={'CON'} label="Conjunto Residencial"
+                          >Conjunto Residencial</Select.Item
+                        >
+                    </Select.Group>
+                  </Select.Content>
+                  <Select.Input name="document issuance" />
+                </Select.Root>
+                <Input class="w-[80px]" type="text" placeholder="201" bind:value={directioDec.numberHouse} />
                 </div>
             </div>
         </div>
@@ -1563,7 +1620,10 @@
           </div>
           <div>
             <label for="">País.</label>
-            <Select.Root onSelectedChange={(v)=> data.prodcountr = v.label} >
+            <Select.Root selected={{label:data.prodcountr}}
+            onSelectedChange={(v)=> {
+              data.prodcountr = v.label
+              }} >
               <Select.Trigger class="w-[300px]">
                 <Select.Value placeholder="País." />
               </Select.Trigger>
@@ -1582,8 +1642,9 @@
           </div>
           <div>
             <label for="">Ciudad.</label>
-            <Select.Root
-              onSelectedChange={(v)=> data.prodmuni = v.label}
+            <Select.Root selected={{label:data.prodmuni}}
+              onSelectedChange={(v)=> {
+                data.prodmuni = v.label}}
             >
               <Select.Trigger class="w-[300px]">
                 <Select.Value placeholder="Ciudad." />
