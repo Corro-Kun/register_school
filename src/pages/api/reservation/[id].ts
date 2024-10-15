@@ -3,7 +3,7 @@ import type { APIRoute } from "astro";
 
 export const GET: APIRoute = async ({ params, request }) => {
     try{
-        const [municipality]: any[] = await sql.query('select * from municipio;');
+        const [municipality]: any[] = await sql.query('select * from municipio ORDER BY nombre ASC;');
         const [dni]: any[] = await sql.query('select * from tipoid;');
         const [ocupation]: any[] = await sql.query('select * from ocupacion;');
         const [country]: any[] = await sql.query('select * from pais;');
