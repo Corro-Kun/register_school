@@ -148,8 +148,15 @@
       prodmoneda: null,
       inftributaria: {
         ResponsableIVA: false,
+        ResponsableICA: false,
+        ResoluciónNumContri: '',
+        ReginContri: '',
+        Autorretenedor: false,
+        ResoluciónNumAutorre: '',
+        AutorretenedorICA: false,
+        ResoluciónNumICA: '',
         CIUU: '',
-        Persona: '',
+        Persona: undefined,
       }
     }
 
@@ -211,6 +218,13 @@
       data.decextranjero = '0'
       data.inftributaria = {
         ResponsableIVA: false,
+        ResponsableICA: false,
+        ResoluciónNumContri: '',
+        ReginContri: '',
+        Autorretenedor: false,
+        ResoluciónNumAutorre: '',
+        AutorretenedorICA: false,
+        ResoluciónNumICA: '',
         CIUU: '',
         Persona: undefined,
       }
@@ -340,16 +354,44 @@
         messageLoading = '¿Enviar formulario?';
         toast.error('Llene todos los campos del acudiente');
         return;
-      }else if (data.declaraparentesco === undefined || data.declaranombres === undefined || data.declaraapellidos === undefined || data.declaradocumento === undefined || data.declaratipoid === undefined || data.declarapais === undefined || data.declaradireccion === undefined || data.declarareside === undefined || data.declaralugarexpide === undefined || data.declaraemail === undefined || data.declaracelular === undefined || data.declarafechanace === undefined || data.declaraocupacion === undefined){
-        loading = 0;
-        messageLoading = '¿Enviar formulario?';
-        toast.error('Llene todos los campos del declarante');
-        return;
-      }else if (data.decactivos === undefined || data.decpasivos === undefined || data.decpatrimonio === undefined || data.decrpublicos === undefined || data.decvincpublico === undefined || data.decextranjero === undefined || data.decorigen === undefined || data.decmonextern === undefined || data.deccuentasme === undefined || data.inftributaria.Persona === undefined){
-        loading = 0;
-        messageLoading = '¿Enviar formulario?';
-        toast.error('Llene todos los campos financieros del declarante');
-        return;
+      }
+     if(dec !== '3'){
+        if (data.declaraparentesco === undefined || data.declaranombres === undefined || data.declaraapellidos === undefined || data.declaradocumento === undefined || data.declaratipoid === undefined || data.declarapais === undefined || data.declaradireccion === undefined || data.declarareside === undefined || data.declaralugarexpide === undefined || data.declaraemail === undefined || data.declaracelular === undefined || data.declarafechanace === undefined || data.declaraocupacion === undefined){
+          loading = 0;
+          messageLoading = '¿Enviar formulario?';
+          toast.error('Llene todos los campos del declarante');
+          return;
+        }
+        if (data.decactivos === undefined || data.decpasivos === undefined || data.decpatrimonio === undefined || data.decrpublicos === undefined || data.decvincpublico === undefined || data.decextranjero === undefined || data.decorigen === undefined || data.decmonextern === undefined || data.deccuentasme === undefined || data.inftributaria.Persona === undefined){
+          loading = 0;
+          messageLoading = '¿Enviar formulario?';
+          toast.error('Llene todos los campos financieros del declarante');
+          return;
+        }
+      }else{
+        data.decrpublicos = '3'
+        data.decppublic = '3'
+        data.decvincpublico = '3'
+        data.decextranjero = '3'
+        data.decimporta = 3
+        data.decexporta = 3
+        data.decinversiones = 3
+        data.dectransferencias = 3
+        data.decotrasmact = 3
+        data.decmonextern = '3'
+        data.deccuentasme = '3'
+        if (data.declaraempresa === undefined || data.declaranit === undefined || data.declaranombres === undefined || data.declaradocumento === undefined || data.declaratipoid === undefined || data.declaralugarexpide === undefined || data.declaradireccion === undefined || data.declaraemail === undefined || data.declaracelular === undefined || data.declarareside === undefined){
+          loading = 0;
+          messageLoading = '¿Enviar formulario?';
+          toast.error('Llene todos los campos del declarante');
+          return;
+        }
+        if (data.inftributaria.ResponsableIVA === undefined || data.inftributaria.ResponsableICA === undefined || data.inftributaria.Persona === undefined || data.inftributaria.ResoluciónNumContri === undefined || data.inftributaria.RégimenContri === undefined || data.inftributaria.Autorretenedor === undefined || data.inftributaria.ResoluciónNumAutorre === undefined || data.inftributaria.AutorretenedorICA === undefined || data.inftributaria.ResoluciónNumICA === undefined){
+          loading = 0;
+          messageLoading = '¿Enviar formulario?';
+          toast.error('Llene todos los campos financieros del declarante');
+          return;
+        }
       }
 
       data.inftributaria = JSON.stringify(data.inftributaria);
@@ -955,6 +997,10 @@
                     </div>
                     {/if}
                     <div class="flex items-center space-x-2">
+                      <RadioGroup.Item value='3' id="r2" />
+                      <label for="r2">Empresa</label>
+                    </div>
+                    <div class="flex items-center space-x-2">
                       <RadioGroup.Item value='2' id="r3" on:click={()=> toast("para registrar una tercera persona como declarante, debe adjuntar autorización autenticada en notaria de parte de los padres o copia de la resolución de custodia del menor y copia ampliada de la cédula del declarante.", {duration: 10000})} />
                       <label for="r3">Tercera persona</label>
                     </div>
@@ -981,13 +1027,13 @@
                 </Select.Root>
             </div>
             {/if}
-            {#if dec !== null}
+            {#if dec === '3'}
             <div class="flex flex-col gap-1.5">
-              <label for="name">Empresa</label>
+              <label for="name">Empresa <strong class=" text-red-600" >*</strong> </label>
               <Input class="w-[300px]" type="text" id="name" placeholder="Empresa" bind:value={data.declaraempresa} />
             </div>
             <div class="flex flex-col gap-1.5">
-              <label for="name">Nit</label>
+              <label for="name">Nit <strong class=" text-red-600" >*</strong> </label>
               <Input class="w-[300px]" type="number" id="name" placeholder="Nit" bind:value={data.declaranit} />
             </div>
             {/if}
@@ -995,22 +1041,22 @@
         {#if dec !== null}
         <div class=" flex items-center justify-center gap-10 flex-wrap mt-5" >
             <div class="flex flex-col gap-1.5">
-                <label for="name">Nombres <strong class=" text-red-600" >*</strong> </label>
+                <label for="name">Nombres {dec === '3'? 'del Representante': ''} <strong class=" text-red-600" >*</strong> </label>
                 {#if dec === '0'}
                     <Input class="w-[300px]" type="text" id="name" placeholder="Nombres" bind:value={data.nompadre} disabled />
                 {:else if dec === '1'}
                     <Input class="w-[300px]" type="text" id="name" placeholder="Nombres" bind:value={data.nommadre} disabled />
-                {:else if dec === '2'}
+                {:else}
                     <Input class="w-[300px]" type="text" id="name" placeholder="Nombres" bind:value={data.declaranombres} />
                 {/if}
             </div>
             <div class="flex flex-col gap-1.5">
-                <label for="name">Apellidos <strong class=" text-red-600" >*</strong> </label>
+                <label for="name">Apellidos {dec === '3'? 'del Representante': ''} <strong class=" text-red-600" >*</strong> </label>
                 {#if dec === '0'}
                     <Input class="w-[300px]" type="text" id="last" placeholder="Apellidos" bind:value={data.apellpadre} disabled />
                 {:else if dec === '1'}
                     <Input class="w-[300px]" type="text" id="last" placeholder="Apellidos" bind:value={data.apellmadre} disabled />
-                {:else if dec === '2'}
+                {:else}
                     <Input class="w-[300px]" type="text" id="last" placeholder="Apellidos" bind:value={data.declaraapellidos} />
                 {/if}
             </div>
@@ -1019,7 +1065,7 @@
                 <Select.Root selected={{label:data.declaratipoid_label_frontend}} onSelectedChange={(v)=> {
                   data.declaratipoid = v.value
                   data.declaratipoid_label_frontend = v.label
-                  }} disabled={dec === '2'? false: true} >
+                  }} disabled={dec === '2'? false: dec === '3'? false: true} >
                   <Select.Trigger class="w-[300px]">
                     <Select.Value placeholder="Tipo de Documento" />
                   </Select.Trigger>
@@ -1042,7 +1088,7 @@
                     <Input class="w-[300px]" type="number" id="numberofid" placeholder="Número de identificación" bind:value={data.docpadre} disabled />
                 {:else if dec === '1'}
                     <Input class="w-[300px]" type="number" id="numberofid" placeholder="Número de identificación" bind:value={data.docmadre} disabled />
-                {:else if dec === '2'}
+                {:else}
                     <Input class="w-[300px]" type="number" id="numberofid" placeholder="Número de identificación" bind:value={data.declaradocumento} />
                 {/if}
             </div>
@@ -1053,7 +1099,7 @@
                 <Select.Root selected={{label:data.declaralugarexpide_label_frontend}} onSelectedChange={(v)=> {
                   data.declaralugarexpide = v.value
                   data.declaralugarexpide_label_frontend = v.label
-                }} disabled={dec === '2'? false: true} >
+                }} disabled={dec === '2'? false: dec === '3'? false : true} >
                   <Select.Trigger class="w-[300px]">
                     <Select.Value placeholder="Expedición del documento" />
                   </Select.Trigger>
@@ -1071,22 +1117,22 @@
                 </Select.Root>
             </div>
             <div class="flex flex-col gap-1.5">
-                <label for="Email">Email <strong class=" text-red-600" >*</strong> </label>
+                <label for="Email">Email {dec ==='3' ? 'del Representante': ''} <strong class=" text-red-600" >*</strong> </label>
                 {#if dec === '0'}
                     <Input class="w-[300px]" type="text" id="Email" placeholder="Email" bind:value={data.emailpadre} disabled />
                 {:else if dec === '1'}
                     <Input class="w-[300px]" type="text" id="Email" placeholder="Email" bind:value={data.madreemail} disabled />
-                {:else if dec === '2'}
+                {:else}
                     <Input class="w-[300px]" type="text" id="Email" placeholder="Email" bind:value={data.declaraemail} />
                 {/if}
             </div>
             <div class="flex flex-col gap-1.5">
-                <label for="cellular">Celular <strong class=" text-red-600" >*</strong> </label>
+                <label for="cellular">Celular {dec ==='3' ? 'del Representante': ''} <strong class=" text-red-600" >*</strong> </label>
                 {#if dec === '0'}
                     <Input class="w-[300px]" type="number" id="cellular" placeholder="Celular" bind:value={data.padrecelular} disabled />
                 {:else if dec === '1'}
                     <Input class="w-[300px]" type="number" id="cellular" placeholder="Celular" bind:value={data.madrecelular} disabled />
-                {:else if dec === '2'}
+                {:else}
                     <Input class="w-[300px]" type="number" id="cellular" placeholder="Celular" bind:value={data.declaracelular} />
                 {/if}
             </div>
@@ -1189,6 +1235,7 @@
             </div>
         </div>
         <div class=" flex items-center justify-center gap-10 flex-wrap mt-5" >
+            {#if dec !== '3'}
             <div class=" flex flex-col gap-1.5" >
                 <label for="">Nacionalidad <strong class=" text-red-600" >*</strong> </label>
                 <Select.Root selected={{label:data.declarapais_label_frontend}}
@@ -1234,8 +1281,9 @@
                   <Select.Input name="document issuance" />
                 </Select.Root>
             </div>
+            {/if}
             <div class="flex flex-col gap-1.5">
-                <label for="Residence-address">Dirección de residencia <strong class=" text-red-600" >*</strong> </label>
+                <label for="Residence-address">Dirección de {dec === '3'? 'la Empresa': 'residencia'} <strong class=" text-red-600" >*</strong> </label>
                 <div class="flex gap-2 items-center flex-wrap" >
                 <Select.Root selected={{label:directioDec.type_label}}
                 onSelectedChange={(v)=> {
@@ -1318,8 +1366,33 @@
                 <Input class="w-[80px]" type="text" placeholder="201" bind:value={directioDec.numberHouse} />
                 </div>
             </div>
+            {#if dec === '3'}
+            <div class=" flex flex-col gap-1.5" >
+                <label for="">Municipio <strong class=" text-red-600" >*</strong> </label>
+                <Select.Root selected={{label:data.declarareside_label_frontend}} onSelectedChange={(v)=>{
+                  data.declarareside = v.value
+                  data.declarareside_label_frontend = v.label
+                }} >
+                  <Select.Trigger class="w-[300px]">
+                    <Select.Value placeholder="Municipio" />
+                  </Select.Trigger>
+                  <Select.Content class="h-40 overflow-auto" >
+                    <Select.Group>
+                      <Select.Label>Municipios</Select.Label>
+                      {#each Municipality as municipality}
+                        <Select.Item value={municipality.id} label={municipality.nombre}
+                          >{municipality.nombre}</Select.Item
+                        >
+                      {/each}
+                    </Select.Group>
+                  </Select.Content>
+                  <Select.Input name="municipality" />
+                </Select.Root>
+            </div>
+            {/if}
         </div>
         <div class=" flex items-center justify-center gap-10 flex-wrap mt-5" >
+          {#if dec !== '3'}
           <div class=" flex flex-col gap-1.5" >
                 <label for="">Municipio <strong class=" text-red-600" >*</strong> </label>
                 <Select.Root selected={{label:data.declarareside_label_frontend}} onSelectedChange={(v)=>{
@@ -1342,6 +1415,7 @@
                   <Select.Input name="municipality" />
                 </Select.Root>
             </div>
+            {/if}
             <div class=" flex flex-col gap-1.5" >
                 <label for="">ResponsableIVA <strong class=" text-red-600" >*</strong> </label>
                 <Select.Root selected={{label: data.inftributaria?.ResponsableIVA === true? 'Si': 'No'}}
@@ -1363,12 +1437,35 @@
                   <Select.Input name="municipality" />
                 </Select.Root> 
             </div>
+            {#if dec === '3'}
+            <div class=" flex flex-col gap-1.5" >
+                <label for="">ResponsableICA <strong class=" text-red-600" >*</strong> </label>
+                <Select.Root selected={{label: data.inftributaria?.ResponsableICA === true? 'Si': 'No'}}
+                onSelectedChange={(e) => data.inftributaria.ResponsableICA = e.value} >
+                  <Select.Trigger class="w-[300px]">
+                    <Select.Value placeholder="Seleccione su respuesta" />
+                  </Select.Trigger>
+                  <Select.Content class="h-40 overflow-auto" >
+                    <Select.Group>
+                      <Select.Label>Seleccione su respuesta</Select.Label>
+                        <Select.Item value={true} label="Si"
+                          >Si</Select.Item
+                        >
+                        <Select.Item value={false} label="No"
+                          >No</Select.Item
+                        >
+                    </Select.Group>
+                  </Select.Content>
+                  <Select.Input name="municipality" />
+                </Select.Root> 
+            </div>
+            {/if}
             <div class="flex flex-col gap-1.5">
                 <label for="passive">CIUU </label>
                 <Input class="w-[300px]" type="number" id="ciuu" placeholder="CIUU" bind:value={data.inftributaria.CIUU} />
             </div>
             <div class="flex flex-col gap-1.5">
-                <label for="passive">Tipo de Persona <strong class=" text-red-600" >*</strong> </label>
+                <label for="passive">{dec === '3'? 'Contribuyente': 'Tipo de persona'} <strong class=" text-red-600" >*</strong> </label>
                 <Select.Root selected={{label: data.inftributaria?.Persona}}
                 onSelectedChange={(e) => data.inftributaria.Persona= e.value} >
                   <Select.Trigger class="w-[300px]">
@@ -1376,16 +1473,18 @@
                   </Select.Trigger>
                   <Select.Content class="h-40 overflow-auto" >
                     <Select.Group>
-                      <Select.Label>Tipos de persona</Select.Label>
+                      <Select.Label>{dec === '3'? 'Contribuyente': 'Tipo de persona'}</Select.Label>
                         <Select.Item value="COMÚN" label="Común"
                           >Común</Select.Item
                         >
                         <Select.Item value="SIMPLIFICADO" label="Simplificado"
                           >Simplificado</Select.Item
                         >
+                        {#if dec !== '3'}
                         <Select.Item value="PERSONA NATURAL" label="Persona Natural"
                           >Persona Natural</Select.Item
                         >
+                        {/if}
                         <Select.Item value="TRIBUTACION SIMPLE" label="Tributación Simple"
                           >Tributación Simple</Select.Item
                         >
@@ -1400,6 +1499,7 @@
         </div>
         {/if}
     {:else if page === 6}
+        {#if dec !== '3'}
         <div class=" flex items-center justify-center gap-10 flex-wrap" >
             <div class="flex flex-col gap-1.5">
                 <label for="Assets">Activos <strong class=" text-red-600" >*</strong> </label>
@@ -1520,10 +1620,78 @@
                 <Textarea class="w-[300px] sm:w-[642px]" placeholder="Explícanos tu situación." bind:value={data.decorigen} />
             </div> 
         </div>
+        {:else if dec === '3'}
+        <div class=" flex items-center justify-center gap-10 flex-wrap mt-5" >
+          <div class="flex flex-col gap-1.5">
+            <label for="">(Contribuyente) Resolución N° <strong class=" text-red-600" >*</strong> </label>
+            <Input class="w-[300px]" type="number" id="passive" placeholder="Resolución N°" bind:value={data.inftributaria.ResoluciónNumContri} />
+          </div>
+          <div class="flex flex-col gap-1.5">
+            <label for="">Régimen <strong class=" text-red-600" >*</strong> </label>
+            <Input class="w-[300px]" type="text" id="passive" placeholder="Régimen" bind:value={data.inftributaria.RégimenContri} />
+          </div>
+        <div class=" flex flex-col gap-1.5" >
+            <label for="">Autorretenedor <strong class=" text-red-600" >*</strong> </label>
+            <Select.Root selected={{label: data.inftributaria?.Autorretenedor === true? 'Si': 'No'}}
+            onSelectedChange={(e) => data.inftributaria.Autorretenedor = e.value} >
+              <Select.Trigger class="w-[300px]">
+                <Select.Value placeholder="Seleccione su respuesta" />
+              </Select.Trigger>
+              <Select.Content class="h-40 overflow-auto" >
+                <Select.Group>
+                  <Select.Label>Seleccione su respuesta</Select.Label>
+                    <Select.Item value={true} label="Si"
+                      >Si</Select.Item
+                    >
+                    <Select.Item value={false} label="No"
+                      >No</Select.Item
+                    >
+                </Select.Group>
+              </Select.Content>
+              <Select.Input name="municipality" />
+            </Select.Root> 
+        </div>
+        <div class="flex flex-col gap-1.5">
+          <label for="">(Autorretenedor) Resolución N° <strong class=" text-red-600" >*</strong> </label>
+          <Input class="w-[300px]" type="number" id="passive" placeholder="Resolución N°" bind:value={data.inftributaria.ResoluciónNumAutorre} />
+        </div>
+        </div>
+        <div class=" flex items-center justify-center gap-10 flex-wrap mt-5" >
+          <div class=" flex flex-col gap-1.5" >
+            <label for="">Autorretenedor de ICA <strong class=" text-red-600" >*</strong> </label>
+            <Select.Root selected={{label: data.inftributaria?.AutorretenedorICA === true? 'Si': 'No'}}
+            onSelectedChange={(e) => data.inftributaria.AutorretenedorICA = e.value} >
+              <Select.Trigger class="w-[300px]">
+                <Select.Value placeholder="Seleccione su respuesta" />
+              </Select.Trigger>
+              <Select.Content class="h-40 overflow-auto" >
+                <Select.Group>
+                  <Select.Label>Seleccione su respuesta</Select.Label>
+                    <Select.Item value={true} label="Si"
+                      >Si</Select.Item
+                    >
+                    <Select.Item value={false} label="No"
+                      >No</Select.Item
+                    >
+                </Select.Group>
+              </Select.Content>
+              <Select.Input name="municipality" />
+            </Select.Root> 
+          </div>
+          <div class="flex flex-col gap-1.5">
+            <label for="">(ICA) Resolución N° <strong class=" text-red-600" >*</strong> </label>
+            <Input class="w-[300px]" type="text" id="passive" placeholder="Resolución N°" bind:value={data.inftributaria.ResoluciónNumICA} />
+          </div>
+        </div>
+        {/if}
     {:else if page === 7}
         <div class=" flex items-center justify-center gap-10 flex-wrap mt-5" >
             <div class=" flex flex-col gap-1.5 items-center" >
-                <label for="">¿Realiza operaciones en moneda extranjera? <strong class=" text-red-600" >*</strong> </label>
+                <label for="">¿Realiza operaciones en moneda extranjera? 
+                  {#if dec !== '3'}
+                    <strong class=" text-red-600" >*</strong> 
+                  {/if}
+                </label>
                 <Select.Root selected={{label: data.decmonextern === '1'? 'Si': 'No'}}
                 onSelectedChange={(v) => data.decmonextern = v.value} >
                   <Select.Trigger class="w-[300px]">
@@ -1546,7 +1714,11 @@
         </div>
         <div class=" flex items-center justify-center gap-10 flex-wrap mt-5" >
             <div class="flex flex-col gap-1.5 items-center">
-                <p>¿Realiza alguna de estas operaciones? <strong class=" text-red-600" >*</strong> </p>
+                <p>¿Realiza alguna de estas operaciones? 
+                  {#if dec !== '3'}
+                    <strong class=" text-red-600" >*</strong> 
+                  {/if}
+                </p>
                 <div>
                 <div class="flex items-center space-x-2" >
                   <Checkbox id="terms" aria-labelledby="terms-label" />
@@ -1577,7 +1749,11 @@
         </div>
         <div class=" flex items-center justify-center gap-10 flex-wrap mt-5" >
             <div class=" flex flex-col gap-1.5 items-center" >
-                <label for="">¿Posee cuentas bancarias en moneda extranjera? <strong class=" text-red-600" >*</strong> </label>
+                <label for="">¿Posee cuentas bancarias en moneda extranjera? 
+                  {#if dec !== '3'}
+                    <strong class=" text-red-600" >*</strong> 
+                  {/if}
+                </label>
                 <Select.Root selected={{label: data.deccuentasme === '1'? 'Si': 'No'}}
                 onSelectedChange={(v) => data.deccuentasme = v.value} >
                   <Select.Trigger class="w-[300px]">

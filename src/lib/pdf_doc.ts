@@ -443,91 +443,99 @@ export async function Acudiente(data:any){
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(10).drawText('$' + data.decactivos,{
+    const activos = data.decactivos? data.decactivos : ' '
+
+    pdfDoc.getPage(10).drawText('$' + activos,{
         x: 122,
         y: pdfDoc.getPage(10).getHeight() - 312,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(10).drawText('$' + data.decpasivos,{
+    const pasivos = data.decpasivos? data.decpasivos : ' '
+
+    pdfDoc.getPage(10).drawText('$' + pasivos,{
         x: 263,
         y: pdfDoc.getPage(10).getHeight() - 312,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(10).drawText('$' + data.decpatrimonio,{
+    const patrimonio = data.decpatrimonio? data.decpatrimonio : ' '
+
+    pdfDoc.getPage(10).drawText('$' + patrimonio,{
         x: 405,
         y: pdfDoc.getPage(10).getHeight() - 312,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(10).drawText('$' + data.decotrosing,{
+    const ingresos = data.decingresos? data.decingresos : ' '
+
+    pdfDoc.getPage(10).drawText('$' + ingresos,{
         x: 170,
         y: pdfDoc.getPage(10).getHeight() - 350.5,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(10).drawText(data.decrpublicos === '1' ? 'SI' : 'NO',{
+    pdfDoc.getPage(10).drawText(data.decrpublicos === '1' ? 'SI' : data.decrpublicos === '0'? 'NO' : '',{
         x: 325,
         y: pdfDoc.getPage(10).getHeight() - 414,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(10).drawText(data.decppublic === '1' ? 'SI' : 'NO',{
+    pdfDoc.getPage(10).drawText(data.decppublic === '1' ? 'SI' : data.decppublic === '0'? 'NO' : '',{
         x: 463,
         y: pdfDoc.getPage(10).getHeight() - 427.3,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(10).drawText(data.decvincpublico === '1' ? 'SI' : 'NO',{
+    pdfDoc.getPage(10).drawText(data.decvincpublico === '1' ? 'SI' : data.decvincpublico === '0'? 'NO' : '',{
         x: 72,
         y: pdfDoc.getPage(10).getHeight() - 454,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(10).drawText(data.decextranjero === '1' ? 'SI' : 'NO',{
+    pdfDoc.getPage(10).drawText(data.decextranjero === '1' ? 'SI' : data.decextranjero === '0'? 'NO' : '',{
         x: 72,
         y: pdfDoc.getPage(10).getHeight() - 478.5,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(10).drawText(data.decmonextern === '1' ? 'SI': 'NO',{
+    pdfDoc.getPage(10).drawText(data.decmonextern === '1' ? 'SI':  data.decmonextern === '0'? 'NO' : '',{
         x: 342,
         y: 175,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(10).drawText(data.dectransferencias  === '1' ? 'SI' : 'NO',{
+    pdfDoc.getPage(10).drawText(data.dectransferencias  === '1' ? 'SI' : data.dectransferencias === '0'? 'NO' : '',{
         x: 270,
         y: 161.5,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(10).drawText(data.decimporta === '1' ? 'SI' : 'NO',{
+    pdfDoc.getPage(10).drawText(data.decimporta === '1' ? 'SI' : data.decimporta === '0'? 'NO' : '',{
         x: 160,
         y: 148.5,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(10).drawText(data.decexporta === '1' ? 'SI' : 'NO',{
+    pdfDoc.getPage(10).drawText(data.decexporta === '1' ? 'SI' : data.decexporta === '0'? 'NO' : '',{
         x: 278,
         y: 148.5,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(10).drawText(data.decotrasmact === '1' ? 'SI' : 'NO',{
+    pdfDoc.getPage(10).drawText(data.decotrasmact === '1' ? 'SI' : data.decotrasmact === '0'? 'NO' : '',{
         x: 343,
         y: 148.5,
         size: 10,
@@ -1246,98 +1254,106 @@ export async function PadreMadre(data:any){
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(10).drawText(data.declaradireccion? data.declaradireccion : '',{
+    pdfDoc.getPage(10).drawText(data.declaradireccion  ? data.declaradireccion : '',{
         x: 139,
         y: pdfDoc.getPage(10).getHeight() - 260.3,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(10).drawText('$' + data.decactivos,{
+    const activos = data.decactivos !== undefined ? data.decactivos : ' ';
+
+    pdfDoc.getPage(10).drawText('$' + activos,{
         x: 122,
         y: pdfDoc.getPage(10).getHeight() - 312,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(10).drawText('$' + data.decpasivos,{
+    const pasivo = data.decpasivos !== undefined ? data.decpasivos : ' ';
+
+    pdfDoc.getPage(10).drawText('$' + pasivo,{
         x: 250,
         y: pdfDoc.getPage(10).getHeight() - 312,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(10).drawText('$' + data.decpatrimonio,{
+    const patrimonio = data.decpatrimonio !== undefined ? data.decpatrimonio : ' ';
+
+    pdfDoc.getPage(10).drawText('$' + patrimonio,{
         x: 390,
         y: pdfDoc.getPage(10).getHeight() - 312,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(10).drawText('$' + data.decotrosing,{
+    const ingresos = data.decingresos !== undefined ? data.decingresos : ' ';
+
+    pdfDoc.getPage(10).drawText('$' + ingresos,{
         x: 250,
         y: pdfDoc.getPage(10).getHeight() - 351,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(10).drawText(data.decrpublicos === '1' ? 'SI' : 'NO',{
+    pdfDoc.getPage(10).drawText(data.decrpublicos === '1' ? 'SI' : data.decrpublicos === '0'? 'NO' : '',{
         x: 325,
         y: pdfDoc.getPage(10).getHeight() - 401.5,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(10).drawText(data.decppublic === '1' ? 'SI' : 'NO',{
+    pdfDoc.getPage(10).drawText(data.decppublic === '1' ? 'SI' : data.decppublic === '0'? 'NO' : '',{
         x: 463,
         y: pdfDoc.getPage(10).getHeight() - 414.8,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(10).drawText(data.decvincpublico === '1' ? 'SI' : 'NO',{
+    pdfDoc.getPage(10).drawText(data.decvincpublico === '1' ? 'SI' : data.decvincpublico === '0'? 'NO' : '',{
         x: 72,
         y: pdfDoc.getPage(10).getHeight() - 442,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(10).drawText(data.decextranjero === '1' ? 'SI' : 'NO',{
+    pdfDoc.getPage(10).drawText(data.decextranjero === '1' ? 'SI' : data.decextranjero === '0'? 'NO' : '',{
         x: 72,
         y: pdfDoc.getPage(10).getHeight() - 466.5,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(10).drawText(data.decmonextern === '1' ? 'SI': 'NO',{
+    pdfDoc.getPage(10).drawText(data.decmonextern === '1' ? 'SI': data.decmonextern === '0'? 'NO' : '',{
         x: 342,
         y: 161.5,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(10).drawText(data.dectransferencias  === '1' ? 'SI' : 'NO',{
+    pdfDoc.getPage(10).drawText(data.dectransferencias  === '1' ? 'SI' : data.dectransferencias === '0'? 'NO' : '',{
         x: 270,
         y: 148.5,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(10).drawText(data.decimporta === '1' ? 'SI' : 'NO',{
+    pdfDoc.getPage(10).drawText(data.decimporta === '1' ? 'SI' : data.decimporta === '0'? 'NO' : '',{
         x: 160,
         y: 135.5,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(10).drawText(data.decexporta === '1' ? 'SI' : 'NO',{
+    pdfDoc.getPage(10).drawText(data.decexporta === '1' ? 'SI' : data.decexporta === '0'? 'NO' : '',{
         x: 286,
         y: 135.5,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(10).drawText(data.decotrasmact === '1' ? 'SI' : 'NO',{
+    pdfDoc.getPage(10).drawText(data.decotrasmact === '1' ? 'SI' : data.decotrasmact === '0'? 'NO' : '',{
         x: 366,
         y: 135.5,
         size: 10,
@@ -2086,91 +2102,99 @@ export async function PadreAcudiente(data:any){
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(10).drawText('$' + data.decactivos,{
+    const activos = data.decactivos ? data.decactivos : ' ';
+
+    pdfDoc.getPage(10).drawText('$' + activos,{
         x: 122,
         y: pdfDoc.getPage(10).getHeight() - 312,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(10).drawText('$' + data.decpasivos,{
+    const pasivos = data.decpasivos ? data.decpasivos : ' ';
+
+    pdfDoc.getPage(10).drawText('$' + pasivos,{
         x: 250,
         y: pdfDoc.getPage(10).getHeight() - 312,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(10).drawText('$' + data.decpatrimonio,{
+    const patrimonio = data.decpatrimonio ? data.decpatrimonio : ' ';
+
+    pdfDoc.getPage(10).drawText('$' + patrimonio,{
         x: 390,
         y: pdfDoc.getPage(10).getHeight() - 312,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(10).drawText('$' + data.decotrosing,{
+    const ingresos = data.decingresos ? data.decingresos : ' ';
+
+    pdfDoc.getPage(10).drawText('$' + ingresos,{
         x: 250,
         y: pdfDoc.getPage(10).getHeight() - 351,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(10).drawText(data.decrpublicos === '1' ? 'SI' : 'NO',{
+    pdfDoc.getPage(10).drawText(data.decrpublicos === '1' ? 'SI' : data.decrpublicos === '2' ? 'NO' : '',{
         x: 325,
         y: pdfDoc.getPage(10).getHeight() - 401.5,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(10).drawText(data.decppublic === '1' ? 'SI' : 'NO',{
+    pdfDoc.getPage(10).drawText(data.decppublic === '1' ? 'SI' : data.decppublic === '2' ? 'NO' : '',{
         x: 463,
         y: pdfDoc.getPage(10).getHeight() - 414.8,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(10).drawText(data.decvincpublico === '1' ? 'SI' : 'NO',{
+    pdfDoc.getPage(10).drawText(data.decvincpublico === '1' ? 'SI' : data.decvincpublico === '2' ? 'NO' : '',{
         x: 72,
         y: pdfDoc.getPage(10).getHeight() - 442,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(10).drawText(data.decextranjero === '1' ? 'SI' : 'NO',{
+    pdfDoc.getPage(10).drawText(data.decextranjero === '1' ? 'SI' : data.decextranjero === '2' ? 'NO' : '',{
         x: 72,
         y: pdfDoc.getPage(10).getHeight() - 466.5,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(10).drawText(data.decmonextern === '1' ? 'SI': 'NO',{
+    pdfDoc.getPage(10).drawText(data.decmonextern === '1' ? 'SI': data.decmonextern === '2' ? 'NO' : '',{
         x: 342,
         y: 161.5,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(10).drawText(data.dectransferencias  === '1' ? 'SI' : 'NO',{
+    pdfDoc.getPage(10).drawText(data.dectransferencias  === '1' ? 'SI' : data.dectransferencias === '2' ? 'NO' : '',{
         x: 270,
         y: 148.5,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(10).drawText(data.decimporta === '1' ? 'SI' : 'NO',{
+    pdfDoc.getPage(10).drawText(data.decimporta === '1' ? 'SI' : data.decimporta === '2' ? 'NO' : '',{
         x: 160,
         y: 135.5,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(10).drawText(data.decexporta === '1' ? 'SI' : 'NO',{
+    pdfDoc.getPage(10).drawText(data.decexporta === '1' ? 'SI' : data.decexporta === '2' ? 'NO' : '',{
         x: 286,
         y: 135.5,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(10).drawText(data.decotrasmact === '1' ? 'SI' : 'NO',{
+    pdfDoc.getPage(10).drawText(data.decotrasmact === '1' ? 'SI' : data.decotrasmact === '2' ? 'NO' : '',{
         x: 366,
         y: 135.5,
         size: 10,
@@ -2919,91 +2943,99 @@ export async function MadreAcudiente(data: any){
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(10).drawText('$' + data.decactivos,{
+    const activos = data.decactivos ? data.decactivos : ' '
+
+    pdfDoc.getPage(10).drawText('$' + activos,{
         x: 122,
         y: pdfDoc.getPage(10).getHeight() - 312,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(10).drawText('$' + data.decpasivos,{
+    const pasivos = data.decpasivos ? data.decpasivos : ' '
+
+    pdfDoc.getPage(10).drawText('$' + pasivos,{
         x: 250,
         y: pdfDoc.getPage(10).getHeight() - 312,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(10).drawText('$' + data.decpatrimonio,{
+    const patrimonio = data.decpatrimonio ? data.decpatrimonio : ' '
+
+    pdfDoc.getPage(10).drawText('$' + patrimonio,{
         x: 390,
         y: pdfDoc.getPage(10).getHeight() - 312,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(10).drawText('$' + data.decotrosing,{
+    const ingresos = data.decingresos ? data.decingresos : ' '
+
+    pdfDoc.getPage(10).drawText('$' + ingresos,{
         x: 250,
         y: pdfDoc.getPage(10).getHeight() - 351,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(10).drawText(data.decrpublicos === '1' ? 'SI' : 'NO',{
+    pdfDoc.getPage(10).drawText(data.decrpublicos === '1' ? 'SI' : data.decrpublicos === '2' ? 'NO' : '',{
         x: 325,
         y: pdfDoc.getPage(10).getHeight() - 401.5,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(10).drawText(data.decppublic === '1' ? 'SI' : 'NO',{
+    pdfDoc.getPage(10).drawText(data.decppublic === '1' ? 'SI' : data.decppublic === '2' ? 'NO' : '',{
         x: 463,
         y: pdfDoc.getPage(10).getHeight() - 414.8,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(10).drawText(data.decvincpublico === '1' ? 'SI' : 'NO',{
+    pdfDoc.getPage(10).drawText(data.decvincpublico === '1' ? 'SI' :data.decvincpublico === '2' ? 'NO' : '',{
         x: 72,
         y: pdfDoc.getPage(10).getHeight() - 442,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(10).drawText(data.decextranjero === '1' ? 'SI' : 'NO',{
+    pdfDoc.getPage(10).drawText(data.decextranjero === '1' ? 'SI' : data.decextranjero === '2' ? 'NO' : '',{
         x: 72,
         y: pdfDoc.getPage(10).getHeight() - 466.5,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(10).drawText(data.decmonextern === '1' ? 'SI': 'NO',{
+    pdfDoc.getPage(10).drawText(data.decmonextern === '1' ? 'SI': data.decmonextern === '2' ? 'NO' : '',{
         x: 342,
         y: 161.5,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(10).drawText(data.dectransferencias  === '1' ? 'SI' : 'NO',{
+    pdfDoc.getPage(10).drawText(data.dectransferencias  === '1' ? 'SI' : data.dectransferencias === '2' ? 'NO' : '',{
         x: 270,
         y: 148.5,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(10).drawText(data.decimporta === '1' ? 'SI' : 'NO',{
+    pdfDoc.getPage(10).drawText(data.decimporta === '1' ? 'SI' : data.decimporta === '2' ? 'NO' : '',{
         x: 160,
         y: 135.5,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(10).drawText(data.decexporta === '1' ? 'SI' : 'NO',{
+    pdfDoc.getPage(10).drawText(data.decexporta === '1' ? 'SI' : data.decexporta === '2' ? 'NO' : '',{
         x: 286,
         y: 135.5,
         size: 10,
         color: rgb(0,0,0)
     });
 
-    pdfDoc.getPage(10).drawText(data.decotrasmact === '1' ? 'SI' : 'NO',{
+    pdfDoc.getPage(10).drawText(data.decotrasmact === '1' ? 'SI' : data.decotrasmact === '2' ? 'NO' : '',{
         x: 366,
         y: 135.5,
         size: 10,

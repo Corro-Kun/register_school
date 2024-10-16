@@ -9,11 +9,11 @@ export const GET: APIRoute = async ({ params, request }) => {
         const [country]: any[] = await sql.query('select * from pais;');
         const [parents]: any[] = await sql.query('select * from parentesco where descripcion != "Padre" and descripcion != "Madre" and descripcion != "Acudiente";');
         let [student]: any[] = await sql.query('select id, nombres, apellidos, documento, idtipoid as tipoid_id, mupioexp, nacefecha, direccion, municipio_id, barrio_id, telefono, enfermedad, matricula_id from estudiante where documento = ?;', [params.id]);
-        let [neighborhood]: any[] = await sql.query('select * from barrio;');
+        let [neighborhood]: any[] = await sql.query('select * from barrio ORDER BY nombre ASC;');
         student[0].fechanace = new Date(student[0].nacefecha).toISOString().split('T')[0];
         let [father]: any[] = await sql.query('select id, nombres, apellidos, documento, email, celular from estudiante_familia where idestudiante = ?  and idparentesco = 1 ;', [student[0].id]);
         let [mother]: any[] = await sql.query('select id, nombres, apellidos, documento, email, celular from estudiante_familia where idestudiante = ?  and idparentesco = 2 ;', [student[0].id]);
-        let [grade]: any[] = await sql.query('select g.titulo from matricula m JOIN grupo u ON m.idgrupo = u.id JOIN grado g ON u.idgrado = g.id where m.idestudiante = ?;', [student[0].id]);
+        let [grade]: any[] = await sql.query('select g.titulo from matricula m JOIN grupo u ON m.idgrupo = u.id JOIN grado g ON u.idgrado = g.id where m.idestudiante = ? and m.idanyo = 11;', [student[0].id]);
         let [eps]: any[] = await sql.query('select eps.nombre from estudiante JOIN eps ON estudiante.ideps = eps.id where estudiante.id = ?;', [student[0].id]);
         student[0].grado = grade.length > 0 ? grade[0].titulo : null;
         student[0].eps = eps.length > 0 ? eps[0].nombre : null;

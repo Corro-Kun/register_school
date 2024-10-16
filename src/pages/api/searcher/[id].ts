@@ -6,7 +6,10 @@ export const GET: APIRoute = async ({ params }) => {
     if (student.length === 0) {
         return new Response(JSON.stringify({message: 'No se encontró el estudiante'}), { status: 404 });
     }
-    const [matricule]: any[] = await sql.query('select id from matricula where idestudiante = ?', [student[0].id]);
+    const [matricule]: any[] = await sql.query('select id from matricula where idestudiante = ? and idanyo = 11', [student[0].id]);
+    if (matricule.length === 0) {
+        return new Response(JSON.stringify({message: 'No se encontró la matrícula'}), { status: 404 });
+    }
     const [photo]: any[] = await sql.query('select * from fotos where idmatricula = ?;', [matricule[0].id]);
     const data = {
         names: student[0].nombres,
