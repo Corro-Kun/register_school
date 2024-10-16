@@ -3,6 +3,24 @@ import type { APIRoute } from "astro";
 
 export const GET: APIRoute = async ({ params, request }) => {
     try{
+        const [student_test]: any[] = await sql.query('select id from estudiante where documento = ?;', [params.id]);
+        if (student_test.length === 0) {
+            return new Response(JSON.stringify({message: 'No existe el estudiante'}), { status: 404,
+                headers: {"Content-Type": "application/json"}
+            });
+        }
+        const [verif]: any[] = await sql.query('SELECT * FROM verificar WHERE documento = ?;', [params.id]);
+        if (verif.length === 0) {
+            return new Response(JSON.stringify({message: 'No tiene permiso'}), { status: 400,
+                headers: {"Content-Type": "application/json"}
+            });
+        }else if(verif[0].activo === 0) {
+            return new Response(JSON.stringify({message: 'No tiene permiso'}), { status: 400,
+                headers: {"Content-Type": "application/json"}
+            });
+        }
+        await sql.query('DELETE FROM verificar WHERE documento = ?;', [params.id]);
+        
         const [depart]: any[] = await sql.query('select * from departamento;');
         const [municipality]: any[] = await sql.query('select * from municipio ORDER BY nombre ASC;');
         const [dni]: any[] = await sql.query('select * from tipoid;');

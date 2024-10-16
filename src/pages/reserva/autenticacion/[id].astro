@@ -1,0 +1,10 @@
+---
+import Layout from '$lib/layouts/Layout.astro';
+import Verif from '$lib/components/Verif.svelte';
+
+const { id } = Astro.params;
+---
+
+<Layout title="Autenticación">
+    <Verif {id} client:load />
+</Layout>

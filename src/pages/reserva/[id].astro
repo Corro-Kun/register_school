@@ -5,7 +5,9 @@ import MatriculateForm from '$lib/components/MatriculateForm.svelte';
 const { id } = Astro.params;
 
 const result = await fetch(`${Astro.url.origin}/api/reservation/${id}`);
-if (result.status !== 200) {
+if (result.status === 400) {
+  return Astro.redirect(`/reserva/autenticacion/${id}`);
+}else if (result.status !== 200) {
   return Astro.redirect("/reserva");
 }
 const data = await result.json();

@@ -16,7 +16,6 @@
     import {navigate} from 'astro:transitions/client';
     import {onMount} from 'svelte';
     import {today, getLocalTimeZone} from "@internationalized/date";
-  import { F } from "dist/client/_astro/index.B4SyftnK";
 
     let page = 1;
     let title = 'Datos del estudiante';

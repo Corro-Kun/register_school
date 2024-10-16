@@ -26,7 +26,7 @@
     }
 
     function redirect(){
-        navigate('/reserva/'+document);
+        navigate('/reserva/autenticacion/'+document);
     }
 
 </script>
