@@ -34,6 +34,7 @@ if (data.mother !== null){
 <Layout title={`Reserva de cupo de ${data.student[0].nombres}`} >
 	<MatriculateForm client:load 
 	Municipality={data.municipality} 
+	Department={data.depart}
 	typeOfDocument={data.dni} 
 	neighborhood={data.neighborhood} 
 	data={data.student[0]} 

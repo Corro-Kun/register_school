@@ -16,6 +16,7 @@
     import {navigate} from 'astro:transitions/client';
     import {onMount} from 'svelte';
     import {today, getLocalTimeZone} from "@internationalized/date";
+  import { F } from "dist/client/_astro/index.B4SyftnK";
 
     let page = 1;
     let title = 'Datos del estudiante';
@@ -178,6 +179,8 @@
 
     export let Municipality = [];
 
+    export let Department = [];
+
     export let neighborhood = [];
 
     export let country = [];
@@ -207,6 +210,23 @@
         }else if (page === 8) {
             title = 'Finalizar'
         }
+    }
+
+    let municipality_list = {
+      Student_Exp_Dep: false,
+      Student_Exp: [],
+      Student_Nac_Dep: false,
+      Student_Nac: [],
+      Father_Exp_Dep: false,
+      Father_Exp: [],
+      Mother_Exp_Dep: false,
+      Mother_Exp: [],
+      Acu_Exp_Dep: false,
+      Acu_Exp: [],
+      Declarante_Exp_Dep: false,
+      Declarante_Exp: [],
+      Declarante_Map_Dep: false,
+      Declarante_Map: [],
     }
 
     onMount(()=>{
@@ -504,8 +524,37 @@
         </div>
         <div class=" flex items-center justify-center gap-10 flex-wrap mt-5" >
             <div class=" flex flex-col gap-1.5" >
+                <label for="">Expedición del d. departamento <strong class=" text-red-600" >*</strong> </label>
+                <Select.Root selected={{label: data.mupioexp_label_frontend_D}} 
+                onSelectedChange={(v)=> {
+                  data.mupioexp_label_frontend_D = v.label
+                  municipality_list.Student_Exp = Municipality;
+                  if(v.value !== 2){
+                    municipality_list.Student_Exp = Municipality.filter((m) => m.departamento_id === v.value);
+                  }
+                  municipality_list.Student_Exp_Dep = true;
+                  }} >
+                  <Select.Trigger class="w-[300px]">
+                    <Select.Value placeholder="Expedición del documento" />
+                  </Select.Trigger>
+                  <Select.Content class="h-40 overflow-auto" >
+                    <Select.Group>
+                      <Select.Label>Departamentos</Select.Label>
+                      {#each Department as department}
+                        <Select.Item value={department.id} label={department.nombre}
+                          >{department.nombre}</Select.Item
+                        >
+                      {/each}
+                    </Select.Group>
+                  </Select.Content>
+                  <Select.Input name="document issuance" />
+                </Select.Root>
+            </div>
+            <div class=" flex flex-col gap-1.5" >
                 <label for="">Expedición del documento <strong class=" text-red-600" >*</strong> </label>
-                <Select.Root selected={{label: data.mupioexp_label_frontend}} onSelectedChange={(v)=> {
+                <Select.Root selected={{label: data.mupioexp_label_frontend}} 
+                disabled={!municipality_list.Student_Exp_Dep}
+                onSelectedChange={(v)=> {
                   data.mupioexp_id = v.value
                   data.mupioexp_label_frontend = v.label
                   }} >
@@ -515,7 +564,7 @@
                   <Select.Content class="h-40 overflow-auto" >
                     <Select.Group>
                       <Select.Label>Municipios</Select.Label>
-                      {#each Municipality as municipality}
+                      {#each municipality_list.Student_Exp as municipality}
                         <Select.Item value={municipality.id} label={municipality.nombre}
                           >{municipality.nombre}</Select.Item
                         >
@@ -549,9 +598,40 @@
                 <label for="address">Dirección de residencia <strong class=" text-red-600" >*</strong> </label>
                 <Input class="w-[300px]" type="text" id="address" placeholder="Dirección de residencia" bind:value={data.direccion} />
             </div>
+        </div>
+        <div class=" flex items-center justify-center gap-10 flex-wrap mt-5" >
+            <div class=" flex flex-col gap-1.5" >
+                <label for="">Departamento <strong class=" text-red-600" >*</strong> </label>
+                <Select.Root selected={{label: data.departamento_label_frontend_D}} 
+                onSelectedChange={(v)=> {
+                  data.departamento_label_frontend_D = v.label
+                  municipality_list.Student_Nac = Municipality;
+                  if(v.value !== 2){
+                    municipality_list.Student_Nac = Municipality.filter((m) => m.departamento_id === v.value);
+                  }
+                  municipality_list.Student_Nac_Dep = true;
+                  }} >
+                  <Select.Trigger class="w-[300px]">
+                    <Select.Value placeholder="Expedición del documento" />
+                  </Select.Trigger>
+                  <Select.Content class="h-40 overflow-auto" >
+                    <Select.Group>
+                      <Select.Label>Departamentos</Select.Label>
+                      {#each Department as department}
+                        <Select.Item value={department.id} label={department.nombre}
+                          >{department.nombre}</Select.Item
+                        >
+                      {/each}
+                    </Select.Group>
+                  </Select.Content>
+                  <Select.Input name="document issuance" />
+                </Select.Root>
+            </div>
             <div class=" flex flex-col gap-1.5" >
                 <label for="">Municipio <strong class=" text-red-600" >*</strong> </label>
-                <Select.Root selected={{label:data.municipio_label_frontend}} onSelectedChange={(v)=> {
+                <Select.Root selected={{label:data.municipio_label_frontend}} 
+                disabled={!municipality_list.Student_Nac_Dep}
+                onSelectedChange={(v)=> {
                   data.municipio_id = v.value
                   data.municipio_label_frontend = v.label
                   }}>
@@ -561,7 +641,7 @@
                   <Select.Content class="h-40 overflow-auto" >
                     <Select.Group>
                       <Select.Label>Municipios</Select.Label>
-                      {#each Municipality as municipality}
+                      {#each municipality_list.Student_Nac as municipality}
                         <Select.Item value={municipality.id} label={municipality.nombre}
                           >{municipality.nombre}</Select.Item
                         >
@@ -571,8 +651,6 @@
                   <Select.Input name="municipality" />
                 </Select.Root>
             </div>
-        </div>
-        <div class=" flex items-center justify-center gap-10 flex-wrap mt-5" >
             <div class=" flex flex-col gap-1.5" >
                 <label for="">Barrio <strong class=" text-red-600" >*</strong> </label>
                 <Select.Root selected={{label: data.barrio_label_frontend}} onSelectedChange={(v)=> {
@@ -599,10 +677,12 @@
                 <label for="landlinephone">Teléfono fijo <strong class=" text-red-600" >*</strong> </label>
                 <Input class="w-[300px]" type="number" id="landlinephone" placeholder="Teléfono fijo" bind:value={data.telefono} />
             </div>
-            <div class="flex flex-col gap-1.5 items-center">
-                <label for="diseases">Enfermedades o alergias sufridas por el estudiante</label>
-                <Textarea class="w-[300px] sm:w-[642px]" placeholder="Explícanos tu situación." bind:value={data.enfermedad} />
-            </div>
+        </div>
+        <div class=" flex items-center justify-center gap-10 flex-wrap mt-5" >
+          <div class="flex flex-col gap-1.5 items-center">
+            <label for="diseases">Enfermedades o alergias sufridas por el estudiante</label>
+            <Textarea class="w-[300px] sm:w-[642px]" placeholder="Explícanos tu situación." bind:value={data.enfermedad} />
+          </div>
         </div>
         <div class=" flex items-center justify-center gap-10 flex-wrap mt-5" >
             <p>En caso de urgencia ¿a quién podemos llamar? (diferente a papá y mamá)</p>
@@ -680,8 +760,37 @@
         </div>
         <div class=" flex items-center justify-center gap-10 flex-wrap mt-5" >
             <div class=" flex flex-col gap-1.5" >
+                <label for="">Departamento Expedición<strong class=" text-red-600" >*</strong> </label>
+                <Select.Root selected={{label: data.F_departamento_label_frontend_D}} 
+                onSelectedChange={(v)=> {
+                  data.F_departamento_label_frontend_D = v.label
+                  municipality_list.Father_Exp = Municipality;
+                  if(v.value !== 2){
+                    municipality_list.Father_Exp = Municipality.filter((m) => m.departamento_id === v.value);
+                  }
+                  municipality_list.Father_Exp_Dep = true;
+                  }} >
+                  <Select.Trigger class="w-[300px]">
+                    <Select.Value placeholder="Expedición del documento" />
+                  </Select.Trigger>
+                  <Select.Content class="h-40 overflow-auto" >
+                    <Select.Group>
+                      <Select.Label>Departamentos</Select.Label>
+                      {#each Department as department}
+                        <Select.Item value={department.id} label={department.nombre}
+                          >{department.nombre}</Select.Item
+                        >
+                      {/each}
+                    </Select.Group>
+                  </Select.Content>
+                  <Select.Input name="document issuance" />
+                </Select.Root>
+            </div>
+            <div class=" flex flex-col gap-1.5" >
                 <label for="">Expedición del documento <strong class=" text-red-600" >*</strong> </label>
-                <Select.Root selected={{label:data.munexppadre_label_frontend}} onSelectedChange={(v)=> {
+                <Select.Root selected={{label:data.munexppadre_label_frontend}} 
+                disabled={!municipality_list.Father_Exp_Dep}
+                onSelectedChange={(v)=> {
                   data.munexppadre_id = v.value
                   data.munexppadre_label_frontend = v.label
                   }} >
@@ -691,7 +800,7 @@
                   <Select.Content class="h-40 overflow-auto" >
                     <Select.Group>
                       <Select.Label>Municipios</Select.Label>
-                      {#each Municipality as municipality}
+                      {#each municipality_list.Father_Exp as municipality}
                         <Select.Item value={municipality.id} label={municipality.nombre}
                           >{municipality.nombre}</Select.Item
                         >
@@ -709,7 +818,9 @@
                 <label for="cellular">Celular <strong class=" text-red-600" >*</strong> </label>
                 <Input class="w-[300px]" type="number" id="cellular" placeholder="Celular" bind:value={data.padrecelular} />
             </div>
-            <div class="flex flex-col gap-1.5">
+        </div>
+        <div class=" flex items-center justify-center gap-10 flex-wrap mt-5" >
+          <div class="flex flex-col gap-1.5">
                 <label for="work-phone">Teléfono del trabajo</label>
                 <div class="flex gap-3" >
                     <Input class="w-[50px]" type="number" placeholder="601" bind:value={data.padretelcorto} />
@@ -777,8 +888,37 @@
         </div>
         <div class=" flex items-center justify-center gap-10 flex-wrap mt-5" >
             <div class=" flex flex-col gap-1.5" >
+                <label for="">Departamento Expedición<strong class=" text-red-600" >*</strong> </label>
+                <Select.Root selected={{label: data.M_departamento_label_frontend_D}} 
+                onSelectedChange={(v)=> {
+                  data.M_departamento_label_frontend_D = v.label
+                  municipality_list.Mother_Exp = Municipality;
+                  if(v.value !== 2){
+                    municipality_list.Mother_Exp = Municipality.filter((m) => m.departamento_id === v.value);
+                  }
+                  municipality_list.Mother_Exp_Dep = true;
+                  }} >
+                  <Select.Trigger class="w-[300px]">
+                    <Select.Value placeholder="Expedición del documento" />
+                  </Select.Trigger>
+                  <Select.Content class="h-40 overflow-auto" >
+                    <Select.Group>
+                      <Select.Label>Departamentos</Select.Label>
+                      {#each Department as department}
+                        <Select.Item value={department.id} label={department.nombre}
+                          >{department.nombre}</Select.Item
+                        >
+                      {/each}
+                    </Select.Group>
+                  </Select.Content>
+                  <Select.Input name="document issuance" />
+                </Select.Root>
+            </div>
+            <div class=" flex flex-col gap-1.5" >
                 <label for="">Expedición del documento <strong class=" text-red-600" >*</strong> </label>
-                <Select.Root selected={{label: data.munexpmadre_label_frontend}} onSelectedChange={(v)=> {
+                <Select.Root selected={{label: data.munexpmadre_label_frontend}} 
+                disabled={!municipality_list.Mother_Exp_Dep}
+                onSelectedChange={(v)=> {
                   data.munexpmadre_id = v.value
                   data.munexpmadre_label_frontend = v.label
                   }} >
@@ -788,7 +928,7 @@
                   <Select.Content class="h-40 overflow-auto" >
                     <Select.Group>
                       <Select.Label>Municipios</Select.Label>
-                      {#each Municipality as municipality}
+                      {#each municipality_list.Mother_Exp as municipality}
                         <Select.Item value={municipality.id} label={municipality.nombre}
                           >{municipality.nombre}</Select.Item
                         >
@@ -806,7 +946,9 @@
                 <label for="cellular">Celular <strong class=" text-red-600" >*</strong> </label>
                 <Input class="w-[300px]" type="number" id="cellular" placeholder="Celular" bind:value={data.madrecelular} />
             </div>
-            <div class="flex flex-col gap-1.5">
+        </div>
+        <div class=" flex items-center justify-center gap-10 flex-wrap mt-5" >
+          <div class="flex flex-col gap-1.5">
                 <label for="work-phone">Teléfono del trabajo</label>
                 <div class="flex gap-3" >
                     <Input class="w-[50px]" type="number" placeholder="601" bind:value={data.madretelcorto} />
@@ -921,18 +1063,46 @@
         </div>
         <div class=" flex items-center justify-center gap-10 flex-wrap mt-5" >
             <div class=" flex flex-col gap-1.5" >
+                <label for="">Departamento Expedición<strong class=" text-red-600" >*</strong> </label>
+                <Select.Root selected={{label: data.A_departamento_label_frontend_D}} 
+                disabled={acu === '2'? false: true}
+                onSelectedChange={(v)=> {
+                  data.A_departamento_label_frontend_D = v.label
+                  municipality_list.Acu_Exp = Municipality;
+                  if(v.value !== 2){
+                    municipality_list.Acu_Exp = Municipality.filter((m) => m.departamento_id === v.value);
+                  }
+                  municipality_list.Acu_Exp_Dep = true;
+                  }} >
+                  <Select.Trigger class="w-[300px]">
+                    <Select.Value placeholder="Expedición del documento" />
+                  </Select.Trigger>
+                  <Select.Content class="h-40 overflow-auto" >
+                    <Select.Group>
+                      <Select.Label>Departamentos</Select.Label>
+                      {#each Department as department}
+                        <Select.Item value={department.id} label={department.nombre}
+                          >{department.nombre}</Select.Item
+                        >
+                      {/each}
+                    </Select.Group>
+                  </Select.Content>
+                  <Select.Input name="document issuance" />
+                </Select.Root>
+            </div>
+            <div class=" flex flex-col gap-1.5" >
                 <label for="">Expedición del documento <strong class=" text-red-600" >*</strong> </label>
                 <Select.Root selected={{label:data.munexpacu_label_frontend}} onSelectedChange={(v)=>{
                   data.munexpacu_id = v.value
                   data.munexpacu_label_frontend = v.label
-                }} disabled={acu === '2'? false: true} >
+                }} disabled={!municipality_list.Acu_Exp_Dep} >
                   <Select.Trigger class="w-[300px]">
                     <Select.Value placeholder="Expedición del documento" />
                   </Select.Trigger>
                   <Select.Content class="h-40 overflow-auto" >
                     <Select.Group>
                       <Select.Label>Municipios</Select.Label>
-                      {#each Municipality as municipality}
+                      {#each municipality_list.Acu_Exp as municipality}
                         <Select.Item value={municipality.id} label={municipality.nombre}
                           >{municipality.nombre}</Select.Item
                         >
@@ -962,7 +1132,9 @@
                     <Input class="w-[300px]" type="number" id="cellular" placeholder="Celular" bind:value={data.acucelular} />
                 {/if}
             </div>
-            <div class="flex flex-col gap-1.5">
+        </div>
+        <div class=" flex items-center justify-center gap-10 flex-wrap mt-5" >
+          <div class="flex flex-col gap-1.5">
                 <label for="work-phone">Teléfono del trabajo</label>
                 <div class="flex gap-3" >
                     {#if acu === '0'}
@@ -1092,6 +1264,34 @@
                     <Input class="w-[300px]" type="number" id="numberofid" placeholder="Número de identificación" bind:value={data.declaradocumento} />
                 {/if}
             </div>
+            <div class=" flex flex-col gap-1.5" >
+                <label for="">Departamento Expedición<strong class=" text-red-600" >*</strong> </label>
+                <Select.Root selected={{label: data.DE_departamento_label_frontend_D}} 
+                disabled={dec === '2'? false: dec === '3'? false : true}
+                onSelectedChange={(v)=> {
+                  data.DE_departamento_label_frontend_D = v.label
+                  municipality_list.Declarante_Exp = Municipality;
+                  if(v.value !== 2){
+                    municipality_list.Declarante_Exp = Municipality.filter((m) => m.departamento_id === v.value);
+                  }
+                  municipality_list.Declarante_Exp_Dep = true;
+                  }} >
+                  <Select.Trigger class="w-[300px]">
+                    <Select.Value placeholder="Expedición del documento" />
+                  </Select.Trigger>
+                  <Select.Content class="h-40 overflow-auto" >
+                    <Select.Group>
+                      <Select.Label>Departamentos</Select.Label>
+                      {#each Department as department}
+                        <Select.Item value={department.id} label={department.nombre}
+                          >{department.nombre}</Select.Item
+                        >
+                      {/each}
+                    </Select.Group>
+                  </Select.Content>
+                  <Select.Input name="document issuance" />
+                </Select.Root>
+            </div>
         </div>
         <div class=" flex items-center justify-center gap-10 flex-wrap mt-5" >
             <div class=" flex flex-col gap-1.5" >
@@ -1099,14 +1299,14 @@
                 <Select.Root selected={{label:data.declaralugarexpide_label_frontend}} onSelectedChange={(v)=> {
                   data.declaralugarexpide = v.value
                   data.declaralugarexpide_label_frontend = v.label
-                }} disabled={dec === '2'? false: dec === '3'? false : true} >
+                }} disabled={!municipality_list.Declarante_Exp_Dep} >
                   <Select.Trigger class="w-[300px]">
                     <Select.Value placeholder="Expedición del documento" />
                   </Select.Trigger>
                   <Select.Content class="h-40 overflow-auto" >
                     <Select.Group>
                       <Select.Label>Municipios</Select.Label>
-                      {#each Municipality as municipality}
+                      {#each municipality_list.Declarante_Exp as municipality}
                         <Select.Item value={municipality.id} label={municipality.nombre}
                           >{municipality.nombre}</Select.Item
                         >
@@ -1368,8 +1568,37 @@
             </div>
             {#if dec === '3'}
             <div class=" flex flex-col gap-1.5" >
+                <label for="">Departamento <strong class=" text-red-600" >*</strong> </label>
+                <Select.Root selected={{label: data.DEP_departamento_label_frontend_D}} 
+                onSelectedChange={(v)=> {
+                  data.DEP_departamento_label_frontend_D = v.label
+                  municipality_list.Declarante_Map = Municipality;
+                  if(v.value !== 2){
+                    municipality_list.Declarante_Map = Municipality.filter((m) => m.departamento_id === v.value);
+                  }
+                  municipality_list.Declarante_Map_Dep = true;
+                  }} >
+                  <Select.Trigger class="w-[300px]">
+                    <Select.Value placeholder="Expedición del documento" />
+                  </Select.Trigger>
+                  <Select.Content class="h-40 overflow-auto" >
+                    <Select.Group>
+                      <Select.Label>Departamentos</Select.Label>
+                      {#each Department as department}
+                        <Select.Item value={department.id} label={department.nombre}
+                          >{department.nombre}</Select.Item
+                        >
+                      {/each}
+                    </Select.Group>
+                  </Select.Content>
+                  <Select.Input name="document issuance" />
+                </Select.Root>
+            </div>
+            <div class=" flex flex-col gap-1.5" >
                 <label for="">Municipio <strong class=" text-red-600" >*</strong> </label>
-                <Select.Root selected={{label:data.declarareside_label_frontend}} onSelectedChange={(v)=>{
+                <Select.Root selected={{label:data.declarareside_label_frontend}} 
+                disabled={!municipality_list.Declarante_Map_Dep}
+                onSelectedChange={(v)=>{
                   data.declarareside = v.value
                   data.declarareside_label_frontend = v.label
                 }} >
@@ -1379,7 +1608,7 @@
                   <Select.Content class="h-40 overflow-auto" >
                     <Select.Group>
                       <Select.Label>Municipios</Select.Label>
-                      {#each Municipality as municipality}
+                      {#each municipality_list.Declarante_Map as municipality}
                         <Select.Item value={municipality.id} label={municipality.nombre}
                           >{municipality.nombre}</Select.Item
                         >
@@ -1394,8 +1623,37 @@
         <div class=" flex items-center justify-center gap-10 flex-wrap mt-5" >
           {#if dec !== '3'}
           <div class=" flex flex-col gap-1.5" >
+                <label for="">Departamento <strong class=" text-red-600" >*</strong> </label>
+                <Select.Root selected={{label: data.DEP_departamento_label_frontend_D}} 
+                onSelectedChange={(v)=> {
+                  data.DEP_departamento_label_frontend_D = v.label
+                  municipality_list.Declarante_Map = Municipality;
+                  if(v.value !== 2){
+                    municipality_list.Declarante_Map = Municipality.filter((m) => m.departamento_id === v.value);
+                  }
+                  municipality_list.Declarante_Map_Dep = true;
+                  }} >
+                  <Select.Trigger class="w-[300px]">
+                    <Select.Value placeholder="Expedición del documento" />
+                  </Select.Trigger>
+                  <Select.Content class="h-40 overflow-auto" >
+                    <Select.Group>
+                      <Select.Label>Departamentos</Select.Label>
+                      {#each Department as department}
+                        <Select.Item value={department.id} label={department.nombre}
+                          >{department.nombre}</Select.Item
+                        >
+                      {/each}
+                    </Select.Group>
+                  </Select.Content>
+                  <Select.Input name="document issuance" />
+                </Select.Root>
+          </div>
+          <div class=" flex flex-col gap-1.5" >
                 <label for="">Municipio <strong class=" text-red-600" >*</strong> </label>
-                <Select.Root selected={{label:data.declarareside_label_frontend}} onSelectedChange={(v)=>{
+                <Select.Root selected={{label:data.declarareside_label_frontend}} 
+                disabled={!municipality_list.Declarante_Map_Dep}
+                onSelectedChange={(v)=>{
                   data.declarareside = v.value
                   data.declarareside_label_frontend = v.label
                 }} >
@@ -1405,7 +1663,7 @@
                   <Select.Content class="h-40 overflow-auto" >
                     <Select.Group>
                       <Select.Label>Municipios</Select.Label>
-                      {#each Municipality as municipality}
+                      {#each municipality_list.Declarante_Map as municipality}
                         <Select.Item value={municipality.id} label={municipality.nombre}
                           >{municipality.nombre}</Select.Item
                         >
