@@ -1244,7 +1244,7 @@
                   data.declaratipoid_label_frontend = v.label
                   }} disabled={dec === '2'? false: dec === '3'? false: true} >
                   <Select.Trigger class="w-[300px]">
-                    <Select.Value placeholder="Tipo de Documento" />
+                    <Select.Value placeholder={dec === '0' ? data.tipoidpadre_label_frontend : dec === '1'? data.tipoidmadre_label_frontend : "Tipo de Documento"} />
                   </Select.Trigger>
                   <Select.Content>
                     <Select.Group>
@@ -1282,7 +1282,7 @@
                   municipality_list.Declarante_Exp_Dep = true;
                   }} >
                   <Select.Trigger class="w-[300px]">
-                    <Select.Value placeholder="Expedición del documento" />
+                    <Select.Value placeholder={dec === '0' ? data.F_departamento_label_frontend_D : dec === '1'? data.M_departamento_label_frontend_D : "Expedición del documento"} />
                   </Select.Trigger>
                   <Select.Content class="h-40 overflow-auto" >
                     <Select.Group>
@@ -1306,7 +1306,7 @@
                   data.declaralugarexpide_label_frontend = v.label
                 }} disabled={!municipality_list.Declarante_Exp_Dep} >
                   <Select.Trigger class="w-[300px]">
-                    <Select.Value placeholder="Expedición del documento" />
+                    <Select.Value placeholder={dec === '0' ? data.munexppadre_label_frontend : dec === '1'? data.munexpmadre_label_frontend : "Expedición del documento"} />
                   </Select.Trigger>
                   <Select.Content class="h-40 overflow-auto" >
                     <Select.Group>
