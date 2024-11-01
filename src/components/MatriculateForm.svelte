@@ -1466,25 +1466,7 @@
             </div>
             <div class=" flex flex-col gap-1.5" >
                 <label for="">Ocupación y oficio <strong class=" text-red-600" >*</strong> </label>
-                <Select.Root selected={{label:data.declaraocupacion_label_frontend}}
-                onSelectedChange={(v)=> {
-                  data.declaraocupacion_label_frontend = v.label
-                  data.declaraocupacion = v.label}} >
-                  <Select.Trigger class="w-[280px]">
-                    <Select.Value placeholder="Ocupación y oficio" />
-                  </Select.Trigger>
-                  <Select.Content class="h-40 overflow-auto" >
-                    <Select.Group>
-                      <Select.Label>Ocupaciones</Select.Label>
-                      {#each occupation as item}
-                        <Select.Item value={item.id} label={item.descripcion}
-                          >{item.descripcion}</Select.Item
-                        >
-                      {/each}
-                    </Select.Group>
-                  </Select.Content>
-                  <Select.Input name="document issuance" />
-                </Select.Root>
+                <Input class="w-[300px]" type="text" id="ocupacion" placeholder="Ocupacion" bind:value={data.declaraocupacion} />
             </div>
             {/if}
             <div class="flex flex-col gap-1.5">
