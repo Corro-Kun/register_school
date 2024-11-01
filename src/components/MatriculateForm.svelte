@@ -413,6 +413,12 @@
         }
       }
 
+      data.decimporta = data.decimporta ? 1:0;
+      data.decexporta = data.decexporta ? 1:0;
+      data.decinversiones = data.decinversiones ? 1:0;
+      data.dectransferencias = data.dectransferencias ? 1:0;
+      data.decotrasmact = data.decotrasmact ? 1:0;
+
       data.inftributaria = JSON.stringify(data.inftributaria);
 
       fillOutForm();
@@ -1034,7 +1040,7 @@
                   data.tipoidacu_label_frontend = v.label
                   }} disabled={acu === '2'? false: true} >
                   <Select.Trigger class="w-[300px]">
-                    <Select.Value placeholder="Tipo de Documento" />
+                    <Select.Value placeholder={acu === '2'? "Tipo de Documento": acu === '0' ? data.tipoidpadre_label_frontend : data.tipoidmadre_label_frontend} />
                   </Select.Trigger>
                   <Select.Content>
                     <Select.Group>
@@ -1074,7 +1080,7 @@
                   municipality_list.Acu_Exp_Dep = true;
                   }} >
                   <Select.Trigger class="w-[300px]">
-                    <Select.Value placeholder="Expedición del documento" />
+                    <Select.Value placeholder={acu === '2'? "Expedición del documento" : acu === '0' ? data.F_departamento_label_frontend_D : data.M_departamento_label_frontend_D} />
                   </Select.Trigger>
                   <Select.Content class="h-40 overflow-auto" >
                     <Select.Group>
@@ -1096,7 +1102,7 @@
                   data.munexpacu_label_frontend = v.label
                 }} disabled={!municipality_list.Acu_Exp_Dep} >
                   <Select.Trigger class="w-[300px]">
-                    <Select.Value placeholder="Expedición del documento" />
+                    <Select.Value placeholder={acu === '2'? "Expedición del documento" : acu === '0' ? data.munexppadre_label_frontend : data.munexpmadre_label_frontend} />
                   </Select.Trigger>
                   <Select.Content class="h-40 overflow-auto" >
                     <Select.Group>
@@ -1982,23 +1988,23 @@
                   <label for="">Ninguna</label>
                 </div>
                 <div class="flex items-center space-x-2" >
-                  <Checkbox id="terms" aria-labelledby="terms-label" on:change={(e)=> data.decimporta = e.target.checked? 1: 0} />
+                  <Checkbox id="terms" aria-labelledby="terms-label"  bind:checked={data.decimporta} />
                   <label for="">Importaciones</label>
                 </div>
                 <div class="flex items-center space-x-2" >
-                  <Checkbox id="terms" aria-labelledby="terms-label" on:change={(e)=> data.decexporta = e.target.checked? 1: 0} />
+                  <Checkbox id="terms" aria-labelledby="terms-label"  bind:checked={data.decexporta} />
                   <label for="">Exportaciones</label>
                 </div>
                 <div class="flex items-center space-x-2" >
-                  <Checkbox id="terms" aria-labelledby="terms-label" on:change={(e)=> data.decinversiones = e.target.checked? 1: 0} />
+                  <Checkbox id="terms" aria-labelledby="terms-label"  bind:checked={data.decinversiones} />
                   <label for="">Inversiones</label>
                 </div>
                 <div class="flex items-center space-x-2" >
-                  <Checkbox id="terms" aria-labelledby="terms-label" on:change={(e)=> data.dectransferencias = e.target.checked? 1: 0} />
+                  <Checkbox id="terms" aria-labelledby="terms-label"  bind:checked={data.dectransferencias} />
                   <label for="">Transferencias</label>
                 </div>
                 <div class="flex items-center space-x-2" >
-                  <Checkbox id="terms" aria-labelledby="terms-label" on:change={(e)=> data.decotrasmact = e.target.checked? 1: 0} />
+                  <Checkbox id="terms" aria-labelledby="terms-label" bind:checked={data.decotrasmact} />
                   <label for="">Otras</label>
                 </div>
                 </div>
