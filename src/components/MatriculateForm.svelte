@@ -155,7 +155,7 @@
         ResoluciónNumAutorre: '',
         AutorretenedorICA: false,
         ResoluciónNumICA: '',
-        CIUU: '',
+        CIUU: undefined,
         Persona: undefined,
       }
     }
@@ -481,6 +481,42 @@
       toast.success('Datos actualizados correctamente');
 
       return true;
+    }
+
+    let pageDisabled = {
+      1: false,
+      2: true,
+      3: true,
+      4: true,
+      5: true,
+      6: true,
+      7: false,
+      8: false,
+    }
+
+    function verifDec(){
+      if (dec === '3'){
+        if (data.declaranit === undefined || data.declaraempresa === undefined || data.declaraparentesco === undefined || data.declaranombres === undefined || data.declaraapellidos === undefined || data.declaratipoid === undefined || data.declaradocumento === undefined || data.declaralugarexpide === undefined || data.declaraemail === undefined || data.declaracelular === undefined){
+          return true;
+        }
+      }else if (dec === '2'){
+        if (data.declaraparentesco === undefined || data.declaranombres === undefined || data.declaraapellidos === undefined || data.declaratipoid === undefined || data.declaradocumento === undefined || data.declaralugarexpide === undefined || data.declaraemail === undefined || data.declaracelular === undefined || data.declarapais === undefined){
+          return true;
+        }
+      }
+      if (data.declarafechanace === undefined || data.declaraocupacion === undefined || directioDec.type === undefined || directioDec.name === undefined || data.declarareside === undefined || data.inftributaria.ResponsableIVA === undefined || data.inftributaria.CIUU === undefined){
+        return true;
+      }
+
+      return false;
+    }
+
+    $:{
+      pageDisabled[2] = data.tipoid_id !== undefined && data.mupioexp_id !== undefined && data.municipio_id !== undefined && data.barrio_id !== undefined && data.direccion !== undefined && data.telefono !== undefined && data.emernombre !== undefined && data.emertelefono !== undefined && data.tipoemer !== undefined ? false : true;
+      pageDisabled[3] = data.padrevivo === '1' ? data.tipoidpadre_id !== undefined && data.munexppadre_id !== undefined && data.padrecelular !== undefined && data.emailpadre !== undefined ? false : true : false;
+      pageDisabled[4] = data.madrevive === '1' ? data.tipoidmadre_id !== undefined && data.munexpmadre_id !== undefined && data.madrecelular !== undefined && data.madreemail !== undefined ? false : true : false;
+      pageDisabled[5] = acu === '2' ? data.acuparentesco_id !== undefined && data.nomacu !== undefined && data.apellacu !== undefined && data.docacu !== undefined && data.tipoidacu_id !== undefined && data.munexpacu_id !== undefined && data.acuemail !== undefined && data.acucelular !== undefined ? false : true : acu !== null ? false : true;
+      pageDisabled[6] = verifDec();
     }
 
 </script>
@@ -2116,14 +2152,14 @@
         </Pagination.Item>
       {:else}
         <Pagination.Item isVisible={currentPage == page.value}>
-          <Pagination.Link {page} isActive={currentPage == page.value}>
+          <Pagination.Link {page} isActive={currentPage == page.value} disabled={pageDisabled[page.value]} >
             {page.value}
           </Pagination.Link>
         </Pagination.Item>
       {/if}
     {/each}
     <Pagination.Item>
-      <Pagination.NextButton />
+      <Pagination.NextButton disabled={pageDisabled[currentPage+1]} />
     </Pagination.Item>
   </Pagination.Content>
   </Pagination.Root>
