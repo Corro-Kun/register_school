@@ -238,12 +238,12 @@
       data.inftributaria = {
         ResponsableIVA: false,
         ResponsableICA: false,
-        ResoluciónNumContri: '',
-        ReginContri: '',
+        ResoluciónNumContri: undefined,
+        ReginContri: undefined,
         Autorretenedor: false,
-        ResoluciónNumAutorre: '',
+        ResoluciónNumAutorre: undefined,
         AutorretenedorICA: false,
-        ResoluciónNumICA: '',
+        ResoluciónNumICA: undefined,
         CIUU: '',
         Persona: undefined,
       }
@@ -490,21 +490,21 @@
       4: true,
       5: true,
       6: true,
-      7: false,
-      8: false,
+      7: true,
+      8: true,
     }
 
-    function verifDec(){
-      if (dec === '3'){
-        if (data.declaranit === undefined || data.declaraempresa === undefined || data.declaraparentesco === undefined || data.declaranombres === undefined || data.declaraapellidos === undefined || data.declaratipoid === undefined || data.declaradocumento === undefined || data.declaralugarexpide === undefined || data.declaraemail === undefined || data.declaracelular === undefined){
+    function verifDec(d){
+      if (d === '3'){
+        if (data.declaranit === undefined || data.declaraempresa === undefined || data.declaranombres === undefined || data.declaraapellidos === undefined || data.declaratipoid === undefined || data.declaradocumento === undefined || data.declaralugarexpide === undefined || data.declaraemail === undefined || data.declaracelular === undefined){
           return true;
         }
-      }else if (dec === '2'){
+      }else if (d === '2'){
         if (data.declaraparentesco === undefined || data.declaranombres === undefined || data.declaraapellidos === undefined || data.declaratipoid === undefined || data.declaradocumento === undefined || data.declaralugarexpide === undefined || data.declaraemail === undefined || data.declaracelular === undefined || data.declarapais === undefined){
           return true;
         }
       }
-      if (data.declarafechanace === undefined || data.declaraocupacion === undefined || directioDec.type === undefined || directioDec.name === undefined || data.declarareside === undefined || data.inftributaria.ResponsableIVA === undefined || data.inftributaria.CIUU === undefined){
+      if (data.declarafechanace === undefined || data.declaraocupacion === undefined || directioDec.type === undefined || directioDec.name === undefined || data.declarareside === undefined || data.inftributaria.ResponsableIVA === undefined || data.inftributaria.CIUU === undefined || data.inftributaria.Persona === undefined){
         return true;
       }
 
@@ -516,7 +516,9 @@
       pageDisabled[3] = data.padrevivo === '1' ? data.tipoidpadre_id !== undefined && data.munexppadre_id !== undefined && data.padrecelular !== undefined && data.emailpadre !== undefined ? false : true : false;
       pageDisabled[4] = data.madrevive === '1' ? data.tipoidmadre_id !== undefined && data.munexpmadre_id !== undefined && data.madrecelular !== undefined && data.madreemail !== undefined ? false : true : false;
       pageDisabled[5] = acu === '2' ? data.acuparentesco_id !== undefined && data.nomacu !== undefined && data.apellacu !== undefined && data.docacu !== undefined && data.tipoidacu_id !== undefined && data.munexpacu_id !== undefined && data.acuemail !== undefined && data.acucelular !== undefined ? false : true : acu !== null ? false : true;
-      pageDisabled[6] = verifDec();
+      pageDisabled[6] = dec === null ? false : verifDec(dec);
+      pageDisabled[7] = dec === '3' ? data.inftributaria.ResoluciónNumContri !== undefined && data.inftributaria.RégimenContri !== undefined && data.inftributaria.ResoluciónNumAutorre !== undefined && data.inftributaria.ResoluciónNumICA !== undefined ? false : true : data.decactivos !== undefined && data.decpasivos !== undefined && data.decpatrimonio !== undefined && data.decrpublicos !== undefined && data.decvincpublico !== undefined && data.decextranjero !== undefined && data.decorigen !== undefined ? false : true;
+      pageDisabled[8] = dec === '3' ? data.inftributaria.ResoluciónNumContri !== undefined && data.inftributaria.RégimenContri !== undefined && data.inftributaria.ResoluciónNumAutorre !== undefined && data.inftributaria.ResoluciónNumICA !== undefined ? false : true : data.decactivos !== undefined && data.decpasivos !== undefined && data.decpatrimonio !== undefined && data.decrpublicos !== undefined && data.decvincpublico !== undefined && data.decextranjero !== undefined && data.decorigen !== undefined ? false : true;
     }
 
 </script>
