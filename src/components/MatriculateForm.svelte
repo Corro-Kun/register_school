@@ -421,14 +421,9 @@
 
       data.inftributaria = JSON.stringify(data.inftributaria);
 
-      fillOutForm();
-    }
-
-    async function fillOutForm(){
       messageLoading = 'Actualizando datos...';
 
       try {
-
         let res = await save();
 
         if (!res){
@@ -436,9 +431,19 @@
           messageLoading = '¿Enviar formulario?';
           return;
         }
+        messageLoading = 'Datos guardados.';
+        loading = 2;
+      } catch (error) {
+        messageLoading = '¿Enviar formulario?';
+        loading = 0;
+        toast.error('Llene todos los campos requeridos sin errores');
+      }
 
-        messageLoading = 'Generando PDF...';
+      buttonDownload = true;
+    }
 
+    async function fillOutForm(){
+      try {
         if (import.meta.env.PUBLIC_SCHOOL === 'medellin'){
           if (data.padrevivo !== '1' & data.madrevive !== '1'){
             await Acudiente(data);
@@ -452,9 +457,6 @@
         }else if (import.meta.env.PUBLIC_SCHOOL === 'chia'){
           await Chia(data);
         }
-
-        messageLoading = 'Terminado'
-        loading = 2;
 
         navigate('/reserva/finalizar');
       } catch (error) {
@@ -506,9 +508,9 @@
       }
       if (data.declarafechanace === undefined || data.declaraocupacion === undefined || directioDec.type === undefined || directioDec.name === undefined || data.declarareside === undefined || data.inftributaria.ResponsableIVA === undefined || data.inftributaria.CIUU === undefined || data.inftributaria.Persona === undefined){
         return true;
+      }else {
+        return false;
       }
-
-      return false;
     }
 
     $:{
@@ -520,6 +522,8 @@
       pageDisabled[7] = dec === '3' ? data.inftributaria.ResoluciónNumContri !== undefined && data.inftributaria.RégimenContri !== undefined && data.inftributaria.ResoluciónNumAutorre !== undefined && data.inftributaria.ResoluciónNumICA !== undefined ? false : true : data.decactivos !== undefined && data.decpasivos !== undefined && data.decpatrimonio !== undefined && data.decrpublicos !== undefined && data.decvincpublico !== undefined && data.decextranjero !== undefined && data.decorigen !== undefined ? false : true;
       pageDisabled[8] = dec === '3' ? data.inftributaria.ResoluciónNumContri !== undefined && data.inftributaria.RégimenContri !== undefined && data.inftributaria.ResoluciónNumAutorre !== undefined && data.inftributaria.ResoluciónNumICA !== undefined ? false : true : data.decactivos !== undefined && data.decpasivos !== undefined && data.decpatrimonio !== undefined && data.decrpublicos !== undefined && data.decvincpublico !== undefined && data.decextranjero !== undefined && data.decorigen !== undefined ? false : true;
     }
+
+    let buttonDownload = false;
 
 </script>
 
@@ -2136,6 +2140,12 @@
           <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="animate-spin icon icon-tabler icons-tabler-outline icon-tabler-loader-2"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 3a9 9 0 1 0 9 9" /></svg>
           {:else if loading === 2}
           <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-check"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10" /></svg>
+          {/if}
+        </div>
+        <div class="flex items-center justify-center flex-col gap-2 mt-3" >
+          {#if buttonDownload}
+          <p>Click Para Descargar PDF</p>
+          <button on:click={fillOutForm} class="px-5 py-2 bg-red-600 text-white rounded-sm" >Descargar</button>
           {/if}
         </div>
     {/if}
